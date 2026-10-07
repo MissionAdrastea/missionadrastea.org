@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Contact | Adrastea</title>
+    <link rel="stylesheet" href="../globals.css?v=6" />
+    <link rel="stylesheet" href="../assets/site.css?v=5" />
+    <link rel="stylesheet" href="../style/contact.css?v=5" />
+    <link rel="stylesheet" href="../assets/responsive.css" />
+    <script src="../assets/components.js?v=2" defer></script>
+    <script src="../assets/contact-form.js" defer></script>
+    <script src="../assets/scroll-effects.js" defer></script>
+    <script src="../assets/star-trail.js" defer></script>
+  </head>
+
+  <body>
+    <main class="contact">
+      <div data-site-header></div>
+
+      <div class="contact-content">
+        <header class="contact-page-heading" data-scroll-section>
+          <h1 class="contact-title" id="contact-title">Contact Adrastea</h1>
+          <p class="contact-lede">We’d be glad to hear from you.</p>
+        </header>
+
+        <section
+          class="contact-form-card"
+          aria-labelledby="contact-form-title"
+          data-scroll-section
+        >
+          <h2 id="contact-form-title">Send us a message</h2>
+          <p class="contact-form-intro">
+            Complete the form and we’ll route your inquiry to the right team. Required fields are
+            marked with an asterisk.
+          </p>
+
+          <form
+            class="contact-form"
+            action="https://script.google.com/a/macros/missionadrastea.org/s/AKfycbxU3NvyUYza55pGAztd_41mF8mhSUqhbZN4ji-2zgRpps8nO5wf-yBZWx_K5widYieP/exec"
+            method="post"
+            target="contact-form-response"
+          >
+            <div class="contact-field contact-field--full">
+              <label for="contact-request-type">Request type <span aria-hidden="true">*</span></label>
+              <select id="contact-request-type" name="Request Type" required>
+                <option value="" selected disabled>Select a topic</option>
+                <option value="Student/Research Application">Student or researcher application</option>
+                <option value="Sponsorship">Sponsorship</option>
+                <option value="Partnership/Collaboration">Partnership or collaboration</option>
+                <option value="Media/Event">Media, speaking, or events</option>
+                <option value="General Inquiry">General inquiry</option>
+              </select>
+            </div>
+
+            <div class="contact-field">
+              <label for="contact-first-name">First name <span aria-hidden="true">*</span></label>
+              <input
+                id="contact-first-name"
+                name="First Name"
+                autocomplete="given-name"
+                required
+                maxlength="80"
+              />
+            </div>
+            <div class="contact-field">
+              <label for="contact-last-name">Last name <span aria-hidden="true">*</span></label>
+              <input
+                id="contact-last-name"
+                name="Last Name"
+                autocomplete="family-name"
+                required
+                maxlength="80"
+              />
+            </div>
+            <div class="contact-field contact-field--full">
+              <label for="contact-email">Email address <span aria-hidden="true">*</span></label>
+              <input
+                id="contact-email"
+                name="Email"
+                type="email"
+                autocomplete="email"
+                required
+                maxlength="254"
+              />
+            </div>
+            <div class="contact-field">
+              <label for="contact-organization">Organization or school</label>
+              <input
+                id="contact-organization"
+                name="Organization"
+                autocomplete="organization"
+                maxlength="160"
+              />
+            </div>
+            <div class="contact-field">
+              <label for="contact-organization-website">Organization website</label>
+              <input
+                id="contact-organization-website"
+                name="Organization Website"
+                type="url"
+                inputmode="url"
+                autocomplete="url"
+                placeholder="https://"
+                maxlength="300"
+              />
+            </div>
+            <div class="contact-field">
+              <label for="contact-request-date">Request date</label>
+              <input id="contact-request-date" name="Request Date" type="date" />
+            </div>
+            <div class="contact-field">
+              <label for="contact-urgency">Urgency</label>
+              <select id="contact-urgency" name="Urgency">
+                <option value="">Select an option</option>
+                <option>General</option>
+                <option>Time-sensitive</option>
+                <option>Urgent</option>
+              </select>
+            </div>
+            <div class="contact-field contact-field--full">
+              <label for="contact-joining-team">Are you interested in joining a team?</label>
+              <select id="contact-joining-team" name="Joining Team">
+                <option value="">Select an option</option>
+                <option>Yes</option>
+                <option>No</option>
+              </select>
+            </div>
+
+            <fieldset class="contact-field contact-field--full contact-conditional" data-application-details hidden disabled>
+              <legend>Student &amp; team application details</legend>
+              <div class="contact-form">
+                <div class="contact-field">
+                  <label for="contact-team">Team of interest</label>
+                  <select id="contact-team" name="Team">
+                    <option value="">Select a team</option>
+                    <option>Health &amp; Physiology</option>
+                    <option>Bioengineering &amp; Innovation</option>
+                    <option>Policy, Ethics &amp; Society</option>
+                    <option>Marketing &amp; Communications</option>
+                    <option>Strategy &amp; Operations</option>
+                    <option>Not sure yet</option>
+                  </select>
+                </div>
+                <div class="contact-field">
+                  <label for="contact-resume">Resume link</label>
+                  <input
+                    id="contact-resume"
+                    name="Resume"
+                    type="url"
+                    inputmode="url"
+                    placeholder="Paste a shareable Drive link"
+                    maxlength="1000"
+                  />
+                </div>
+                <div class="contact-field contact-field--full">
+                  <label for="contact-why-join">Why would you like to join?</label>
+                  <textarea id="contact-why-join" name="Why Join" maxlength="3000"></textarea>
+                </div>
+                <div class="contact-field contact-field--full">
+                  <label for="contact-additional-file">Additional file link</label>
+                  <input
+                    id="contact-additional-file"
+                    name="Additional File"
+                    type="url"
+                    inputmode="url"
+                    placeholder="Paste a shareable Drive link"
+                    maxlength="1000"
+                  />
+                </div>
+              </div>
+            </fieldset>
+
+            <div class="contact-field contact-field--full">
+              <label for="contact-message">Message <span aria-hidden="true">*</span></label>
+              <textarea
+                id="contact-message"
+                name="Message"
+                required
+                minlength="10"
+                maxlength="5000"
+                placeholder="Tell us a little about your inquiry…"
+              ></textarea>
+            </div>
+            <div class="contact-field contact-field--full">
+              <label for="contact-how-heard">How did you hear about Adrastea?</label>
+              <select id="contact-how-heard" name="How Heard">
+                <option value="">Select an option</option>
+                <option>School or university</option>
+                <option>Social media</option>
+                <option>Colleague or friend</option>
+                <option>Event or conference</option>
+                <option>Web search</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="contact-field contact-field--full">
+              <label for="contact-additional-comments">Additional comments</label>
+              <textarea
+                id="contact-additional-comments"
+                name="Additional Comments"
+                maxlength="3000"
+              ></textarea>
+            </div>
+
+            <div class="contact-honeypot" aria-hidden="true">
+              <label for="contact-website-check">Leave this field blank</label>
+              <input id="contact-website-check" name="website_check" tabindex="-1" autocomplete="off" />
+            </div>
+
+            <button class="contact-submit contact-field--full" type="submit">Send inquiry</button>
+            <p class="contact-form-status contact-field--full" role="status" aria-live="polite"></p>
+          </form>
+
+          <iframe
+            class="contact-response-frame"
+            name="contact-form-response"
+            title="Form submission response"
+            tabindex="-1"
+          ></iframe>
+        </section>
+
+        <aside class="contact-topics" aria-label="Contact topics">
+          <section class="contact-topic">
+            <h2>Students &amp; researchers</h2>
+            <p>Tell us what you study and which topics or research divisions interest you.</p>
+          </section>
+          <section class="contact-topic">
+            <h2>Sponsors &amp; partners</h2>
+            <p>Get in touch about sponsorship, collaboration, events, or supporting our work.</p>
+          </section>
+        </aside>
+      </div>
+
+      <div data-site-footer></div>
+    </main>
+  </body>
+</html>
