@@ -1,0 +1,76 @@
+{
+  "founder": {
+    "name": "Aiyana",
+    "title": "Founder",
+    "image": "aiyanab.jpg",
+    "bio": [
+      "Aiyana Bage is the Founder and CEO of Adrastea, a youth-led nonprofit advancing women’s health and participation in aerospace through research, technology, policy, and public engagement. Her work spans space medicine, neuroscience, bioengineering, women’s health, and human spaceflight.",
+      "She founded Adrastea after identifying two persistent gaps in the field: limited attention to female physiology in preparation for human exploration, and limited opportunities for the generation that will inherit these missions to meaningfully contribute to their direction. Through Adrastea, she leads a growing interdisciplinary community working across women’s health in space, bioengineering, space policy and ethics, and science communication.",
+      "Aiyana has contributed to research connected to NASA and the European Space Agency (ESA), including work with NASA’s Open Science Data Repository on female reproduction and neuroscience in space. Her broader research experience includes pediatric neuroscience at Children’s National Hospital, computational analysis of biological data, and reproductive health research with collaborators including NYU Langone Health. She has also contributed to space medicine scholarship spanning medicine, economics, and policy.",
+      "Her work in women’s health has included directing an adolescent-led symposium at Harvard Medical School and participating in women’s health initiatives recognized by Harvard and Princeton. She has led a 40+ member medical research team, authored a 100-page clinical literature review, and developed research and policy initiatives focused on reproductive and menstrual health. Aiyana is also actively involved in women’s health and gender-based violence prevention in her local community. She has represented young people in international policy spaces through the United Nations and is committed to creating meaningful pathways for the next generation to shape the systems that will define their future."
+    ]
+  },
+
+  "partners": [
+    { "name": "Columbia", "logo": "columbia.png" },
+    { "name": "NASA", "logo": "nasa.png" },
+    { "name": "Harvard", "logo": "harvard.png" },
+    { "name": "University of Arizona", "logo": "uaz.png" }
+  ],
+
+  "teams": [
+    { "id": "policy", "name": "Policy, Ethics & Society" },
+    { "id": "communications", "name": "Marketing & Communications" },
+    { "id": "visual-media", "name": "Visual Media & Creative Marketing" },
+    { "id": "business-development", "name": "Business Development & Technology" },
+    { "id": "bioengineering", "name": "Bioengineering Technology" },
+    { "id": "health", "name": "Health & Physiology Research" }
+  ],
+
+  "people": [
+    { "team": "policy", "name": "Profile coming soon", "title": "Director" },
+    { "team": "policy", "name": "Joi Ysabella Carla Salvino", "title": "Policy Research Lead" },
+    { "team": "policy", "name": "Harsha Bheemanathini", "title": "Legal Advocacy Lead" },
+    {
+      "team": "communications",
+      "name": "Laine Kowalski",
+      "title": "Director",
+      "bio": "Space Sciences & National Security Research Strategic Communications / Content Specialist @ University of Arizona",
+      "image": "lainek.jpg"
+    },
+    { "team": "communications", "name": "Rida Akhtar", "title": "Content Research Lead" },
+    {
+      "team": "visual-media",
+      "name": "Vee Nyugen",
+      "title": "Director",
+      "bio": "Biomedical Engineering @ University of Texas at Austin"
+    },
+    { "team": "visual-media", "name": "Sakura Lai", "title": "Website Lead" },
+    { "team": "visual-media", "name": "Victoria Lee", "title": "Videography Lead" },
+    {
+      "team": "business-development",
+      "name": "Abigail Merchant",
+      "title": "Director",
+      "bio": "Satellite Payload Architect @ Accenture",
+      "image": "abigailm.jpeg"
+    },
+    {
+      "team": "bioengineering",
+      "name": "Rianna Chaudhuri",
+      "title": "Director",
+      "bio": "Founder @ NeuroPen",
+      "image": "riannac.jpg"
+    },
+    { "team": "bioengineering", "name": "Rene Mohammadi", "title": "Specialist" },
+    {
+      "team": "health",
+      "name": "Kate Russell",
+      "title": "Director",
+      "bio": "NASA TechRise Winner '26",
+      "image": "kater.PNG"
+    },
+    { "team": "health", "name": "Skylar Dipasupil", "title": "Microbiology Research Lead" },
+    { "team": "health", "name": "Ananya Sridhar", "title": "Specialist" },
+    { "team": "health", "name": "Hannah May Lyons", "title": "Specialist" }
+  ]
+}

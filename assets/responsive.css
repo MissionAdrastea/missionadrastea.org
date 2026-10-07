@@ -1,0 +1,35 @@
+@media (max-width: 760px) {
+  :root {
+    --site-header-height: 76px;
+  }
+
+  .site-header {
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px;
+    padding: 8px 18px;
+  }
+
+  .site-brand {
+    font-size: 18px;
+  }
+
+  .site-nav {
+    gap: 4px 20px;
+  }
+
+  .site-nav a {
+    font-size: 14px;
+  }
+
+  .site-footer-inner {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .site-footer-links {
+    gap: 8px 18px;
+  }
+}

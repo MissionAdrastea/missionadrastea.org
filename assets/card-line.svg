@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="291" height="3" viewBox="0 0 291 3" preserveAspectRatio="none">
+  <defs>
+    <linearGradient id="card-line" x1="0" y1="0" x2="291" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#74e6a6" />
+      <stop offset="0.5" stop-color="#8a38f5" />
+      <stop offset="1" stop-color="#ff00ff" />
+    </linearGradient>
+  </defs>
+  <path d="M0 1.5h291" fill="none" stroke="url(#card-line)" stroke-width="3" />
+</svg>
