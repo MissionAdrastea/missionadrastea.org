@@ -1,0 +1,190 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@400;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap");
+
+:root {
+  color-scheme: dark;
+  --color-text: #f7f5fb;
+  --color-muted: #d4cede;
+  --color-surface: rgba(20, 15, 36, 0.9);
+  --color-surface-soft: rgba(20, 15, 36, 0.74);
+  --color-border: rgba(255, 255, 255, 0.17);
+  --color-accent: #d946ef;
+  --color-accent-soft: #f0abfc;
+  --color-accent-secondary: #e879f9;
+  --color-green: #b6f5d0;
+  --font-heading: "Cormorant SC", Georgia, serif;
+  --font-body: "Source Sans 3", Arial, sans-serif;
+  --content-width: 1160px;
+  --page-gutter: clamp(20px, 5vw, 56px);
+  --section-space: clamp(36px, 6vw, 72px);
+  --site-header-height: 68px;
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--site-header-height) + 16px);
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  background-color: #09070f;
+  background-image: url("./images/general/background.png");
+  background-position: top center;
+  background-repeat: repeat-y;
+  background-size: 100% auto;
+  color: var(--color-text);
+  font-family: var(--font-body);
+  line-height: 1.55;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-heading);
+  line-height: 1.15;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-green);
+  outline-offset: 4px;
+}
+
+.moving-line {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    var(--color-text),
+    var(--color-green),
+    var(--color-accent) 58%,
+    var(--color-text) 78%,
+    var(--color-green)
+  );
+  background-size: 220% 100%;
+  animation: line-drift 12s linear infinite;
+}
+
+.solid-line {
+  height: 2px;
+  background: var(--color-green);
+}
+
+.solid-line--purple {
+  background: var(--color-accent);
+}
+
+.solid-line--magenta {
+  background: var(--color-accent-secondary);
+}
+
+.site-star-trail {
+  position: fixed;
+  z-index: 30;
+  inset: 0 auto auto 0;
+  pointer-events: none;
+}
+
+@keyframes line-drift {
+  to {
+    background-position: -220% 0;
+  }
+}
+
+.scroll-reveal {
+  opacity: 1;
+  transform: none;
+}
+
+.scroll-reveal.is-visible {
+  animation: slide-up-in 600ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.scroll-reveal--left.is-visible {
+  animation-name: slide-from-left;
+}
+
+.scroll-reveal--right.is-visible {
+  animation-name: slide-from-right;
+}
+
+@keyframes slide-up-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes slide-from-left {
+  from {
+    opacity: 0;
+    transform: translate3d(-18px, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes slide-from-right {
+  from {
+    opacity: 0;
+    transform: translate3d(18px, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .scroll-reveal.is-visible {
+    animation: none;
+  }
+}
