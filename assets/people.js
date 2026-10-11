@@ -7,33 +7,35 @@ function createTextElement(tagName, className, text) {
   return element;
 }
 
+function createImage(src, alt) {
+  const image = document.createElement("img");
+  image.src = src;
+  image.alt = alt;
+  image.loading = "lazy";
+  image.decoding = "async";
+  return image;
+}
+
 function createPersonCard(person) {
-  const card = document.createElement("article");
+  const card = document.createElement("li");
   const isDirector = person.title.toLowerCase() === "director";
-  card.className = isDirector ? "people-card people-card--director" : "people-card";
+  card.className = isDirector ? "person person--director" : "person";
 
   if (isDirector && person.image) {
     const portrait = document.createElement("span");
-    portrait.className = "people-card-portrait";
-
-    const image = document.createElement("img");
-    image.className = "people-card-image";
-    image.src = `../images/profile/${person.image}`;
-    image.alt = "";
-    image.loading = "lazy";
-    portrait.append(image);
+    portrait.className = "person-portrait";
+    portrait.append(createImage(`../images/profile/${person.image}`, ""));
     card.append(portrait);
   }
 
   const details = document.createElement("div");
-  details.className = "people-card-details";
   details.append(
-    createTextElement("h3", "people-card-name", person.name),
-    createTextElement("p", "people-card-title", person.title),
+    createTextElement("h4", "person-name", person.name),
+    createTextElement("p", "person-title", person.title),
   );
 
   if (person.bio) {
-    details.append(createTextElement("p", "people-card-bio", person.bio));
+    details.append(createTextElement("p", "person-bio", person.bio));
   }
 
   card.append(details);
@@ -44,15 +46,13 @@ function renderFounder(founder) {
   const profile = document.querySelector("#founder-profile");
   if (!profile) throw new Error("The About page founder profile container is missing.");
 
-  const portrait = document.createElement("img");
+  const portrait = document.createElement("figure");
   portrait.className = "founder-portrait";
-  portrait.src = `../images/profile/${founder.image}`;
-  portrait.alt = `Portrait of ${founder.name}`;
-  portrait.loading = "lazy";
-  portrait.decoding = "async";
+  portrait.dataset.reveal = "";
+  portrait.append(createImage(`../images/profile/${founder.image}`, `Portrait of ${founder.name}`));
 
   const details = document.createElement("div");
-  details.className = "founder-details";
+  details.dataset.reveal = "";
   details.append(
     createTextElement("p", "founder-title", founder.title),
     createTextElement("h2", "founder-name", founder.name),
@@ -76,19 +76,59 @@ function renderPartners(partners) {
 
   partners.forEach((partner) => {
     const card = document.createElement("article");
-    card.className = "partner-card";
+    card.className = "partner";
+    card.dataset.reveal = "";
 
+    // Entries without a logo show their name instead.
     if (partner.logo) {
-      const logo = document.createElement("img");
-      logo.className = "partner-logo";
-      logo.src = `../images/logo/${partner.logo}`;
-      logo.alt = `${partner.name} logo`;
-      logo.loading = "lazy";
-      logo.decoding = "async";
-      card.append(logo);
+      card.append(createImage(`../images/logo/${partner.logo}`, `${partner.name} logo`));
+    } else {
+      card.textContent = partner.name;
     }
 
     partnerList.append(card);
+  });
+}
+
+function renderCouncil(council) {
+  const list = document.querySelector("#council-list");
+  if (!list) return;
+
+  council.forEach((member) => {
+    const card = document.createElement("article");
+    card.className = "council-member";
+    card.dataset.zoom = "";
+
+    if (member.image) {
+      const portrait = document.createElement("figure");
+      portrait.className = "council-portrait";
+      portrait.append(
+        createImage(`../images/profile/${member.image}`, `Portrait of ${member.name}`),
+      );
+      card.append(portrait);
+    }
+
+    const body = document.createElement("div");
+    body.className = "council-body";
+    body.append(createTextElement("h3", "council-name", member.name));
+    if (member.bio) {
+      body.append(createTextElement("p", "council-bio", member.bio));
+    }
+
+    card.append(body);
+    list.append(card);
+  });
+}
+
+function renderAdvisors(advisors) {
+  const list = document.querySelector("#advisor-list");
+  if (!list) return;
+
+  advisors.forEach((advisor) => {
+    const card = createPersonCard(advisor);
+    card.classList.add("advisor");
+    card.dataset.reveal = "";
+    list.append(card);
   });
 }
 
@@ -105,14 +145,15 @@ function renderTeams(teams, people) {
 
   teams.forEach((team) => {
     const section = document.createElement("section");
-    section.className = "people-team";
+    section.className = "split team";
+    section.dataset.reveal = "";
     section.setAttribute("aria-labelledby", `people-team-${team.id}`);
 
-    const heading = createTextElement("h2", "people-team-title", team.name);
+    const heading = createTextElement("h3", "team-name", team.name);
     heading.id = `people-team-${team.id}`;
 
-    const members = document.createElement("div");
-    members.className = "people-team-members";
+    const members = document.createElement("ul");
+    members.className = "team-members";
     people
       .filter((person) => person.team === team.id)
       .forEach((person) => members.append(createPersonCard(person)));
@@ -142,6 +183,8 @@ async function loadPeopleDirectory() {
 
   renderFounder(data.founder);
   renderPartners(data.partners);
+  renderCouncil(data.council || []);
+  renderAdvisors(data.advisors || []);
   renderTeams(data.teams, data.people);
   window.adrasteaRefreshScrollEffects?.();
 }

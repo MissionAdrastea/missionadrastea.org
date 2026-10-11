@@ -4,76 +4,231 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>About Us | Adrastea</title>
-    <link rel="stylesheet" href="../globals.css?v=6" />
-    <link rel="stylesheet" href="../assets/site.css?v=5" />
-    <link rel="stylesheet" href="../style/about.css?v=5" />
-    <link rel="stylesheet" href="../assets/responsive.css" />
-    <script src="../assets/components.js?v=2" defer></script>
-    <script src="../assets/people.js?v=4" defer></script>
-    <script src="../assets/scroll-effects.js" defer></script>
-    <script src="../assets/star-trail.js" defer></script>
+    <meta
+      name="description"
+      content="Adrastea is a youth-led accelerator and collaboration hub advancing women in space. Meet our mission, roadmap, founder, advisors, and teams."
+    />
+    <link rel="icon" href="../images/general/emblem.jpg" />
+    <link rel="preload" as="image" href="../images/general/emblem.jpg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Instrument+Serif:ital@0;1&display=swap"
+    />
+    <link rel="stylesheet" href="../assets/site.css?v=14" />
+    <link rel="stylesheet" href="../style/about.css?v=14" />
+    <script src="../assets/vendor/gsap.min.js" defer></script>
+    <script src="../assets/vendor/ScrollTrigger.min.js" defer></script>
+    <script src="../assets/sky.js?v=14" defer></script>
+    <script src="../assets/components.js?v=14" defer></script>
+    <script src="../assets/motion.js?v=14" defer></script>
+    <script src="../assets/constellation.js?v=14" defer></script>
+    <script src="../assets/people.js?v=14" defer></script>
+    <script src="../assets/star-trail.js?v=14" defer></script>
   </head>
 
   <body>
-    <main class="about-us">
-      <div data-site-header></div>
+    <div data-site-header></div>
 
-      <section class="intro-paragraph" aria-labelledby="about-title" data-scroll-section>
-        <h1 class="text-wrapper-5" id="about-title">“ad astra, for all.”</h1>
-        <p class="p">
-          Adrastea is an accelerator and collaboration hub dedicated to advancing women in space
-          through research and advocacy. We serve all women in the space industry, whether they are
-          doctors, engineers, designers, or female astronauts, with the aim of prioritizing, and
-          advocating for their prioritization. We strive for an equitable future for human
-          spaceflight.
+    <main>
+      <section class="hero hero--motto" id="content" data-orbit="hero" aria-labelledby="about-title">
+        <div class="layer" data-intro>
+          <h1 id="about-title">Ad astra, <em>for all.</em></h1>
+          <p>Closing the sex gap in aerospace.</p>
+        </div>
+      </section>
+
+      <section class="scrub layer" data-orbit="ghost" aria-label="About Adrastea">
+        <p data-scrub>
+          Adrastea is a youth-led accelerator and collaboration hub dedicated to advancing women in
+          space through research and advocacy. We serve all women in the space industry, whether
+          they are doctors, engineers, designers, or female astronauts, with the aim of
+          prioritizing, and advocating for their prioritization. We strive for an equitable future
+          for human spaceflight.
         </p>
       </section>
 
-      <section class="goals" aria-labelledby="mission-title" data-scroll-section>
-        <div class="goals-haader">
-          <div class="line moving-line" aria-hidden="true"></div>
-          <h2 class="text-wrapper-3" id="mission-title">Our Mission</h2>
-          <div class="line-2 solid-line solid-line--purple" aria-hidden="true"></div>
-        </div>
+      <section class="mission layer" data-orbit="dock" aria-labelledby="mission-title">
+        <h2 class="section-title" id="mission-title" data-reveal>Our mission</h2>
+        <p class="section-lede" data-reveal>
+          Our goal is not just to identify gaps, but to build the research, projects, and
+          partnerships that address them.
+        </p>
+        <ol class="goals">
+          <li class="goal goal--lead goal--photo" data-zoom>
+            <figure class="card-photo">
+              <img
+                src="../images/space/webb.jpg"
+                alt="A deep field of galaxies and stars seen by the James Webb Space Telescope"
+                loading="lazy"
+                decoding="async"
+                style="object-position: 50% 50%"
+                data-parallax
+              />
+            </figure>
+            <span class="goal-number" aria-hidden="true">1</span>
+            <p>Ensure women are not an afterthought in space exploration</p>
+          </li>
+          <li class="goal goal--photo" data-zoom>
+            <figure class="card-photo">
+              <img
+                src="../images/space/aurora.jpg"
+                alt="Station modules silhouetted against a green aurora over Earth's limb"
+                loading="lazy"
+                decoding="async"
+                style="object-position: 50% 60%"
+                data-parallax
+              />
+            </figure>
+            <span class="goal-number" aria-hidden="true">2</span>
+            <p>Change how the industry attends to women’s health</p>
+          </li>
+          <li class="goal goal--photo" data-zoom>
+            <figure class="card-photo">
+              <img
+                src="../images/space/earthrise.jpg"
+                alt="Earth rising over the lunar horizon against black space"
+                loading="lazy"
+                decoding="async"
+                style="object-position: 50% 52%"
+                data-parallax
+              />
+            </figure>
+            <span class="goal-number" aria-hidden="true">3</span>
+            <p>Build a leading hub for women’s health in space</p>
+          </li>
+        </ol>
+      </section>
 
-        <div class="goals-content">
-          <article class="goals-box">
-            <div class="goals-box-content">
-              <span class="text-wrapper-4" aria-hidden="true">1</span>
-              <div class="line-3 solid-line" aria-hidden="true"></div>
-              <p class="bringing-young">Ensure women are not an afterthought in space exploration</p>
+      <!--
+        The roadmap constellation (see constellation.js). Each caption with data-star="x,y" is a
+        star; positions are in sky units, roughly 0-1000 across and 0-600 down.
+      -->
+      <section class="roadmap" id="roadmap" data-orbit="dock" data-sky="quiet" aria-label="Our roadmap">
+        <div class="sticky">
+          <svg class="sky" aria-hidden="true"></svg>
+          <div class="copy">
+            <div class="step on">
+              <span class="tag"><span class="tag-dot"></span>Our roadmap</span>
+              <h2>Where we are headed.</h2>
+              <p>
+                Follow the constellation. Each star is a step in how Adrastea plans to grow, from
+                launch day to the future we are building toward.
+              </p>
             </div>
-          </article>
-          <article class="goals-box">
-            <div class="goals-box-content">
-              <span class="text-wrapper-4" aria-hidden="true">2</span>
-              <div class="line-3 solid-line solid-line--purple" aria-hidden="true"></div>
-              <p class="bringing-young">Change how the industry attends to women’s health</p>
+            <div class="step" data-star="80,540">
+              <span class="tag"><span class="tag-dot"></span>October 12, 2026</span>
+              <h2>Launch &amp; foundation</h2>
+              <p>
+                Our hard launch. Nonprofit registration and governance documents are in progress.
+              </p>
             </div>
-          </article>
-
-          <article class="goals-box">
-            <div class="goals-box-content">
-              <span class="text-wrapper-4" aria-hidden="true">3</span>
-              <div class="line-3 solid-line solid-line--magenta" aria-hidden="true"></div>
-              <p class="bringing-young">Build a leading hub for women’s health in space</p>
+            <div class="step" data-star="260,430" data-label="above">
+              <span class="tag"><span class="tag-dot"></span>2026 to 2029</span>
+              <h2>Research &amp; expansion</h2>
+              <p>
+                The ESA Concordia proposal, our flagship analog research project with CHASM, works
+                toward 2029 implementation while we expand research, fellowships, and
+                interdisciplinary labs.
+              </p>
             </div>
-          </article>
+            <div class="step" data-star="400,500">
+              <span class="tag"><span class="tag-dot"></span>Ongoing</span>
+              <h2>Public engagement</h2>
+              <p>
+                Social media, science communication, educational outreach, and a youth engagement
+                platform that translate research into accessible public content.
+              </p>
+            </div>
+            <div class="step" data-star="480,300" data-label="left">
+              <span class="tag"><span class="tag-dot"></span>2026 onward</span>
+              <h2>Research &amp; innovation</h2>
+              <p>Launch and expand interdisciplinary projects.</p>
+            </div>
+            <div class="step" data-star="360,180" data-label="left">
+              <span class="tag"><span class="tag-dot"></span>2026 onward</span>
+              <h2>Youth pipeline</h2>
+              <p>Fellowships, mentorship, and leadership development.</p>
+            </div>
+            <div class="step" data-star="640,170" data-label="above">
+              <span class="tag"><span class="tag-dot"></span>2026 onward</span>
+              <h2>Partnerships</h2>
+              <p>Grow collaborations across academia, industry, and space organizations.</p>
+            </div>
+            <div class="step" data-star="800,360" data-link="4" data-label="below">
+              <span class="tag"><span class="tag-dot"></span>2026 onward</span>
+              <h2>Organizational growth</h2>
+              <p>Expand labs, leadership, funding, and our global network.</p>
+            </div>
+            <div class="step" data-star="920,90" style="--c: var(--pink)">
+              <span class="tag"><span class="tag-dot"></span>Where it all leads</span>
+              <h2>The future of women in aerospace</h2>
+              <p>Every star above points here. Ad astra, for all.</p>
+            </div>
+          </div>
+          <div class="rail" aria-hidden="true"></div>
         </div>
       </section>
 
-      <section class="founder" aria-label="Founder" data-scroll-section>
+      <section class="founder layer" aria-label="Founder">
         <article class="founder-profile" id="founder-profile"></article>
       </section>
 
-      <section class="people" id="people-directory" aria-label="Our people and teams" data-scroll-section></section>
+      <section class="council layer" aria-labelledby="council-title">
+        <h2 class="section-title" id="council-title" data-reveal>Astronaut Advisory Council</h2>
+        <div class="council-list" id="council-list"></div>
+        <h3 class="advisors-title" data-reveal>Advisors</h3>
+        <ul class="advisor-list" id="advisor-list"></ul>
+      </section>
 
-      <section class="logos" aria-labelledby="partners-title" data-scroll-section>
-        <h2 class="researchers" id="partners-title">Collaborators, Sponsors &amp; Partners</h2>
+      <section class="people layer" aria-labelledby="people-title">
+        <h2 class="section-title" id="people-title" data-reveal>Our people and teams</h2>
+        <p class="section-lede" data-reveal>
+          Adrastea has grown to approximately 30 members across health, bioengineering, media and
+          marketing, and policy. Finance and AI students, together with adult advisors in grants
+          and law, help run the organization day to day and support research.
+        </p>
+        <div id="people-directory"></div>
+      </section>
+
+      <section class="network layer" aria-labelledby="network-title">
+        <h2 class="section-title" id="network-title" data-reveal>Our team &amp; network</h2>
+        <p class="section-lede" data-reveal>
+          An interdisciplinary team spanning space science, medicine, bioengineering, policy,
+          research, business, and science communication, connecting researchers, students,
+          clinicians, engineers, policymakers, and communicators.
+        </p>
+        <p class="tag network-label" data-reveal>
+          <span class="tag-dot"></span>Institutional network
+        </p>
+        <div
+          class="mq network-marquee"
+          data-marquee="NASA|Harvard|MIT|Oxford|Stanford|Mayo Clinic|Virginia Tech|Rutgers|IEEE"
+          aria-hidden="true"
+        ></div>
+        <p class="sr-only">
+          NASA, Harvard, MIT, Oxford, Stanford, Mayo Clinic, Virginia Tech, Rutgers, and IEEE.
+        </p>
         <div class="partner-list" id="partner-list"></div>
       </section>
 
-      <div data-site-footer></div>
+      <section class="join layer" data-orbit="join" aria-labelledby="join-title">
+        <div>
+          <h2 id="join-title">Ad astra,<br /><em>for all.</em></h2>
+          <p>
+            Get in touch about joining a team, sponsorship, collaboration, events, or supporting our
+            work.
+          </p>
+          <div class="row">
+            <a class="btn" href="contact.html">Contact us</a>
+            <a class="btn dark" href="div.html">Explore our divisions</a>
+          </div>
+        </div>
+      </section>
+
     </main>
+
+    <div data-site-footer></div>
   </body>
 </html>

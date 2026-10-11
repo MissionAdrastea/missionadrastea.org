@@ -1,65 +1,68 @@
+/* Contact page: the intro stays pinned beside the form on wide screens. */
+
 .contact {
-  display: flex;
-  min-height: 100vh;
-  flex-direction: column;
-}
-
-.contact-content {
   display: grid;
-  width: min(calc(100% - 2 * var(--page-gutter)), var(--content-width));
-  grid-template-columns: minmax(0, 1.35fr) minmax(250px, 0.65fr);
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
   align-items: start;
-  gap: 24px;
-  margin: 0 auto;
-  padding-block: clamp(28px, 5vw, 58px) var(--section-space);
+  gap: clamp(32px, 6vw, 96px);
+  padding: 170px var(--gutter) var(--section-space);
+  background: radial-gradient(60% 40% at 80% 10%, rgba(116, 21, 201, 0.3), transparent 72%);
 }
 
-.contact-page-heading {
-  grid-column: 1 / -1;
+.contact-intro {
+  position: sticky;
+  top: 130px;
+  display: grid;
+  gap: 28px;
 }
 
-.contact-title {
-  margin-bottom: 6px;
-  color: var(--color-text);
-  font-size: clamp(36px, 5vw, 52px);
+.contact-intro h1 {
+  margin-bottom: 12px;
+  font-size: clamp(2.4rem, 4.6vw, 4.4rem);
 }
 
-.contact-lede {
-  margin: 0;
-  color: var(--color-muted);
-  font-size: 18px;
+.contact-topic {
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+
+.contact-topic h2 {
+  margin-bottom: 8px;
+  font-size: 1.3rem;
+}
+
+.contact-topic p {
+  max-width: 44ch;
+  color: var(--mute);
 }
 
 .contact-form-card {
-  min-width: 0;
-  padding: clamp(20px, 3vw, 32px);
-  border: 1px solid var(--color-border);
-  border-radius: 16px;
-  background: var(--color-surface);
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.26);
+  padding: clamp(24px, 3.4vw, 48px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--card);
+}
+
+.contact-form-card h2 {
+  font-size: clamp(1.6rem, 2.4vw, 2.2rem);
 }
 
 .contact-form-intro {
-  margin-bottom: 22px;
-  color: var(--color-muted);
+  margin: 12px 0 32px;
+  color: var(--mute);
 }
 
-.contact-form-card > h2 {
-  margin-bottom: 8px;
-  font-size: 25px;
-}
-
-.contact-form {
+.contact-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
+  gap: 20px;
 }
 
 .contact-field {
   display: grid;
   min-width: 0;
   align-content: start;
-  gap: 6px;
+  gap: 8px;
 }
 
 .contact-field--full {
@@ -67,45 +70,56 @@
 }
 
 .contact-field label,
-.contact-field legend {
-  color: var(--color-text);
-  font-size: 14px;
-  font-weight: 600;
+.contact-conditional legend {
+  color: var(--mute);
+  font-size: 0.92rem;
+}
+
+.contact-field label span {
+  color: var(--pink);
 }
 
 .contact-field input,
 .contact-field select,
 .contact-field textarea {
   width: 100%;
-  min-height: 44px;
-  padding: 9px 11px;
-  border: 1px solid var(--color-border);
-  border-radius: 6px;
-  background: rgba(9, 7, 15, 0.88);
-  color: var(--color-text);
-}
-
-.contact-field select {
-  color-scheme: dark;
-}
-
-.contact-field select option {
-  background: #100b23;
-  color: #fff;
+  min-height: 52px;
+  padding: 12px 16px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: rgba(7, 4, 15, 0.6);
+  color: var(--ink);
+  transition:
+    border-color 0.25s,
+    box-shadow 0.25s;
 }
 
 .contact-field textarea {
-  min-height: 120px;
+  min-height: 140px;
   resize: vertical;
 }
 
-.contact-field input::placeholder,
-.contact-field textarea::placeholder {
-  color: #bdb5c9;
-  opacity: 1;
+.contact-field ::placeholder {
+  color: rgba(169, 155, 201, 0.6);
+}
+
+.contact-field input:hover,
+.contact-field select:hover,
+.contact-field textarea:hover {
+  border-color: rgba(201, 167, 255, 0.45);
+}
+
+/* the ring replaces the default outline, so focus stays clearly visible */
+.contact-field input:focus-visible,
+.contact-field select:focus-visible,
+.contact-field textarea:focus-visible {
+  border-color: var(--lilac);
+  box-shadow: 0 0 0 4px rgba(154, 107, 255, 0.25);
+  outline: none;
 }
 
 .contact-conditional {
+  margin: 0;
   padding: 0;
   border: 0;
 }
@@ -114,72 +128,37 @@
   display: none;
 }
 
-.contact-submit {
-  min-height: 46px;
-  padding: 10px 20px;
-  border: 1px solid var(--color-accent);
-  border-radius: 6px;
-  background: rgba(217, 70, 239, 0.17);
-  color: var(--color-text);
-  cursor: pointer;
-  font-weight: 700;
-  transition:
-    background-color 180ms ease,
-    transform 180ms ease;
+.contact-conditional legend {
+  margin-bottom: 12px;
+  padding: 0;
+  color: var(--ink);
+  font-size: 1.05rem;
+  font-weight: var(--display-weight);
 }
 
-.contact-submit:hover:not(:disabled) {
-  transform: translateY(-2px);
-  background: rgba(217, 70, 239, 0.28);
+.contact-submit {
+  margin-top: 8px;
+  text-align: center;
 }
 
 .contact-submit:disabled {
   cursor: wait;
-  opacity: 0.7;
+  opacity: 0.6;
+  transform: none;
 }
 
 .contact-form-status {
-  min-height: 1.5em;
-  margin: 0;
-  color: var(--color-green);
-  font-size: 14px;
+  min-height: 1.55em;
+  color: var(--mute);
 }
 
-.contact-topics {
-  display: grid;
-  gap: 14px;
-}
-
-.contact-topic {
-  padding: 18px;
-  border-left: 2px solid var(--color-accent);
-  border-radius: 0 10px 10px 0;
-  background: var(--color-surface-soft);
-}
-
-.contact-topic h2 {
-  margin-bottom: 6px;
-  font-size: 19px;
-}
-
-.contact-topic p {
-  margin: 0;
-  color: var(--color-muted);
-  font-size: 15px;
-}
-
-.contact-topic a {
-  color: var(--color-accent-soft);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
+/* the honeypot and the response frame are never shown */
 .contact-honeypot,
 .contact-response-frame {
   position: absolute;
+  overflow: hidden;
   width: 1px;
   height: 1px;
-  overflow: hidden;
   clip-path: inset(50%);
   white-space: nowrap;
 }
@@ -188,27 +167,19 @@
   display: none;
 }
 
-@media (max-width: 760px) {
-  .contact-content {
+@media (max-width: 900px) {
+  .contact {
     grid-template-columns: minmax(0, 1fr);
+    padding-top: 130px;
   }
 
-  .contact-topics {
-    grid-row: 3;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .contact-intro {
+    position: static;
   }
 }
 
-@media (max-width: 520px) {
-  .contact-form {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .contact-field--full {
-    grid-column: auto;
-  }
-
-  .contact-topics {
+@media (max-width: 560px) {
+  .contact-grid {
     grid-template-columns: minmax(0, 1fr);
   }
 }

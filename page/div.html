@@ -4,145 +4,275 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Divisions | Adrastea</title>
-    <link rel="stylesheet" href="../globals.css?v=6" />
-    <link rel="stylesheet" href="../assets/site.css?v=5" />
-    <link rel="stylesheet" href="../style/div.css?v=5" />
-    <link rel="stylesheet" href="../assets/responsive.css" />
-    <script src="../assets/components.js?v=2" defer></script>
-    <script src="../assets/scroll-effects.js" defer></script>
-    <script src="../assets/star-trail.js" defer></script>
+    <meta
+      name="description"
+      content="Adrastea works across four divisions with one mission. Find where you fit in."
+    />
+    <link rel="icon" href="../images/general/emblem.jpg" />
+    <link rel="preload" as="image" href="../images/general/emblem.jpg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Instrument+Serif:ital@0;1&display=swap"
+    />
+    <link rel="stylesheet" href="../assets/site.css?v=14" />
+    <link rel="stylesheet" href="../style/div.css?v=14" />
+    <script src="../assets/vendor/gsap.min.js" defer></script>
+    <script src="../assets/vendor/ScrollTrigger.min.js" defer></script>
+    <script src="../assets/sky.js?v=14" defer></script>
+    <script src="../assets/components.js?v=14" defer></script>
+    <script src="../assets/motion.js?v=14" defer></script>
+    <script src="../assets/star-trail.js?v=14" defer></script>
   </head>
 
   <body>
-    <main class="divisions">
-      <div data-site-header></div>
+    <div data-site-header></div>
 
-      <div class="content">
-        <section class="div-2" id="health-physiology" data-scroll-section>
-          <h1 class="text-wrapper-2">Health &amp; Physiology</h1>
-          <div class="header-line moving-line" aria-hidden="true"></div>
-          <div class="division">
-            <div class="image-frame">
-              <img
-                class="image"
-                src="../images/healthdiv.jpg"
-                alt="Researcher working with laboratory equipment"
-                loading="eager"
-                decoding="async"
-              />
-            </div>
-            <p class="p">
+    <main>
+      <section class="hero" id="content" data-orbit="hero" aria-labelledby="hero-title">
+        <div class="layer" data-intro>
+          <h1 id="hero-title">Four divisions, <em>one mission.</em></h1>
+          <p>
+            Adrastea brings young researchers together with senior scientists, engineers, and
+            policymakers. Where do you fit in?
+          </p>
+        </div>
+      </section>
+
+      <!-- Each card's anchor is a separate in-flow element: a stuck (sticky) card cannot be scrolled to. -->
+      <section class="stack layer" data-orbit="dock" data-stack aria-label="Divisions and teams">
+        <span class="stack-anchor" id="health-physiology"></span>
+        <article class="division" style="--i: 0; --c: var(--violet)" data-reveal>
+          <figure class="division-photo">
+            <img
+              src="../images/healthdiv.jpg"
+              alt="Researcher working with laboratory equipment"
+              decoding="async"
+            />
+          </figure>
+          <div class="division-body">
+            <span class="tag"><span class="tag-dot"></span>Research division</span>
+            <h2>Health &amp; Physiology</h2>
+            <p>
               We study how the female body uniquely responds to space, focusing on reproductive and
               hormonal health, radiation, cardiovascular and musculoskeletal changes, neuroscience,
               and microgravity adaptation, all through clinical, literature-based, experimental,
-              analog, and theoretical research.<br /><br />
-              For: researchers, clinicians, and students investigating research gaps in how space
-              affects women’s bodies.
+              analog, and theoretical research.
             </p>
-          </div>
-        </section>
-
-        <section class="div-2" id="bioengineering-innovation" data-scroll-section>
-          <h2 class="text-wrapper-2">Bioengineering &amp; Innovation</h2>
-          <div class="header-line solid-line solid-line--purple" aria-hidden="true"></div>
-          <div class="division-2">
-            <div class="image-frame">
-              <img
-                class="image"
-                src="../images/bioengineeringdiv.jpg"
-                alt="Women collaborating on engineering research"
-                loading="lazy"
-                decoding="async"
-              />
+            <p class="division-for">
+              <strong>For</strong> researchers, clinicians, and students investigating research
+              gaps in how space affects women’s bodies.
+            </p>
+            <div class="division-links">
+              <a class="link" href="contact.html">Apply to this division</a>
+              <a class="link" href="#work-health-physiology">Current work</a>
             </div>
-            <p class="p">
+          </div>
+        </article>
+
+        <span class="stack-anchor" id="bioengineering-innovation"></span>
+        <article class="division" style="--i: 1; --c: var(--pink)" data-reveal>
+          <figure class="division-photo">
+            <img
+              src="../images/bioengineeringdiv.jpg"
+              alt="Women collaborating on engineering research"
+              loading="lazy"
+              decoding="async"
+            />
+          </figure>
+          <div class="division-body">
+            <span class="tag"><span class="tag-dot"></span>Research division</span>
+            <h2>Bioengineering &amp; Innovation</h2>
+            <p>
               We engineer solutions and technological innovations to ensure women can endure and
               thrive in the space environment, through development of wearable health tech,
               next-generation spacesuits, and alternatives to menstrual suppression in orbit.
               Breakthroughs made for space also have the power to improve women’s lives on Earth.
-              <br /><br />
-              For: engineers, designers, and biotech minds who want to build technological
-              solutions that can support women’s health in space.
             </p>
-          </div>
-        </section>
-
-        <section class="div-2" id="policy-ethics-society" data-scroll-section>
-          <h2 class="text-wrapper-2">Policy, Ethics &amp; Society</h2>
-          <div class="header-line moving-line" aria-hidden="true"></div>
-          <div class="division-2">
-            <div class="image-frame">
-              <img
-                class="image"
-                src="../images/policydiv.jpg"
-                alt="Researcher working on a science project"
-                loading="lazy"
-                decoding="async"
-              />
+            <p class="division-for">
+              <strong>For</strong> engineers, designers, and biotech minds who want to build
+              technological solutions that can support women’s health in space.
+            </p>
+            <div class="division-links">
+              <a class="link" href="contact.html">Apply to this division</a>
+              <a class="link" href="#work-bioengineering-innovation">Current work</a>
             </div>
-            <p class="p">
+          </div>
+        </article>
+
+        <span class="stack-anchor" id="policy-ethics-society"></span>
+        <article class="division" style="--i: 2; --c: #fff" data-reveal>
+          <figure class="division-photo">
+            <img
+              src="../images/policydiv.jpg"
+              alt="Researcher working on a science project"
+              loading="lazy"
+              decoding="async"
+            />
+          </figure>
+          <div class="division-body">
+            <span class="tag"><span class="tag-dot"></span>Research division</span>
+            <h2>Policy, Ethics &amp; Society</h2>
+            <p>
               We tackle the systemic, regulatory, and ethical barriers to women’s participation and
               safety in space through policy briefs, legislative projects, governance analysis, and
               advocacy, with the goal of utilizing our evidence-based findings to enact change and
-              inspire a female-focused movement.<br /><br />
-              For: policy, law, and ethics experts set on giving women’s health the attention and
-              recognition it deserves in space governance.
+              inspire a female-focused movement.
             </p>
-          </div>
-        </section>
-
-        <section class="div-2" id="marketing-communications" data-scroll-section>
-          <h2 class="text-wrapper-2">Marketing &amp; Communications</h2>
-          <div class="header-line solid-line solid-line--magenta" aria-hidden="true"></div>
-          <div class="division">
-            <div class="image-frame">
-              <img
-                class="image"
-                src="../images/commsdiv.jpg"
-                alt="Team members collaborating on communications"
-                loading="lazy"
-                decoding="async"
-              />
+            <p class="division-for">
+              <strong>For</strong> policy, law, and ethics experts set on giving women’s health the
+              attention and recognition it deserves in space governance.
+            </p>
+            <div class="division-links">
+              <a class="link" href="contact.html">Apply to this division</a>
+              <a class="link" href="#work-policy-ethics-society">Current work</a>
             </div>
-            <p class="p">
+          </div>
+        </article>
+
+        <span class="stack-anchor" id="marketing-communications"></span>
+        <article class="division" style="--i: 3; --c: var(--lilac)" data-reveal>
+          <figure class="division-photo">
+            <img
+              src="../images/commsdiv.jpg"
+              alt="Team members collaborating on communications"
+              loading="lazy"
+              decoding="async"
+            />
+          </figure>
+          <div class="division-body">
+            <span class="tag"><span class="tag-dot"></span>Internal team</span>
+            <h2>Outreach &amp; Marketing</h2>
+            <p>
               We transform Adrastea’s research and advocacy into accessible, compelling content
               across our social platforms, website, and public presence to enhance our visibility.
               This is a high-intensity science journalism and storytelling initiative, not a generic
               social media role, that translates overlooked science into stories that connect with
-              the general public and attract new, potential partners.<br /><br />
-              For: science communicators, writers, designers, digital and video creators, and
-              strategists who can turn our science into something that resonates with distinct
-              audiences.
+              the general public and attract new, potential partners.
             </p>
-          </div>
-        </section>
-
-        <section class="div-2" id="strategy-operations" data-scroll-section>
-          <h2 class="text-wrapper-2">Strategy &amp; Operations</h2>
-          <div class="header-line solid-line solid-line--purple" aria-hidden="true"></div>
-          <div class="division-2">
-            <div class="image-frame">
-              <img
-                class="image"
-                src="../images/stratopsdiv.jpg"
-                alt="Team planning and coordinating a project"
-                loading="lazy"
-                decoding="async"
-              />
+            <p class="division-for">
+              <strong>For</strong> science communicators, writers, designers, digital and video
+              creators, and strategists who can turn our science into something that resonates with
+              distinct audiences.
+            </p>
+            <div class="division-links">
+              <a class="link" href="contact.html">Apply to this team</a>
+              <a class="link" href="#work-marketing-communications">Current work</a>
             </div>
-            <p class="p">
-              We serve as the backbone that keeps our nonprofit running, managing Adrastea’s
-              priorities, coordination, finance, partnerships, event and conference participation,
-              and the day-to-day systems that keep each division and team aligned with our mission.
-              <br /><br />
-              For: organized, high-agency individuals who can implement strategy behind the scenes,
-              streamline internal procedures, and help grow our reach.
-            </p>
           </div>
-        </section>
-      </div>
+        </article>
+      </section>
 
-      <div data-site-footer></div>
+      <!-- Each group's title stays pinned on the left while its projects scroll past on the right. -->
+      <section class="projects layer" aria-labelledby="projects-title">
+        <h2 class="section-title" id="projects-title" data-reveal>
+          What we are working on. <span class="soft">Current projects, division by division.</span>
+        </h2>
+        <div class="split project-group" id="work-health-physiology" style="--c: var(--violet)">
+          <div class="project-lead">
+            <span class="tag"><span class="tag-dot"></span>Research &amp; partnerships</span>
+            <h3>Health &amp; Physiology</h3>
+          </div>
+          <ul class="project-list">
+            <li class="project" data-reveal>
+              <h4>Women’s hibernation in space</h4>
+              <p>A narrative review on hibernation and torpor work.</p>
+            </li>
+            <li class="project" data-reveal>
+              <h4>Female-focused spaceflight frameworks</h4>
+              <p>A women’s health conscious flight planning framework.</p>
+            </li>
+            <li class="project" data-reveal>
+              <h4>ESA Concordia proposal <span class="flag">Flagship</span></h4>
+              <p>Our flagship 2029 analog research project with CHASM, bringing Health &amp; Physiology and Bioengineering together.</p>
+            </li>
+            <li class="project" data-reveal>
+              <h4>Oura Ring study</h4>
+              <p>A Stanford collaboration offering 50 to 100 rings for expanded cycle-tracking research.</p>
+            </li>
+            <li class="project" data-reveal>
+              <h4>Neuroscience and women’s health</h4>
+              <p>A NASA AWG collaboration spanning reproductive health and brain science.</p>
+            </li>
+          </ul>
+        </div>
+        <div class="split project-group" id="work-bioengineering-innovation" style="--c: var(--pink)">
+          <div class="project-lead">
+            <span class="tag"><span class="tag-dot"></span>Research &amp; prototyping</span>
+            <h3>Bioengineering &amp; Innovation</h3>
+            <p>Advised by Dr. Scott Bailey and Wanjiku Kanjumba (Forbes 30 Under 30).</p>
+          </div>
+          <ul class="project-list">
+            <li class="project" data-reveal>
+              <h4>Menstrual cups in aerospace</h4>
+              <p>Building on AstroCup: material validation and rheological blood analogs, with complementary analog and prototyping studies. Our spotlight project is a microgravity menstrual cup in medical-grade silicone.</p>
+            </li>
+            <li class="project" data-reveal>
+              <h4>Satellite mapping of period poverty</h4>
+              <p>Using existing satellite data to identify menstrual hygiene access gaps and guide nonprofit supply-chain efforts.</p>
+            </li>
+          </ul>
+        </div>
+        <div class="split project-group" id="work-policy-ethics-society" style="--c: #fff">
+          <div class="project-lead">
+            <span class="tag"><span class="tag-dot"></span>Policy &amp; advocacy</span>
+            <h3>Policy, Ethics &amp; Society</h3>
+          </div>
+          <ul class="project-list">
+            <li class="project" data-reveal>
+              <h4>Menstrual Health &amp; Algorithmic Transparency <span class="flag">Flagship</span></h4>
+              <p>Legislation to advance health literacy on social media platforms and bring awareness to misinformation.</p>
+            </li>
+            <li class="project" data-reveal>
+              <h4>Workshops</h4>
+              <p>Advocating for under-18 involvement in space policy and decision-making. Recently, we submitted to an ESA workshop.</p>
+            </li>
+            <li class="project" data-reveal>
+              <h4>Partnerships</h4>
+              <p>Prospective summer lobbying efforts supporting women’s health research and youth participation in policy. We are planning to work with local organizations as well as facilitate UNA-USA youth dialogue.</p>
+            </li>
+            <li class="project" data-reveal>
+              <h4>White papers</h4>
+              <p>The Period as an Underlying Covariate for Analog Missions: addressing menstrual cycle considerations often overlooked in analog research.</p>
+            </li>
+          </ul>
+        </div>
+        <div class="split project-group" id="work-marketing-communications" style="--c: var(--lilac)">
+          <div class="project-lead">
+            <span class="tag"><span class="tag-dot"></span>Scientific media</span>
+            <h3>Outreach &amp; Marketing</h3>
+          </div>
+          <ul class="project-list">
+            <li class="project" data-reveal>
+              <h4>Science communication</h4>
+              <p>Educational and inspiring short-form content across LinkedIn, Instagram, and TikTok.</p>
+            </li>
+            <li class="project" data-reveal>
+              <h4>A multidisciplinary team</h4>
+              <p>3D animators, scientific and medical illustrators, student content creators, and astrophysics and science journalism specialists.</p>
+            </li>
+            <li class="project" data-reveal>
+              <h4>Awareness and youth engagement</h4>
+              <p>Inspiring audiences to explore space medicine and women’s health in aerospace.</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="join layer" data-orbit="join" aria-labelledby="join-title">
+        <div>
+          <h2 id="join-title">Ad astra,<br /><em>for all.</em></h2>
+          <p>Found your place? Tell us what you study and which division or team interests you.</p>
+          <div class="row">
+            <a class="btn" href="contact.html">Apply now</a>
+            <a class="btn dark" href="about.html">Meet our people</a>
+          </div>
+        </div>
+      </section>
+
     </main>
+
+    <div data-site-footer></div>
   </body>
 </html>

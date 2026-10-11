@@ -80,7 +80,7 @@ if (!prefersReducedMotion.matches && hasFinePointer.matches && "CanvasRenderingC
       born: now,
       size: 1.2 + Math.random() * 1.5,
       opacity: 0.45 + Math.random() * 0.3,
-      color: Math.random() > 0.5 ? "#d8c8f7" : "#b6f5d0",
+      color: ["#c9a7ff", "#ffffff", "#f08adf"][Math.floor(Math.random() * 3)],
       rotation: Math.random() * Math.PI,
     });
 

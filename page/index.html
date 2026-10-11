@@ -4,148 +4,205 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Adrastea | Ad astra, for all</title>
-    <link rel="stylesheet" href="../globals.css?v=6" />
-    <link rel="stylesheet" href="../assets/site.css?v=5" />
-    <link rel="stylesheet" href="../style/index.css?v=6" />
-    <link rel="stylesheet" href="../assets/responsive.css" />
-    <script src="../assets/components.js?v=2" defer></script>
-    <script src="../assets/scroll-effects.js" defer></script>
-    <script src="../assets/star-trail.js" defer></script>
+    <meta
+      name="description"
+      content="Adrastea is a youth-led accelerator and collaboration hub dedicated to advancing women in space through research and advocacy."
+    />
+    <link rel="icon" href="../images/general/emblem.jpg" />
+    <link rel="preload" as="image" href="../images/general/emblem.jpg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Instrument+Serif:ital@0;1&display=swap"
+    />
+    <link rel="stylesheet" href="../assets/site.css?v=14" />
+    <link rel="stylesheet" href="../style/index.css?v=14" />
+    <script src="../assets/vendor/gsap.min.js" defer></script>
+    <script src="../assets/vendor/ScrollTrigger.min.js" defer></script>
+    <script src="../assets/sky.js?v=14" defer></script>
+    <script src="../assets/components.js?v=14" defer></script>
+    <script src="../assets/motion.js?v=14" defer></script>
+    <script src="../assets/ring.js?v=14" defer></script>
+    <script src="../assets/star-trail.js?v=14" defer></script>
   </head>
 
   <body>
-    <main class="landing">
-      <div data-site-header></div>
+    <div data-site-header></div>
 
-      <section class="hero-text" aria-labelledby="hero-title" data-scroll-section>
-        <img
-          class="hero-logo"
-          src="../images/general/logo.png"
-          alt="Adrastea astronaut emblem"
-          decoding="async"
-        />
-        <div class="hero-copy">
-          <p class="hero-eyebrow">Research · Advocacy · Space</p>
-          <h1 class="hero-title" id="hero-title">ad astra, for all.</h1>
-          <p class="equipping-women-to">
-            Equipping women to better access, endure &amp; thrive in space
+    <main>
+      <section class="hero" id="content" data-orbit="hero" aria-labelledby="hero-title">
+        <div class="layer" data-intro>
+          <h1 id="hero-title">
+            Equipping women to better access, endure &amp; <em>thrive in space.</em>
+          </h1>
+          <p>
+            Adrastea is a youth-led accelerator and collaboration hub dedicated to advancing women
+            in space through research and advocacy.
           </p>
-          <div class="hero-rule moving-line" aria-hidden="true"></div>
+          <div class="row">
+            <a class="btn" href="contact.html">Apply now</a>
+            <a class="btn dark" href="div.html">Explore our divisions</a>
+          </div>
         </div>
       </section>
 
-      <div class="section-divider moving-line" aria-hidden="true"></div>
-
-      <section class="fun-fact-gallery" aria-label="Adrastea research gallery" data-scroll-section>
-        <img
-          class="fun-fact-image fun-fact-image--first"
-          src="../images/line-5-2.jpg"
-          alt=""
-          loading="lazy"
-          decoding="async"
-        />
-        <img
-          class="fun-fact-image fun-fact-image--second"
-          src="../images/line-5-3.jpg"
-          alt=""
-          loading="lazy"
-          decoding="async"
-        />
-        <img
-          class="fun-fact-image fun-fact-image--third"
-          src="../images/line-5-5.jpg"
-          alt=""
-          loading="lazy"
-          decoding="async"
-        />
+      <section class="highlights layer" data-orbit="dock" aria-labelledby="why-title">
+        <div class="highlights-head">
+          <h2 class="section-title" id="why-title" data-reveal>
+            Why Adrastea? <span class="soft">Five things that set us apart.</span>
+          </h2>
+          <div class="paddles" data-reveal>
+            <button class="paddle" type="button" data-gallery-step="-1" aria-label="Previous highlight">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5.5 8 12l6.5 6.5" /></svg>
+            </button>
+            <button class="paddle" type="button" data-gallery-step="1" aria-label="Next highlight">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 5.5 16 12l-6.5 6.5" /></svg>
+            </button>
+          </div>
+        </div>
+        <div
+          class="gallery"
+          data-gallery
+          tabindex="0"
+          role="region"
+          aria-label="Why Adrastea: five highlights"
+        >
+          <article class="highlight" style="--c: var(--violet)" data-reveal>
+            <figure class="card-photo">
+              <img
+                src="../images/space/workstation.jpg"
+                alt="Two women astronauts working at a crowded research workstation on the International Space Station"
+                loading="lazy"
+                decoding="async"
+                style="object-position: 50% 38%"
+              />
+            </figure>
+            <h3>
+              Research-driven.
+              <span class="soft">Conducting original research, not just awareness or networking.</span>
+            </h3>
+          </article>
+          <article class="highlight" style="--c: var(--pink)" data-reveal>
+            <figure class="card-photo">
+              <img
+                src="../images/space/kochmeir.jpg"
+                alt="Two astronauts aboard the International Space Station, one wearing a spacesuit helmet, smiling at the camera"
+                loading="lazy"
+                decoding="async"
+                style="object-position: 50% 30%"
+              />
+            </figure>
+            <h3>
+              Women across the lifespan.
+              <span class="soft">Addressing women’s health beyond student populations.</span>
+            </h3>
+          </article>
+          <article class="highlight" style="--c: var(--lilac)" data-reveal>
+            <figure class="card-photo">
+              <img
+                src="../images/space/earthrise.jpg"
+                alt="Earth rising over the lunar horizon against black space"
+                loading="lazy"
+                decoding="async"
+                style="object-position: 50% 52%"
+              />
+            </figure>
+            <h3>
+              Youth-led, built to scale.
+              <span class="soft">Developing a pipeline of younger fellows as founders progress.</span>
+            </h3>
+          </article>
+          <article class="highlight" style="--c: #7fb6ff" data-reveal>
+            <figure class="card-photo">
+              <img
+                src="../images/space/aurora.jpg"
+                alt="Station modules silhouetted against a green aurora over Earth's limb"
+                loading="lazy"
+                decoding="async"
+                style="object-position: 50% 60%"
+              />
+            </figure>
+            <h3>
+              Research made accessible.
+              <span class="soft">Translating findings through social media, not just paywalled publications.</span>
+            </h3>
+          </article>
+          <article class="highlight" style="--c: #fff" data-reveal>
+            <figure class="card-photo">
+              <img
+                src="../images/space/jupiter.jpg"
+                alt="Swirling blue and white storm clouds on Jupiter"
+                loading="lazy"
+                decoding="async"
+                style="object-position: 40% 50%"
+              />
+            </figure>
+            <h3>
+              A unique intersection.
+              <span class="soft">Women’s health and space medicine, approached through science, engineering, policy, and media.</span>
+            </h3>
+          </article>
+        </div>
       </section>
 
-      <section class="research-divisions-section" aria-labelledby="divisions-title" data-scroll-section>
-        <div class="research-divisions-intro">
-          <h2 class="section-heading" id="divisions-title">Research Divisions</h2>
-          <p class="section-description">
-            Adrastea functions across three core research divisions and two internal teams, bringing
-            young researchers together with senior scientists, engineers, and policymakers. Where
-            do you fit in?
-          </p>
-          <a class="apply-link" href="contact.html">
-            <span class="apply-link-label">Apply now</span>
-          </a>
-          <div class="section-divider solid-line solid-line--purple" aria-hidden="true"></div>
-        </div>
-
-        <div class="division-card-row">
-          <a
-            class="division-tile division-tile--health"
-            href="div.html#health-physiology"
-            aria-label="Explore Health and Physiology"
-          >
-            <h3 class="division-tile-title">Health &amp; Physiology</h3>
-            <div class="division-tile-accent solid-line" aria-hidden="true"></div>
-          </a>
-          <a
-            class="division-tile division-tile--engineering"
-            href="div.html#bioengineering-innovation"
-            aria-label="Explore Bioengineering and Innovation"
-          >
-            <h3 class="division-tile-title">Bioengineering &amp; Innovation</h3>
-            <div class="division-tile-accent solid-line solid-line--purple" aria-hidden="true"></div>
-          </a>
-          <a
-            class="division-tile division-tile--policy"
-            href="div.html#policy-ethics-society"
-            aria-label="Explore Policy, Ethics and Society"
-          >
-            <h3 class="division-tile-title">Policy, Ethics &amp; Society</h3>
-            <div class="division-tile-accent solid-line solid-line--magenta" aria-hidden="true"></div>
-          </a>
-        </div>
-
-        <div class="division-card-row">
-          <a
-            class="division-tile division-tile--communications"
-            href="div.html#marketing-communications"
-            aria-label="Explore Marketing and Communications"
-          >
-            <h3 class="division-tile-title">Marketing &amp; Communications</h3>
-            <div class="division-tile-accent solid-line solid-line--purple" aria-hidden="true"></div>
-          </a>
-          <a
-            class="division-tile division-tile--operations"
-            href="div.html#strategy-operations"
-            aria-label="Explore Strategy and Operations"
-          >
-            <h3 class="division-tile-title">Strategy &amp; Operations</h3>
-            <div class="division-tile-accent solid-line" aria-hidden="true"></div>
-          </a>
-        </div>
-
-        <div class="section-divider solid-line solid-line--purple" aria-hidden="true"></div>
-      </section>
-
-      <section class="approach-section" aria-labelledby="approach-title" data-scroll-section>
-        <p class="approach-eyebrow">Research with purpose</p>
-        <h2 class="approach-title" id="approach-title">How our work comes together</h2>
-        <p class="approach-intro">
+      <section class="scrub layer" aria-label="Our approach">
+        <p data-scrub>
           Women’s health in space calls for more than one kind of expertise. Adrastea brings
-          research, engineering, policy, and communication into the same conversation.
+          research, engineering, policy, and communication into the same conversation. Our goal is
+          not just to identify gaps, but to build the research, projects, and partnerships that
+          address them.
         </p>
-        <div class="approach-pillars">
-          <article class="approach-pillar">
+      </section>
+
+      <section class="work layer" aria-labelledby="work-title">
+        <h2 class="section-title" id="work-title" data-reveal>How our work comes together</h2>
+        <div class="bento">
+          <article class="bento-card bento-card--lead" data-zoom>
+            <figure class="card-photo">
+              <img
+                src="../images/line-5-3.jpg"
+                alt="A researcher in a lab coat and blue gloves examining a flask"
+                loading="lazy"
+                decoding="async"
+                style="object-position: 50% 24%"
+                data-parallax
+              />
+            </figure>
             <h3>Ask better questions</h3>
             <p>
-              Investigate the health and human-factors questions that shape women’s ability to access
-              and thrive in space.
+              Investigate the health and human-factors questions that shape women’s ability to
+              access and thrive in space.
             </p>
           </article>
-          <article class="approach-pillar">
+          <article class="bento-card" data-zoom>
+            <figure class="card-photo">
+              <img
+                src="../images/line-5-5.jpg"
+                alt="An automated pipetting machine above rows of sample tubes"
+                loading="lazy"
+                decoding="async"
+                style="object-position: 50% 60%"
+                data-parallax
+              />
+            </figure>
             <h3>Build useful ideas</h3>
             <p>
-              Explore technology and design approaches that respond to real needs in spaceflight and
-              beyond.
+              Explore technology and design approaches that respond to real needs in spaceflight
+              and beyond.
             </p>
           </article>
-          <article class="approach-pillar">
+          <article class="bento-card bento-card--bright" data-zoom>
+            <figure class="card-photo">
+              <img
+                src="../images/line-5-2.jpg"
+                alt="A bronze statue of Lady Justice holding a set of scales"
+                loading="lazy"
+                decoding="async"
+                style="object-position: 50% 26%"
+                data-parallax
+              />
+            </figure>
             <h3>Move knowledge forward</h3>
             <p>
               Translate evidence into policy, advocacy, and clear communication so more people can
@@ -153,12 +210,133 @@
             </p>
           </article>
         </div>
-        <a class="approach-link" href="about.html">
-          Learn about our mission <span aria-hidden="true">→</span>
-        </a>
+        <a class="link" href="about.html" data-reveal>Learn about our mission</a>
       </section>
 
-      <div data-site-footer></div>
+      <section class="stage" data-orbit="dock" data-sky="quiet" aria-label="Research divisions">
+        <div class="sticky">
+          <canvas id="ring" aria-hidden="true"></canvas>
+          <div class="copy">
+            <div class="step on">
+              <span class="tag"><span class="tag-dot"></span>Research divisions</span>
+              <h2>Three divisions, one orbit.</h2>
+              <p>
+                Adrastea functions across three core research divisions and a media team,
+                bringing young researchers together with senior scientists, engineers, and
+                policymakers.
+              </p>
+            </div>
+            <div class="step" style="--c: var(--violet)">
+              <span class="tag"><span class="tag-dot"></span>Research division</span>
+              <h2>Health &amp; Physiology</h2>
+              <p>
+                We study how the female body uniquely responds to space, from reproductive and
+                hormonal health to radiation, neuroscience, and microgravity adaptation.
+              </p>
+              <a class="link" href="div.html#health-physiology">Explore the division</a>
+            </div>
+            <div class="step" style="--c: var(--pink)">
+              <span class="tag"><span class="tag-dot"></span>Research division</span>
+              <h2>Bioengineering &amp; Innovation</h2>
+              <p>
+                We engineer solutions so women can endure and thrive in space: wearable health
+                tech, next-generation spacesuits, and alternatives to menstrual suppression in
+                orbit.
+              </p>
+              <a class="link" href="div.html#bioengineering-innovation">Explore the division</a>
+            </div>
+            <div class="step" style="--c: #fff">
+              <span class="tag"><span class="tag-dot"></span>Research division</span>
+              <h2>Policy, Ethics &amp; Society</h2>
+              <p>
+                We tackle the systemic, regulatory, and ethical barriers to women’s participation
+                and safety in space through policy briefs, governance analysis, and advocacy.
+              </p>
+              <a class="link" href="div.html#policy-ethics-society">Explore the division</a>
+            </div>
+            <div class="step" style="--c: var(--lilac)">
+              <span class="tag"><span class="tag-dot"></span>Internal team</span>
+              <h2>One team carries it further.</h2>
+              <p>
+                Outreach &amp; Marketing turns our research and advocacy into stories that
+                reach the public and attract new partners.
+              </p>
+              <a class="link" href="div.html#marketing-communications">Meet the team</a>
+            </div>
+          </div>
+          <div class="rail" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i></div>
+        </div>
+      </section>
+
+      <section class="fit layer" data-orbit="dock" aria-labelledby="fit-title">
+        <h2 class="section-title" id="fit-title" data-reveal>
+          Where do you fit in? <span class="soft">Four teams, one mission.</span>
+        </h2>
+        <div class="fit-grid">
+          <a class="fit-card" href="div.html#health-physiology" style="--c: var(--violet)" data-reveal>
+            <img src="../images/healthdiv.jpg" alt="" loading="lazy" decoding="async" />
+            <div class="fit-body">
+              <h3>Health &amp; Physiology</h3>
+              <p>For researchers, clinicians, and students investigating research gaps in how space affects women’s bodies.</p>
+              <span class="link">Explore</span>
+            </div>
+          </a>
+          <a class="fit-card" href="div.html#bioengineering-innovation" style="--c: var(--pink)" data-reveal>
+            <img src="../images/bioengineeringdiv.jpg" alt="" loading="lazy" decoding="async" />
+            <div class="fit-body">
+              <h3>Bioengineering &amp; Innovation</h3>
+              <p>For engineers, designers, and biotech minds who want to build technological solutions that can support women’s health in space.</p>
+              <span class="link">Explore</span>
+            </div>
+          </a>
+          <a class="fit-card" href="div.html#policy-ethics-society" style="--c: #fff" data-reveal>
+            <img src="../images/policydiv.jpg" alt="" loading="lazy" decoding="async" />
+            <div class="fit-body">
+              <h3>Policy, Ethics &amp; Society</h3>
+              <p>For policy, law, and ethics experts set on giving women’s health the attention and recognition it deserves in space governance.</p>
+              <span class="link">Explore</span>
+            </div>
+          </a>
+          <a class="fit-card" href="div.html#marketing-communications" style="--c: var(--lilac)" data-reveal>
+            <img src="../images/commsdiv.jpg" alt="" loading="lazy" decoding="async" />
+            <div class="fit-body">
+              <h3>Outreach &amp; Marketing</h3>
+              <p>For science communicators, writers, designers, digital and video creators, and strategists who can turn our science into something that resonates.</p>
+              <span class="link">Explore</span>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <section class="teaser layer" aria-labelledby="teaser-title">
+        <h2 class="section-title" id="teaser-title" data-reveal>
+          From launch day to 2029 and beyond.
+          <span class="soft">Follow the constellation that maps where we are headed.</span>
+        </h2>
+        <a class="btn dark" href="about.html#roadmap" data-reveal>See our roadmap</a>
+      </section>
+
+      <section class="marquee layer" data-orbit="drift" aria-hidden="true">
+        <div class="mq" data-marquee="Access|Endure|Thrive|Ad astra, for all"></div>
+        <div class="mq mq--reverse mq--outline" data-marquee="Research|Advocacy|Space"></div>
+      </section>
+
+      <section class="join layer" data-orbit="join" aria-labelledby="join-title">
+        <div>
+          <h2 id="join-title">Ad astra,<br /><em>for all.</em></h2>
+          <p>
+            We bring young researchers together with senior scientists, engineers, and
+            policymakers. We’d be glad to hear from you.
+          </p>
+          <div class="row">
+            <a class="btn" href="contact.html">Apply now</a>
+            <a class="btn dark" href="about.html">Learn about our mission</a>
+          </div>
+        </div>
+      </section>
+
     </main>
+
+    <div data-site-footer></div>
   </body>
 </html>

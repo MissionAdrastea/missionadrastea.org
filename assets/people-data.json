@@ -1,7 +1,7 @@
 {
   "founder": {
-    "name": "Aiyana",
-    "title": "Founder",
+    "name": "Aiyana Bage",
+    "title": "Founder & CEO",
     "image": "aiyanab.jpg",
     "bio": [
       "Aiyana Bage is the Founder and CEO of Adrastea, a youth-led nonprofit advancing women’s health and participation in aerospace through research, technology, policy, and public engagement. Her work spans space medicine, neuroscience, bioengineering, women’s health, and human spaceflight.",
@@ -18,9 +18,41 @@
     { "name": "University of Arizona", "logo": "uaz.png" }
   ],
 
+  "council": [
+    {
+      "name": "Ruth Nichols",
+      "image": "ruthn.jpg",
+      "bio": "Graduate student at Cornell University · 4x analog astronaut · AFRL Scholar, Astronaut Scholar, Zed Factor Fellow, Schwarzman Scholar · Astrobiology B.S. & Mathematics B.S."
+    },
+    {
+      "name": "Eleonore Poli",
+      "image": "eleonorep.jpg",
+      "bio": "Space & Aeronautics Business Development @ CSEM · PhD Materials, University of Cambridge · Analogue astronaut · Director, CHASM · OeWF · BIODYSSEUS · Swiss Space Museum · Global Shaper Alumni · Cos-Rad · Pilot"
+    },
+    {
+      "name": "Gretchen Green",
+      "image": "gretcheng.jpg",
+      "bio": "Physician-astronaut · Speaker · Strategic advisor · Women’s health · Space biotech · Helping mission-driven companies launch and land successfully"
+    }
+  ],
+
+  "advisors": [
+    { "name": "Dr. Scott Bailey", "title": "Advisor, Bioengineering & Innovation" },
+    {
+      "name": "Wanjiku Kanjumba",
+      "title": "Advisor, Bioengineering & Innovation",
+      "bio": "Forbes 30 Under 30"
+    },
+    {
+      "name": "Amanda Savita Alexander, MSc",
+      "title": "Governance & Finance Advisor",
+      "bio": "University of Edinburgh"
+    }
+  ],
+
   "teams": [
     { "id": "policy", "name": "Policy, Ethics & Society" },
-    { "id": "communications", "name": "Marketing & Communications" },
+    { "id": "communications", "name": "Outreach & Marketing" },
     { "id": "visual-media", "name": "Visual Media & Creative Marketing" },
     { "id": "business-development", "name": "Business Development & Technology" },
     { "id": "bioengineering", "name": "Bioengineering Technology" },

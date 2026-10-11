@@ -4,31 +4,51 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Contact | Adrastea</title>
-    <link rel="stylesheet" href="../globals.css?v=6" />
-    <link rel="stylesheet" href="../assets/site.css?v=5" />
-    <link rel="stylesheet" href="../style/contact.css?v=5" />
-    <link rel="stylesheet" href="../assets/responsive.css" />
-    <script src="../assets/components.js?v=2" defer></script>
-    <script src="../assets/contact-form.js" defer></script>
-    <script src="../assets/scroll-effects.js" defer></script>
-    <script src="../assets/star-trail.js" defer></script>
+    <meta
+      name="description"
+      content="Contact Adrastea about student and researcher applications, sponsorship, partnerships, media, or general inquiries."
+    />
+    <link rel="icon" href="../images/general/emblem.jpg" />
+    <link rel="preload" as="image" href="../images/general/emblem.jpg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Instrument+Serif:ital@0;1&display=swap"
+    />
+    <link rel="stylesheet" href="../assets/site.css?v=14" />
+    <link rel="stylesheet" href="../style/contact.css?v=14" />
+    <script src="../assets/vendor/gsap.min.js" defer></script>
+    <script src="../assets/vendor/ScrollTrigger.min.js" defer></script>
+    <script src="../assets/sky.js?v=14" defer></script>
+    <script src="../assets/components.js?v=14" defer></script>
+    <script src="../assets/motion.js?v=14" defer></script>
+    <script src="../assets/contact-form.js?v=14" defer></script>
+    <script src="../assets/star-trail.js?v=14" defer></script>
   </head>
 
   <body>
-    <main class="contact">
-      <div data-site-header></div>
+    <div data-site-header></div>
 
-      <div class="contact-content">
-        <header class="contact-page-heading" data-scroll-section>
-          <h1 class="contact-title" id="contact-title">Contact Adrastea</h1>
-          <p class="contact-lede">We’d be glad to hear from you.</p>
+    <main>
+      <div class="contact layer" id="content" data-orbit="dock">
+        <header class="contact-intro" data-intro>
+          <h1 id="contact-title">We’d be glad to <em>hear from you.</em></h1>
+          <section class="contact-topic">
+            <h2>Students &amp; researchers</h2>
+            <p>Tell us what you study and which topics or research divisions interest you.</p>
+          </section>
+          <section class="contact-topic">
+            <h2>Sponsors &amp; partners</h2>
+            <p>
+              Get in touch about sponsorship, collaboration, events, or supporting our work. We
+              welcome funding, aerospace connections, expert mentorship, in-kind support, and
+              opportunities to showcase youth-led research.
+            </p>
+          </section>
         </header>
 
-        <section
-          class="contact-form-card"
-          aria-labelledby="contact-form-title"
-          data-scroll-section
-        >
+        <section class="contact-form-card" aria-labelledby="contact-form-title" data-reveal>
           <h2 id="contact-form-title">Send us a message</h2>
           <p class="contact-form-intro">
             Complete the form and we’ll route your inquiry to the right team. Required fields are
@@ -36,7 +56,7 @@
           </p>
 
           <form
-            class="contact-form"
+            class="contact-form contact-grid"
             action="https://script.google.com/a/macros/missionadrastea.org/s/AKfycbxU3NvyUYza55pGAztd_41mF8mhSUqhbZN4ji-2zgRpps8nO5wf-yBZWx_K5widYieP/exec"
             method="post"
             target="contact-form-response"
@@ -127,9 +147,14 @@
               </select>
             </div>
 
-            <fieldset class="contact-field contact-field--full contact-conditional" data-application-details hidden disabled>
+            <fieldset
+              class="contact-field contact-field--full contact-conditional"
+              data-application-details
+              hidden
+              disabled
+            >
               <legend>Student &amp; team application details</legend>
-              <div class="contact-form">
+              <div class="contact-grid">
                 <div class="contact-field">
                   <label for="contact-team">Team of interest</label>
                   <select id="contact-team" name="Team">
@@ -137,8 +162,7 @@
                     <option>Health &amp; Physiology</option>
                     <option>Bioengineering &amp; Innovation</option>
                     <option>Policy, Ethics &amp; Society</option>
-                    <option>Marketing &amp; Communications</option>
-                    <option>Strategy &amp; Operations</option>
+                    <option>Outreach &amp; Marketing</option>
                     <option>Not sure yet</option>
                   </select>
                 </div>
@@ -208,7 +232,7 @@
               <input id="contact-website-check" name="website_check" tabindex="-1" autocomplete="off" />
             </div>
 
-            <button class="contact-submit contact-field--full" type="submit">Send inquiry</button>
+            <button class="btn contact-submit contact-field--full" type="submit">Send inquiry</button>
             <p class="contact-form-status contact-field--full" role="status" aria-live="polite"></p>
           </form>
 
@@ -219,20 +243,10 @@
             tabindex="-1"
           ></iframe>
         </section>
-
-        <aside class="contact-topics" aria-label="Contact topics">
-          <section class="contact-topic">
-            <h2>Students &amp; researchers</h2>
-            <p>Tell us what you study and which topics or research divisions interest you.</p>
-          </section>
-          <section class="contact-topic">
-            <h2>Sponsors &amp; partners</h2>
-            <p>Get in touch about sponsorship, collaboration, events, or supporting our work.</p>
-          </section>
-        </aside>
       </div>
 
-      <div data-site-footer></div>
     </main>
+
+    <div data-site-footer></div>
   </body>
 </html>
