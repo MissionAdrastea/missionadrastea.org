@@ -1,4 +1,4 @@
-/* Home page: highlights gallery, photo bento, the divisions stage, the "where do you fit in" accordion, roadmap teaser, the marquee. */
+/* Home page: highlights gallery, photo bento, the divisions stage, the "where do you fit in" cards, the timeline constellation, the marquee. */
 
 /* ---------- highlights: a row of large cards that scrolls sideways and snaps, with arrow buttons ---------- */
 
@@ -63,6 +63,7 @@
 .gallery {
   display: flex;
   overflow-x: auto;
+  overflow-y: hidden; /* sideways only: without this the row can also be nudged up and down */
   gap: 16px;
   margin: 0 calc(-1 * var(--gutter));
   padding: 4px var(--gutter) 20px;
@@ -218,7 +219,7 @@
   position: relative;
   display: flex;
   overflow: hidden;
-  min-height: clamp(400px, 58vh, 520px);
+  min-height: clamp(340px, 46vh, 440px);
   align-items: flex-end;
   border: 1px solid var(--line);
   border-radius: var(--radius);
@@ -291,14 +292,110 @@
   }
 }
 
-/* ---------- roadmap teaser ---------- */
+/* ---------- timeline: the shared scroll stage (site.css) with a constellation drawn by constellation.js ---------- */
 
-.teaser {
-  padding: 0 var(--gutter) var(--section-space);
+.timeline {
+  height: 760vh;
+  scroll-margin-top: -96px; /* cancels the page's scroll padding, which is for ordinary sections */
 }
 
-.teaser .section-title {
-  margin-bottom: 36px;
+/* a photograph for the moment in view, above its caption */
+.timeline .copy {
+  height: 540px;
+}
+
+.step-photo {
+  width: 100%;
+  height: 210px;
+  margin-bottom: 22px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  filter: saturate(0.92) contrast(1.04);
+  object-fit: cover;
+}
+
+@media (max-width: 720px) {
+  .timeline .copy {
+    height: 360px;
+  }
+
+  .step-photo {
+    height: 84px;
+    margin-bottom: 12px;
+    border-radius: 14px;
+  }
+}
+
+.sky {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* keeps the caption readable where the constellation passes behind it */
+.timeline .sticky::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(7, 4, 15, 0.9) 0%,
+    rgba(7, 4, 15, 0.55) 30%,
+    transparent 52%
+  );
+  content: "";
+  pointer-events: none;
+}
+
+.sky-dust circle {
+  fill: #e2d6ff;
+}
+
+.sky-dust .twinkle {
+  animation: twinkle 3.6s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  50% {
+    opacity: 0.1;
+  }
+}
+
+/* stroke width and label size are set by the script, so they hold steady as the camera zooms */
+.sky-lines {
+  stroke: rgba(201, 167, 255, 0.75);
+  stroke-linecap: round;
+}
+
+.sky-star path {
+  fill: #fff;
+}
+
+.sky-star--goal path {
+  fill: #ffd9f6;
+}
+
+/* the dark outline lets a name sit over a line without the two tangling */
+.sky-labels text {
+  fill: var(--ink);
+  stroke: var(--bg);
+  stroke-linejoin: round;
+  stroke-width: 0.5em;
+  dominant-baseline: middle;
+  font-family: var(--font-body);
+  paint-order: stroke;
+}
+
+@media (max-width: 720px) {
+  .timeline .sticky::after {
+    background: linear-gradient(
+      0deg,
+      rgba(7, 4, 15, 0.92) 0%,
+      rgba(7, 4, 15, 0.6) 44%,
+      transparent 60%
+    );
+  }
 }
 
 /* ---------- marquee ---------- */
@@ -306,4 +403,9 @@
 .marquee {
   overflow: hidden;
   padding: var(--section-space) 0;
+}
+
+.marquee .section-title {
+  margin-bottom: 40px;
+  padding: 0 var(--gutter);
 }

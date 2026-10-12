@@ -3,7 +3,7 @@
  *
  * A scattered ring of particles gathers into one orbit as the visitor scrolls, one arc per research
  * division, while a shepherd moon sweeps it into place (Adrastea is the moon that tends Jupiter's
- * main ring). Scroll position drives everything: the ring, the caption on show and the rail dots.
+ * main ring). Scroll position drives everything: the ring, the caption on show.
  */
 
 (() => {
@@ -13,7 +13,6 @@
 
   const context = canvas.getContext("2d");
   const steps = [...stage.querySelectorAll(".step")];
-  const dots = [...stage.querySelectorAll(".rail i")];
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   const TAU = Math.PI * 2;
@@ -96,7 +95,11 @@
     }
   }
 
-  function drawPlanet() {
+  // Jupiter is a real close-up from the Juno mission, wrapped onto a disc and shaded like a sphere.
+  const clouds = new Image();
+  clouds.src = new URL("../images/space/jupiter.jpg", document.currentScript.src).href;
+
+  function drawPlanet(time) {
     const planet = radius * 0.52;
     const glow = context.createRadialGradient(centerX, centerY, planet * 0.6, centerX, centerY, radius * 1.9);
     glow.addColorStop(0, "rgba(116,21,201,.32)");
@@ -108,43 +111,47 @@
     context.beginPath();
     context.arc(centerX, centerY, planet, 0, TAU);
     context.clip();
-    const body = context.createRadialGradient(
-      centerX - planet * 0.4,
-      centerY - planet * 0.45,
-      planet * 0.1,
+    context.fillStyle = "#2a0f55"; // shows until the photograph has loaded
+    context.fillRect(centerX - planet, centerY - planet, planet * 2, planet * 2);
+
+    if (clouds.complete && clouds.naturalWidth) {
+      // larger than the disc, and drifting sideways so the cloud tops seem to turn
+      const scale = Math.max((planet * 2) / clouds.naturalWidth, (planet * 2) / clouds.naturalHeight) * 1.5;
+      const drawWidth = clouds.naturalWidth * scale;
+      const drawHeight = clouds.naturalHeight * scale;
+      const drift = Math.sin(time * 0.00004) * (drawWidth - planet * 2) * 0.5;
+      context.drawImage(clouds, centerX - drawWidth / 2 + drift, centerY - drawHeight / 2, drawWidth, drawHeight);
+      // a wash of the brand violet ties the photograph to the page
+      context.fillStyle = "rgba(96,34,190,.3)";
+      context.fillRect(centerX - planet, centerY - planet, planet * 2, planet * 2);
+    }
+
+    // a sphere, not a disc: the limb darkens all round, more on the night side
+    const limb = context.createRadialGradient(
+      centerX - planet * 0.32,
+      centerY - planet * 0.3,
+      planet * 0.25,
       centerX,
       centerY,
-      planet * 1.05,
+      planet * 1.02,
     );
-    body.addColorStop(0, "#8a4fe0");
-    body.addColorStop(0.5, "#3a1275");
-    body.addColorStop(1, "#0a0418");
-    context.fillStyle = body;
+    limb.addColorStop(0, "rgba(7,4,15,0)");
+    limb.addColorStop(0.72, "rgba(7,4,15,.38)");
+    limb.addColorStop(1, "rgba(7,4,15,.94)");
+    context.fillStyle = limb;
     context.fillRect(centerX - planet, centerY - planet, planet * 2, planet * 2);
-    // cloud bands
-    for (let band = 0; band < 9; band += 1) {
-      const bandY = centerY + (-0.8 + band * 0.2) * planet;
-      context.beginPath();
-      context.moveTo(centerX - planet, bandY);
-      for (let x = -planet; x <= planet; x += 8) {
-        context.lineTo(centerX + x, bandY + Math.sin(x * 0.03 + band * 1.7) * planet * 0.035);
-      }
-      context.strokeStyle = `rgba(230,210,255,${0.05 + (band % 3) * 0.03})`;
-      context.lineWidth = planet * (0.05 + (band % 2) * 0.04);
-      context.stroke();
-    }
-    // night side
-    const shadow = context.createLinearGradient(centerX - planet, 0, centerX + planet, 0);
-    shadow.addColorStop(0, "rgba(7,4,15,0)");
-    shadow.addColorStop(1, "rgba(7,4,15,.78)");
-    context.fillStyle = shadow;
+    const night = context.createLinearGradient(centerX - planet * 0.2, 0, centerX + planet, 0);
+    night.addColorStop(0, "rgba(7,4,15,0)");
+    night.addColorStop(1, "rgba(7,4,15,.82)");
+    context.fillStyle = night;
     context.fillRect(centerX - planet, centerY - planet, planet * 2, planet * 2);
     context.restore();
 
-    context.strokeStyle = "rgba(201,167,255,.4)";
-    context.lineWidth = 1;
+    // sunlight catching the atmosphere on the day side
+    context.strokeStyle = "rgba(214,190,255,.5)";
+    context.lineWidth = 1.2;
     context.beginPath();
-    context.arc(centerX, centerY, planet, Math.PI * 0.95, Math.PI * 1.55);
+    context.arc(centerX, centerY, planet, Math.PI * 0.85, Math.PI * 1.5);
     context.stroke();
   }
 
@@ -219,7 +226,7 @@
       drawMoon(side, sweep + spin);
     };
     pass(0); // far half of the ring, behind the planet
-    drawPlanet();
+    drawPlanet(time);
     pass(1); // near half, in front
   }
 
@@ -233,7 +240,6 @@
     if (index === stepIndex) return;
     stepIndex = index;
     steps.forEach((step, i) => step.classList.toggle("on", i === index));
-    dots.forEach((dot, i) => dot.classList.toggle("on", i === index));
   }
 
   function frame(now) {
@@ -252,16 +258,6 @@
     context.clearRect(0, 0, width, height);
     draw(shown, reduceMotion ? 0 : now);
   }
-
-  // Captions that are not on show are invisible, so tabbing to a link inside one scrolls the stage to it.
-  steps.forEach((step, index) => {
-    step.addEventListener("focusin", () => {
-      if (index === stepIndex) return;
-      const progress = index ? BOUNDS[index - 1] + 0.02 : 0;
-      const top = stage.getBoundingClientRect().top + window.scrollY;
-      window.scrollTo({ top: top + progress * (stage.offsetHeight - height), behavior: "instant" });
-    });
-  });
 
   window.addEventListener("resize", setup);
   setup();

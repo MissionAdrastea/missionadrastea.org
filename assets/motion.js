@@ -2,7 +2,7 @@
  * Adrastea motion layer. Needs GSAP + ScrollTrigger (assets/vendor).
  *
  * The orbit is a logo-derived element that follows the visitor down every page and changes state
- * per section: add data-orbit="hero | ghost | drift | join | dock" to a section to choose one.
+ * only in heroes: data-orbit="hero" shows it, any other value (the pages use "dock") hides it.
  *
  * Scroll effects are opt-in through data attributes:
  *   data-intro     children rise in on page load
@@ -11,7 +11,7 @@
  *   data-parallax  image drifts inside its frame (scrubbed)
  *   data-scrub     paragraph lights up word by word (scrubbed)
  *   data-stack     cards that stack; earlier cards recede as the next one covers them
- *   data-marquee   "One|Two|Three" becomes an endless row of words
+ *   data-marquee   "One|Two@logo.png|Three" becomes an endless row of words, with optional logos
  *
  * With reduced motion, or if GSAP fails to load, content simply stays in place and fully visible.
  */
@@ -25,7 +25,12 @@
   document.querySelectorAll("[data-marquee]").forEach((row) => {
     const words = row.dataset.marquee
       .split("|")
-      .map((word) => `<span>${word}</span><i></i>`)
+      // "Name@file.png" puts that logo, from images/logo, on a light chip before the name
+      .map((word) => {
+        const [name, logo] = word.split("@");
+        const chip = logo ? `<img class="mq-logo" src="../images/logo/${logo}" alt="" />` : "";
+        return `<span>${chip}${name}</span><i></i>`;
+      })
       .join("");
     row.innerHTML = `<div class="mq-track">${words}${words}</div>`.repeat(2);
   });
@@ -113,27 +118,15 @@
   const CIRCUMFERENCE = TAU * 488;
   progressRing.style.strokeDasharray = CIRCUMFERENCE;
 
-  // One state per kind of section; size is the orbit's on-screen diameter in px.
+  // Where the orbit sits in a hero; size is its on-screen diameter in px.
   function orbitStates() {
     const w = window.innerWidth;
     const h = window.innerHeight;
-    const small = w < 720;
     return {
-      hero: small
-        ? { x: w * 0.5, y: h * 0.27, size: w * 0.92, o: 1, r: -14 }
-        : { x: w * 0.72, y: h * 0.44, size: Math.min(h * 0.95, w * 0.7), o: 1, r: -14 },
-      ghost: small
-        ? { x: w * 0.5, y: h * 0.9, size: w * 1.1, o: 0.22, r: 12 }
-        : { x: w * 0.95, y: h * 1.02, size: h * 0.95, o: 0.3, r: 12 },
-      drift: small
-        ? { x: w * 0.5, y: h * 0.5, size: w * 1.3, o: 0.22, r: 30 }
-        : { x: w * 0.1, y: h * 0.52, size: h, o: 0.4, r: 30 },
-      join: small
-        ? { x: w * 0.5, y: h * 0.5, size: w * 1.5, o: 0.2, r: -8 }
-        : { x: w * 0.5, y: h * 0.5, size: h * 1.25, o: 0.2, r: -8 },
-      dock: small
-        ? { x: w - 40, y: h - 40, size: 60, o: 1, r: 0 }
-        : { x: w - 52, y: h - 52, size: 76, o: 1, r: 0 },
+      hero:
+        w < 720
+          ? { x: w * 0.5, y: h * 0.27, size: w * 0.92, r: -14 }
+          : { x: w * 0.72, y: h * 0.44, size: Math.min(h * 0.95, w * 0.7), r: -14 },
     };
   }
 
@@ -153,25 +146,18 @@
   let travel = null;
 
   function moveOrbit(name, instant) {
-    const states = orbitStates();
-    const state = states[name] || states.dock;
-    const to = { x: state.x, y: state.y, scale: state.size / 1000, rotation: state.r };
+    const state = orbitStates()[name];
     current = name;
-    orbit.classList.toggle("dock", state === states.dock);
     if (travel) travel.kill();
 
-    if (instant || reduceMotion) {
-      gsap.set(orbit, { ...to, opacity: state.o });
+    // Only a hero shows the orbit. Everywhere else it fades out where it stands: an emblem gliding
+    // across the page behind other content was distracting.
+    if (!state) {
+      travel = gsap.to(orbit, { opacity: 0, duration: instant || reduceMotion ? 0 : 0.4, ease: "power2.out" });
       return;
     }
-
-    // While travelling the orbit is a faint ghost, so a huge emblem never sits on top of the content
-    // it is crossing; it solidifies on arrival. power3.out restarts cleanly if interrupted mid-flight.
-    travel = gsap
-      .timeline()
-      .to(orbit, { opacity: Math.min(state.o, 0.1), duration: 0.18, ease: "power2.out" }, 0)
-      .to(orbit, { ...to, duration: 0.95, ease: "power3.out" }, 0)
-      .to(orbit, { opacity: state.o, duration: 0.5, ease: "power2.inOut" }, 0.55);
+    gsap.set(orbit, { x: state.x, y: state.y, scale: state.size / 1000, rotation: state.r });
+    travel = gsap.to(orbit, { opacity: 1, duration: instant || reduceMotion ? 0 : 0.5, ease: "power2.out" });
   }
 
   gsap.set(orbit, { xPercent: -50, yPercent: -50 });
@@ -193,10 +179,6 @@
     { passive: true },
   );
   window.addEventListener("resize", () => moveOrbit(stateAtScroll(), true));
-  orbit.addEventListener("click", () => {
-    window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
-  });
-
   function placeMoon(moon, x, y, radius) {
     const [glow, body] = moon.children;
     glow.setAttribute("cx", x);
@@ -365,8 +347,10 @@
   document.querySelectorAll("[data-stack]").forEach(wireStack);
   if (!reduceMotion) {
     document.querySelectorAll("[data-scrub]").forEach(wireScrub);
+    // while the loading screen is up, the entrance waits behind it
+    const loading = document.documentElement.classList.contains("is-loading");
     document.querySelectorAll("[data-intro]").forEach((group) => {
-      gsap.from(group.children, {
+      const intro = gsap.from(group.children, {
         y: 46,
         opacity: 0,
         duration: 1.1,
@@ -374,7 +358,9 @@
         ease: "power3.out",
         delay: 0.2,
         clearProps: "transform,opacity",
+        paused: loading,
       });
+      if (loading) window.addEventListener("adrastea:revealed", () => intro.play(), { once: true });
     });
     // the hero copy lifts and fades as it scrolls away, handing the page to the next chapter
     document.querySelectorAll(".hero").forEach((hero) => {

@@ -105,6 +105,32 @@
   color: rgba(246, 240, 255, 0.82);
 }
 
+/* each division in three lines; the marker carries the division's colour */
+.division-points {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  color: rgba(246, 240, 255, 0.86);
+  list-style: none;
+}
+
+.division-points li {
+  position: relative;
+  padding-left: 20px;
+}
+
+.division-points li::before {
+  position: absolute;
+  top: 0.62em;
+  left: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--c, var(--lilac));
+  content: "";
+}
+
 .division-body .division-for {
   width: 100%;
   padding-top: 16px;

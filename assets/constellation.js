@@ -1,7 +1,7 @@
 /*
- * Adrastea About page: the roadmap constellation. Needs GSAP + ScrollTrigger.
+ * Adrastea home page: the timeline constellation. Needs GSAP + ScrollTrigger.
  *
- * Every caption in .roadmap that carries data-star="x,y" becomes a star. Scrolling flies a camera
+ * Every caption in .timeline that carries data-star="x,y" becomes a star. Scrolling flies a camera
  * from star to star, drawing the line between them and lighting each one on arrival; the last
  * stretch pulls back to show the whole constellation with every star named.
  *
@@ -11,7 +11,7 @@
  */
 
 (() => {
-  const section = document.querySelector(".roadmap");
+  const section = document.querySelector(".timeline");
   const svg = section?.querySelector(".sky");
   if (!section || !svg || !window.gsap || !window.ScrollTrigger) return;
 
@@ -48,12 +48,6 @@
       };
     });
   if (!milestones.length) return;
-
-  // the rail gets one dot per caption
-  const rail = section.querySelector(".rail");
-  steps.forEach((_, index) => rail?.append(document.createElement("i")));
-  const dots = rail ? [...rail.children] : [];
-  dots[0]?.classList.add("on");
 
   /* ---------- build the sky ---------- */
 
@@ -142,11 +136,11 @@
     const width = svg.parentElement.clientWidth;
     const height = svg.parentElement.clientHeight;
     small = width < 720;
-    anchorX = width * (small ? 0.5 : 0.68);
-    anchorY = height * (small ? 0.3 : 0.5);
+    anchorX = width * (small ? 0.5 : 0.72);
+    anchorY = height * (small ? 0.24 : 0.5);
     base = small
-      ? Math.min((width * 0.9) / bounds.width, (height * 0.38) / bounds.height)
-      : Math.min((width * 0.56) / bounds.width, (height * 0.72) / bounds.height);
+      ? Math.min((width * 0.9) / bounds.width, (height * 0.3) / bounds.height)
+      : Math.min((width * 0.46) / bounds.width, (height * 0.72) / bounds.height);
     labelGroup.setAttribute("font-size", 13 / base);
     labelGroup.style.display = small ? "none" : ""; // too crowded to name every star on a phone
     render();
@@ -168,7 +162,6 @@
     if (index === shown) return;
     shown = index;
     steps.forEach((step, i) => step.classList.toggle("on", i === index));
-    dots.forEach((dot, i) => dot.classList.toggle("on", i === index));
   }
 
   // Timeline time runs one unit per star, plus a final stretch for the pull-back.

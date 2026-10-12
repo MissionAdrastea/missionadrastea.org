@@ -178,6 +178,108 @@ h2 em {
   transform: none;
 }
 
+/* ---------- loading screen (home, first visit of a session; see loader.js) ---------- */
+
+.loader {
+  position: fixed;
+  z-index: 500;
+  display: none;
+  inset: 0;
+  background:
+    radial-gradient(50% 42% at 50% 46%, rgba(116, 21, 201, 0.34), transparent 72%),
+    var(--bg);
+  place-items: center;
+  text-align: center;
+  transition:
+    transform 0.9s var(--ease),
+    opacity 0.9s ease;
+}
+
+.is-loading .loader {
+  display: grid;
+}
+
+.is-loading body {
+  overflow: hidden;
+}
+
+/* the screen lifts away like a curtain */
+.loader.is-leaving {
+  opacity: 0;
+  transform: translateY(-6%);
+}
+
+.loader-inner {
+  display: grid;
+  width: min(360px, 78vw);
+  justify-items: center;
+  animation: loader-in 0.9s var(--ease) both;
+}
+
+.loader-mark {
+  width: 72px;
+  height: 72px;
+  box-shadow: 0 0 60px 6px rgba(116, 21, 201, 0.6);
+}
+
+.loader-name {
+  margin-top: 26px;
+  font-size: 1.5rem;
+  font-weight: var(--display-weight);
+  letter-spacing: 0.34em;
+  text-indent: 0.34em; /* balances the trailing letter-space so the word sits centred */
+}
+
+.loader-motto {
+  margin-top: 6px;
+  color: var(--mute);
+  font-size: 1.05rem;
+}
+
+.loader-motto em {
+  color: var(--lilac);
+}
+
+.loader-bar {
+  overflow: hidden;
+  width: 100%;
+  height: 1px;
+  margin-top: 34px;
+  background: rgba(201, 167, 255, 0.2);
+}
+
+.loader-bar i {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, var(--violet), #fff);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+}
+
+.loader-meta {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin-top: 14px;
+  color: var(--mute);
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.loader-count {
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+@keyframes loader-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
 /* ---------- nav: floating glass pill ---------- */
 
 .nav {
@@ -279,13 +381,6 @@ h2 em {
   pointer-events: none;
   transform-origin: 50% 50%;
   will-change: transform, opacity;
-}
-
-/* docked in the corner it doubles as a back-to-top control */
-.orbit.dock {
-  z-index: 90;
-  cursor: pointer;
-  pointer-events: auto;
 }
 
 .orbit svg {
@@ -563,30 +658,6 @@ a:hover .link::after {
   margin-top: 18px;
 }
 
-.rail {
-  position: absolute;
-  top: 50%;
-  right: clamp(14px, 2.4vw, 34px);
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  transform: translateY(-50%);
-}
-
-.rail i {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: rgba(201, 167, 255, 0.28);
-  transition: all 0.4s;
-}
-
-.rail i.on {
-  background: #fff;
-  box-shadow: 0 0 12px #fff;
-  transform: scale(1.4);
-}
-
 /* on phones the ring sits in the upper half and the caption below it, clear of the docked orbit */
 @media (max-width: 720px) {
   .copy {
@@ -658,6 +729,22 @@ a:hover .link::after {
   font-weight: var(--display-weight);
   letter-spacing: var(--display-tracking);
   line-height: var(--display-leading);
+}
+
+.mq span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28em;
+}
+
+/* logos are drawn for light backgrounds, so each sits on a light chip */
+.mq-logo {
+  width: auto;
+  max-width: none;
+  height: 0.62em;
+  padding: 0.1em 0.16em;
+  border-radius: 0.14em;
+  background: var(--ink);
 }
 
 .mq--outline span {

@@ -53,18 +53,22 @@ motion to new content needs no JavaScript:
 | `data-gallery`  | A row of cards that scrolls sideways; buttons with `data-gallery-step="-1"` or `"1"` in the same section move it one card |
 | `data-sky`      | `quiet` hushes the background constellations while this section is on screen |
 
+The home page opens with a loading screen on the first visit of a browser session
+([`loader.js`](./assets/loader.js), markup at the top of `page/index.html`, styles under "loading
+screen" in `site.css`). It is skipped on later visits and for reduced motion.
+
 The other scripts: [`sky.js`](./assets/sky.js) draws the starry sky and its drifting constellations
 behind every page, [`ring.js`](./assets/ring.js) draws the divisions stage on the home page,
-[`constellation.js`](./assets/constellation.js) draws the roadmap on the About page and
+[`constellation.js`](./assets/constellation.js) draws the timeline on the home page and
 [`star-trail.js`](./assets/star-trail.js) is the cursor trail. All motion is switched off for
 visitors who ask their system for reduced motion.
 
 Do not add `scroll-behavior: smooth` to the CSS: ScrollTrigger then measures positions mid-scroll
 and scroll animations end up in the wrong place.
 
-## The roadmap constellation
+## The timeline constellation
 
-The roadmap on the About page is written in `page/about.html`: every caption inside `.roadmap` that
+The timeline on the home page is written in `page/index.html`: every caption inside `.timeline` that
 carries `data-star="x,y"` becomes a star, in order, and the script joins each one to the next. To
 add, remove or reword a milestone, edit those captions; no JavaScript changes are needed.
 

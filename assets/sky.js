@@ -1,13 +1,16 @@
 /*
  * Adrastea: the sky behind every page.
  *
- * A field of stars drifts slowly across the viewport and a handful of constellations travel with
- * it. Each constellation traces its lines, holds, fades and rests, on its own schedule. The sky
- * also slides a little as the page scrolls, which gives it depth behind the content.
+ * A field of stars drifts slowly across the viewport, and slides a little as the page scrolls,
+ * which gives it depth behind the content.
  *
  * Positions come from the clock and a fixed seed, not from when the page loaded, so the sky carries
- * on unbroken from one page to the next. Sections marked data-sky="quiet" (the scroll stages,
- * which draw figures of their own) hush the constellations and leave only the stars.
+ * on unbroken from one page to the next.
+ *
+ * In front of the drifting sky sits one large constellation, fixed to the screen. Its bright line
+ * runs from star to star as the page is scrolled, so reading down a page is travelling along it.
+ *
+ * data-sky="alone" on a section (the timeline, a constellation in its own right) hides it there.
  */
 
 (() => {
@@ -25,38 +28,7 @@
   const DRIFT_X = -5.2; // px per second at full depth: the whole sky slides slowly up and to the left
   const DRIFT_Y = -1.4;
   const PARALLAX = 0.06; // px the sky shifts per px scrolled, at full depth
-  const CYCLE = 32; // seconds for a constellation to trace its lines, hold, fade and rest
   const TINTS = ["#ffffff", "#f3c4ee", "#d9c8ff"];
-
-  // Star positions on a 0-100 grid, and the pairs of stars joined by a line.
-  const FIGURES = [
-    // Cassiopeia
-    { stars: [[0, 20], [25, 55], [48, 30], [72, 62], [100, 35]], lines: [[0, 1], [1, 2], [2, 3], [3, 4]] },
-    // Andromeda
-    {
-      stars: [[0, 62], [28, 52], [55, 40], [100, 18], [50, 22], [46, 6]],
-      lines: [[0, 1], [1, 2], [2, 3], [2, 4], [4, 5]],
-    },
-    // the Big Dipper
-    {
-      stars: [[100, 22], [97, 50], [70, 54], [66, 30], [45, 24], [25, 16], [0, 30]],
-      lines: [[0, 1], [1, 2], [2, 3], [3, 0], [3, 4], [4, 5], [5, 6]],
-    },
-    // Orion
-    {
-      stars: [[25, 12], [72, 16], [40, 49], [50, 46], [60, 43], [32, 88], [78, 84], [48, 0]],
-      lines: [[7, 0], [7, 1], [0, 2], [1, 4], [2, 3], [3, 4], [2, 5], [4, 6]],
-    },
-    // Cygnus
-    { stars: [[50, 0], [50, 35], [50, 68], [50, 100], [88, 30], [12, 45]], lines: [[0, 1], [1, 2], [2, 3], [1, 4], [1, 5]] },
-    // Lyra
-    { stars: [[30, 0], [38, 24], [62, 30], [70, 72], [48, 68]], lines: [[0, 1], [1, 2], [2, 3], [3, 4], [4, 1]] },
-    // Corona Borealis
-    {
-      stars: [[0, 20], [12, 48], [32, 68], [55, 72], [78, 60], [93, 38], [100, 12]],
-      lines: [[0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 6]],
-    },
-  ];
 
   const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
   const smooth = (from, to, value) => {
@@ -74,15 +46,21 @@
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   };
 
-  const quietZones = [...document.querySelectorAll('[data-sky="quiet"]')];
+  // The large constellation zigzags down the empty band to the right of the content, so it never
+  // crosses copy: how far across that band each star sits (0 to 1), top to bottom.
+  const GUIDE = [0.1, 0.85, 0.35, 1, 0.2, 0.75, 0];
+  const SPARKLE = [0, -1, 0.16, -0.16, 1, 0, 0.16, 0.16, 0, 1, -0.16, 0.16, -1, 0, -0.16, -0.16];
+
+  const aloneZones = [...document.querySelectorAll('[data-sky="alone"]')];
   let width = 0;
   let height = 0;
   let pixelRatio = 1;
   let skyWidth = 0;
   let skyHeight = 0;
   let stars = [];
-  let figures = [];
-  let quiet = 0;
+  let alone = 0;
+  let guide = [];
+  let guideSize = 8;
 
   function build() {
     width = window.innerWidth;
@@ -92,6 +70,17 @@
     canvas.height = Math.round(height * pixelRatio);
     skyWidth = width + MARGIN * 2;
     skyHeight = height + MARGIN * 2;
+    // Content is at most 1280px wide inside the page gutter; whatever lies to its right is free.
+    // On narrower screens that is only the gutter, and the constellation slims down to fit it.
+    const gutter = clamp(width * 0.06, 20, 96);
+    const contentEdge = Math.min(width - gutter, gutter + 1280);
+    const bandRight = width - Math.max(8, gutter * 0.2);
+    const bandLeft = Math.min(bandRight - 6, contentEdge + (width - contentEdge >= 220 ? 48 : gutter * 0.2));
+    guide = GUIDE.map((across, index) => [
+      bandLeft + across * (bandRight - bandLeft),
+      height * (0.1 + (0.8 * index) / (GUIDE.length - 1)),
+    ]);
+    guideSize = clamp((bandRight - bandLeft) * 0.09, 4.5, 13);
 
     const random = seeded(4);
     const count = Math.round(clamp((width * height) / 5200, 110, 420));
@@ -106,30 +95,6 @@
       tint: random() < 0.12 ? 1 : random() < 0.5 ? 2 : 0,
     }));
 
-    // One constellation per cell of a loose grid over the wrapped sky, so they never bunch up.
-    const columns = width < 720 ? 2 : width < 1500 ? 3 : 4;
-    const rows = 2;
-    const span = clamp(width * 0.2, 150, 300);
-    figures = FIGURES.slice(0, columns * rows).map((figure, index) => {
-      const size = span * (0.8 + random() * 0.4);
-      const turn = (random() - 0.5) * 1.1;
-      const cos = Math.cos(turn);
-      const sin = Math.sin(turn);
-      const points = figure.stars.map(([x, y]) => {
-        const dx = ((x - 50) / 100) * size;
-        const dy = ((y - 50) / 100) * size;
-        return [dx * cos - dy * sin, dx * sin + dy * cos, 1.2 + random() * 1.1];
-      });
-      return {
-        points,
-        lines: figure.lines,
-        x: ((index % columns) + 0.25 + random() * 0.5) * (skyWidth / columns),
-        y: (Math.floor(index / columns) + 0.25 + random() * 0.5) * (skyHeight / rows),
-        depth: 0.75 + random() * 0.25,
-        reach: size,
-        phase: index / (columns * rows),
-      };
-    });
   }
 
   function draw() {
@@ -138,11 +103,11 @@
     const scroll = reduceMotion ? 0 : window.scrollY * PARALLAX;
 
     const middle = window.innerHeight / 2;
-    const hushed = quietZones.some((zone) => {
+    const solo = aloneZones.some((zone) => {
       const rect = zone.getBoundingClientRect();
       return rect.top < middle && rect.bottom > middle;
     });
-    quiet += ((hushed ? 1 : 0) - quiet) * (reduceMotion ? 1 : 0.08);
+    alone += ((solo ? 1 : 0) - alone) * (reduceMotion ? 1 : 0.08);
 
     context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
     context.clearRect(0, 0, width, height);
@@ -157,54 +122,54 @@
       context.fillRect(x, y, star.size, star.size);
     });
 
-    figures.forEach((figure) => {
-      const centerX = wrap(figure.x + DRIFT_X * time * figure.depth, skyWidth) - MARGIN;
-      const centerY = wrap(figure.y + (DRIFT_Y * time - scroll) * figure.depth, skyHeight) - MARGIN;
-      if (
-        centerX < -figure.reach ||
-        centerX > width + figure.reach ||
-        centerY < -figure.reach ||
-        centerY > height + figure.reach
-      ) {
-        return;
-      }
-
-      // one cycle: lines trace in over the first fifth, hold, then fade; the stars rest alone after that
-      const life = reduceMotion ? 0.4 : (time / CYCLE + figure.phase) % 1;
-      const traced = smooth(0, 0.2, life);
-      const held = 1 - smooth(0.62, 0.78, life);
-      const lineAlpha = 0.3 * held * (1 - quiet);
-
-      if (lineAlpha > 0.01) {
-        context.globalAlpha = lineAlpha;
-        context.strokeStyle = TINTS[2];
-        context.lineWidth = 1;
-        context.beginPath();
-        figure.lines.forEach(([from, to], index) => {
-          const drawn = clamp(traced * figure.lines.length - index, 0, 1);
-          if (!drawn) return;
-          const [fromX, fromY] = figure.points[from];
-          const [toX, toY] = figure.points[to];
-          context.moveTo(centerX + fromX, centerY + fromY);
-          context.lineTo(centerX + fromX + (toX - fromX) * drawn, centerY + fromY + (toY - fromY) * drawn);
-        });
-        context.stroke();
-      }
-
-      const glow = (0.5 + 0.4 * Math.min(traced, held)) * (1 - 0.6 * quiet);
-      context.fillStyle = TINTS[0];
-      figure.points.forEach(([x, y, radius]) => {
-        context.globalAlpha = glow * 0.16;
-        context.beginPath();
-        context.arc(centerX + x, centerY + y, radius * 3.2, 0, TAU);
-        context.fill();
-        context.globalAlpha = glow;
-        context.beginPath();
-        context.arc(centerX + x, centerY + y, radius, 0, TAU);
-        context.fill();
-      });
-    });
+    drawGuide();
     context.globalAlpha = 1;
+  }
+
+  // A faint outline of the whole figure is always there; the bright line and the lit stars advance
+  // with the page's scroll position.
+  function drawGuide() {
+    const strength = 1 - alone;
+    // on a phone the free band is only the page gutter, where the line would sit on card edges
+    if (strength < 0.02 || width < 720) return;
+
+    const range = document.documentElement.scrollHeight - window.innerHeight;
+    const travelled = (range > 0 ? clamp(window.scrollY / range, 0, 1) : 0) * (guide.length - 1);
+
+    context.lineCap = "round";
+    context.strokeStyle = TINTS[2];
+    context.lineWidth = 1;
+    context.globalAlpha = 0.17 * strength;
+    context.beginPath();
+    guide.forEach(([x, y], index) => (index ? context.lineTo(x, y) : context.moveTo(x, y)));
+    context.stroke();
+
+    context.strokeStyle = TINTS[0];
+    context.lineWidth = 1.5;
+    context.globalAlpha = 0.7 * strength;
+    context.beginPath();
+    for (let index = 0; index < guide.length - 1; index += 1) {
+      const drawn = clamp(travelled - index, 0, 1);
+      if (!drawn) break;
+      const [fromX, fromY] = guide[index];
+      const [toX, toY] = guide[index + 1];
+      context.moveTo(fromX, fromY);
+      context.lineTo(fromX + (toX - fromX) * drawn, fromY + (toY - fromY) * drawn);
+    }
+    context.stroke();
+
+    guide.forEach(([x, y], index) => {
+      const lit = index ? smooth(index - 0.12, index, travelled) : 1;
+      const size = guideSize * (0.45 + 0.55 * lit);
+      context.fillStyle = TINTS[0];
+      context.globalAlpha = (0.35 + 0.65 * lit) * strength;
+      context.beginPath();
+      for (let k = 0; k < SPARKLE.length; k += 2) {
+        context.lineTo(x + SPARKLE[k] * size, y + SPARKLE[k + 1] * size);
+      }
+      context.closePath();
+      context.fill();
+    });
   }
 
   // The sky moves slowly, so about 30 frames a second is plenty.

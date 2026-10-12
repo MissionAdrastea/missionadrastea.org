@@ -3,6 +3,14 @@
     "name": "Aiyana Bage",
     "title": "Founder & CEO",
     "image": "aiyanab.jpg",
+    "highlights": [
+      "Founder and CEO of Adrastea",
+      "Research using NASA’s Open Science Data Repository on female reproduction and neuroscience in space",
+      "Pediatric neuroscience at Children’s National Hospital",
+      "Directed an adolescent-led symposium at Harvard Medical School",
+      "Led a 40+ member medical research team",
+      "Represented young people at the United Nations"
+    ],
     "bio": [
       "Aiyana Bage is the Founder and CEO of Adrastea, a youth-led nonprofit advancing women’s health and participation in aerospace through research, technology, policy, and public engagement. Her work spans space medicine, neuroscience, bioengineering, women’s health, and human spaceflight.",
       "She founded Adrastea after identifying two persistent gaps in the field: limited attention to female physiology in preparation for human exploration, and limited opportunities for the generation that will inherit these missions to meaningfully contribute to their direction. Through Adrastea, she leads a growing interdisciplinary community working across women’s health in space, bioengineering, space policy and ethics, and science communication.",
@@ -22,12 +30,12 @@
     {
       "name": "Ruth Nichols",
       "image": "ruthn.jpg",
-      "bio": "Graduate student at Cornell University · 4x analog astronaut · AFRL Scholar, Astronaut Scholar, Zed Factor Fellow, Schwarzman Scholar · Astrobiology B.S. & Mathematics B.S."
+      "bio": "Graduate student at Cornell University · Four-time analog astronaut · AFRL Scholar, Astronaut Scholar, Zed Factor Fellow, Schwarzman Scholar · Astrobiology B.S. & Mathematics B.S."
     },
     {
       "name": "Eleonore Poli",
       "image": "eleonorep.jpg",
-      "bio": "Space & Aeronautics Business Development @ CSEM · PhD Materials, University of Cambridge · Analogue astronaut · Director, CHASM · OeWF · BIODYSSEUS · Swiss Space Museum · Global Shaper Alumni · Cos-Rad · Pilot"
+      "bio": "Space & Aeronautics Business Development @ CSEM · PhD Materials, University of Cambridge · Analog astronaut · Director, CHASM · OeWF · BIODYSSEUS · Swiss Space Museum · Global Shaper alumna · Cos-Rad · Pilot"
     },
     {
       "name": "Gretchen Green",

@@ -58,6 +58,18 @@ function renderFounder(founder) {
     createTextElement("h2", "founder-name", founder.name),
   );
 
+  if (Array.isArray(founder.highlights)) {
+    const points = document.createElement("ul");
+    points.className = "founder-points";
+    founder.highlights.forEach((point) => points.append(createTextElement("li", "", point)));
+    details.append(points);
+  }
+
+  // the full biography stays available, folded away so the page reads in lines
+  const more = document.createElement("details");
+  more.className = "founder-more";
+  more.append(createTextElement("summary", "link", "Read the full story"));
+
   const bio = document.createElement("div");
   bio.className = "founder-bio";
   const paragraphs = Array.isArray(founder.bio)
@@ -66,7 +78,8 @@ function renderFounder(founder) {
   paragraphs.forEach((paragraph) => {
     bio.append(createTextElement("p", "founder-bio-paragraph", paragraph));
   });
-  details.append(bio);
+  more.append(bio);
+  details.append(more);
   profile.append(portrait, details);
 }
 
