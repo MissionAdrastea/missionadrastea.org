@@ -82,10 +82,10 @@ add, remove or reword a milestone, edit those captions; no JavaScript changes ar
 The roster is maintained in [`assets/people-data.json`](./assets/people-data.json), so names and groups can be edited without changing JavaScript:
 
 - Add or rename groups in `teams`, then set each person’s `team` value to the matching group `id`.
-- Each person needs a `name`, `title`, and matching `team`; `bio` and `image` are optional.
+- Each person needs a `name` and matching `team`; `title` and `image` are optional. Anyone whose title starts with "Director" shows their portrait. A `bio` can stay in the file but is not shown on the page.
 - Director portraits are optional and use files under `images/profile/`.
 - Partner entries can include a `logo` filename stored under `images/logo/`; entries without a logo display their name instead.
 - The founder `bio` accepts an array of paragraph strings so text stays spaced and readable.
-- `council` lists the Astronaut Advisory Council: each entry has a `name`, and optionally a `bio` and
-  an `image` under `images/profile/`.
-- `advisors` lists other advisors: each entry has a `name` and `title`, and optionally a `bio`.
+- `council` lists the Astronaut Advisory Council: each entry has a `name`, and optionally an `image`
+  under `images/profile/`.
+- `advisors` lists other advisors: each entry has a `name` and `title`.

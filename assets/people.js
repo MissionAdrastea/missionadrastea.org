@@ -18,7 +18,7 @@ function createImage(src, alt) {
 
 function createPersonCard(person) {
   const card = document.createElement("li");
-  const isDirector = person.title.toLowerCase() === "director";
+  const isDirector = person.title.toLowerCase().startsWith("director");
   card.className = isDirector ? "person person--director" : "person";
 
   if (isDirector && person.image) {
@@ -29,13 +29,9 @@ function createPersonCard(person) {
   }
 
   const details = document.createElement("div");
-  details.append(
-    createTextElement("h4", "person-name", person.name),
-    createTextElement("p", "person-title", person.title),
-  );
-
-  if (person.bio) {
-    details.append(createTextElement("p", "person-bio", person.bio));
+  details.append(createTextElement("h4", "person-name", person.name));
+  if (person.title) {
+    details.append(createTextElement("p", "person-title", person.title));
   }
 
   card.append(details);
@@ -124,9 +120,6 @@ function renderCouncil(council) {
     const body = document.createElement("div");
     body.className = "council-body";
     body.append(createTextElement("h3", "council-name", member.name));
-    if (member.bio) {
-      body.append(createTextElement("p", "council-bio", member.bio));
-    }
 
     card.append(body);
     list.append(card);
@@ -179,7 +172,7 @@ function renderTeams(teams, people) {
 async function loadPeopleDirectory() {
   if (!peopleDirectory) return;
 
-  const response = await fetch("../assets/people-data.json?v=2");
+  const response = await fetch("../assets/people-data.json?v=5");
   if (!response.ok) {
     throw new Error(`Could not load the About page roster: ${response.status}`);
   }

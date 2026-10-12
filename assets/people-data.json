@@ -18,14 +18,24 @@
       "Her work in women’s health has included directing an adolescent-led symposium at Harvard Medical School and participating in women’s health initiatives recognized by Harvard and Princeton. She has led a 40+ member medical research team, authored a 100-page clinical literature review, and developed research and policy initiatives focused on reproductive and menstrual health. Aiyana is also actively involved in women’s health and gender-based violence prevention in her local community. She has represented young people in international policy spaces through the United Nations and is committed to creating meaningful pathways for the next generation to shape the systems that will define their future."
     ]
   },
-
   "partners": [
-    { "name": "Columbia", "logo": "columbia.png" },
-    { "name": "NASA", "logo": "nasa.png" },
-    { "name": "Harvard", "logo": "harvard.png" },
-    { "name": "University of Arizona", "logo": "uaz.png" }
+    {
+      "name": "Columbia",
+      "logo": "columbia.png"
+    },
+    {
+      "name": "NASA",
+      "logo": "nasa.png"
+    },
+    {
+      "name": "Harvard",
+      "logo": "harvard.png"
+    },
+    {
+      "name": "University of Arizona",
+      "logo": "uaz.png"
+    }
   ],
-
   "council": [
     {
       "name": "Ruth Nichols",
@@ -43,12 +53,14 @@
       "bio": "Physician-astronaut · Speaker · Strategic advisor · Women’s health · Space biotech · Helping mission-driven companies launch and land successfully"
     }
   ],
-
   "advisors": [
-    { "name": "Dr. Scott Bailey", "title": "Advisor, Bioengineering & Innovation" },
+    {
+      "name": "Dr. Scott Bailey",
+      "title": "Advisor, Bioengineering & Technology"
+    },
     {
       "name": "Wanjiku Kanjumba",
-      "title": "Advisor, Bioengineering & Innovation",
+      "title": "Advisor, Bioengineering & Technology",
       "bio": "Forbes 30 Under 30"
     },
     {
@@ -57,60 +69,107 @@
       "bio": "University of Edinburgh"
     }
   ],
-
   "teams": [
-    { "id": "policy", "name": "Policy, Ethics & Society" },
-    { "id": "communications", "name": "Outreach & Marketing" },
-    { "id": "visual-media", "name": "Visual Media & Creative Marketing" },
-    { "id": "business-development", "name": "Business Development & Technology" },
-    { "id": "bioengineering", "name": "Bioengineering Technology" },
-    { "id": "health", "name": "Health & Physiology Research" }
+    {
+      "id": "health",
+      "name": "Health & Physiology"
+    },
+    {
+      "id": "bioengineering",
+      "name": "Bioengineering & Technology"
+    },
+    {
+      "id": "policy",
+      "name": "Policy & Advocacy"
+    },
+    {
+      "id": "communications",
+      "name": "Scientific Media & Marketing"
+    }
   ],
-
   "people": [
-    { "team": "policy", "name": "Profile coming soon", "title": "Director" },
-    { "team": "policy", "name": "Joi Ysabella Carla Salvino", "title": "Policy Research Lead" },
-    { "team": "policy", "name": "Harsha Bheemanathini", "title": "Legal Advocacy Lead" },
     {
-      "team": "communications",
-      "name": "Laine Kowalski",
+      "team": "health",
+      "name": "Kate Russell",
       "title": "Director",
-      "bio": "Space Sciences & National Security Research Strategic Communications / Content Specialist @ University of Arizona",
-      "image": "lainek.jpg"
+      "image": "kater.PNG"
     },
-    { "team": "communications", "name": "Rida Akhtar", "title": "Content Research Lead" },
     {
-      "team": "visual-media",
-      "name": "Vee Nyugen",
-      "title": "Director",
-      "bio": "Biomedical Engineering @ University of Texas at Austin"
+      "team": "health",
+      "name": "Skylar Dipasupil",
+      "title": "Microbiology Research Lead"
     },
-    { "team": "visual-media", "name": "Sakura Lai", "title": "Website Lead" },
-    { "team": "visual-media", "name": "Victoria Lee", "title": "Videography Lead" },
     {
-      "team": "business-development",
-      "name": "Abigail Merchant",
-      "title": "Director",
-      "bio": "Satellite Payload Architect @ Accenture",
-      "image": "abigailm.jpeg"
+      "team": "health",
+      "name": "Hannah May Lyons",
+      "title": "Exercise Physiology Specialist"
+    },
+    {
+      "team": "health",
+      "name": "Ananya Sridhar",
+      "title": "Molecular Biology Specialist"
     },
     {
       "team": "bioengineering",
       "name": "Rianna Chaudhuri",
       "title": "Director",
-      "bio": "Founder @ NeuroPen",
       "image": "riannac.jpg"
     },
-    { "team": "bioengineering", "name": "Rene Mohammadi", "title": "Specialist" },
     {
-      "team": "health",
-      "name": "Kate Russell",
-      "title": "Director",
-      "bio": "NASA TechRise Winner '26",
-      "image": "kater.PNG"
+      "team": "bioengineering",
+      "name": "Rene Mohammadi",
+      "title": "Molecular Physiology Specialist"
     },
-    { "team": "health", "name": "Skylar Dipasupil", "title": "Microbiology Research Lead" },
-    { "team": "health", "name": "Ananya Sridhar", "title": "Specialist" },
-    { "team": "health", "name": "Hannah May Lyons", "title": "Specialist" }
+    {
+      "team": "policy",
+      "name": "Joi Ysabella Carla Salvino",
+      "title": "Policy Research Lead"
+    },
+    {
+      "team": "policy",
+      "name": "Harsha Bheemanathini",
+      "title": "Legal Advocacy Lead"
+    },
+    {
+      "team": "communications",
+      "name": "Laine Kowalski",
+      "title": "Director",
+      "image": "lainek.jpg"
+    },
+    {
+      "team": "communications",
+      "name": "Vee Nguyen",
+      "title": "Director, Visual Media & Creative Marketing"
+    },
+    {
+      "team": "communications",
+      "name": "Rida Akhtar",
+      "title": "Scientific Content Research Lead"
+    },
+    {
+      "team": "communications",
+      "name": "Adyan Khan",
+      "title": "Scientific Content Development Lead"
+    },
+    {
+      "team": "communications",
+      "name": "Sakura Lai",
+      "title": "Website Lead"
+    },
+    {
+      "team": "communications",
+      "name": "Victoria Lee",
+      "title": "Videography Lead"
+    },
+    {
+      "team": "communications",
+      "name": "Kieran Fenwick",
+      "title": "Scientific Illustration Specialist"
+    },
+    {
+      "team": "communications",
+      "name": "Jordan Dorsey",
+      "title": ""
+    }
   ]
 }

@@ -232,9 +232,7 @@
 }
 
 .council-body {
-  display: grid;
-  gap: 10px;
-  padding: 24px 28px 28px;
+  padding: 18px 24px 20px;
 }
 
 .council-body h3 {
@@ -259,7 +257,7 @@
 }
 
 .advisor {
-  padding: 24px 28px;
+  padding: 16px 22px;
   border: 1px solid var(--line);
   border-radius: var(--radius);
 }
@@ -279,14 +277,19 @@
   padding: 0 var(--gutter) var(--section-space);
 }
 
+/* a compact roster: names and titles only */
+.team {
+  padding: 18px 0;
+}
+
 .team-name {
   font-size: clamp(1.3rem, 2vw, 1.8rem);
 }
 
 .team-members {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 28px 32px;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 14px 24px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -294,15 +297,15 @@
 
 .person {
   display: flex;
-  align-items: flex-start;
-  gap: 16px;
+  align-items: center;
+  gap: 12px;
 }
 
 .person-portrait {
   overflow: hidden;
   flex: none;
-  width: 64px;
-  height: 64px;
+  width: 40px;
+  height: 40px;
   border: 1px solid var(--line);
   border-radius: 50%;
 }
