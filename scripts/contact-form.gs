@@ -68,16 +68,10 @@ function doPost(e) {
     const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
     sheet.appendRow(headers.map((header) => (header === "Timestamp" ? new Date() : clean(fields[header]))));
 
-    if (NOTIFY_EMAIL) {
-      MailApp.sendEmail({
-        to: NOTIFY_EMAIL,
-        replyTo: String(fields.Email).trim(),
-        subject: "Adrastea inquiry: " + clean(fields["Request Type"]),
-        body: FIELDS.filter((name) => fields[name])
-          .map((name) => name + ": " + fields[name])
-          .join("\n"),
-      });
-    }
+    // The inquiry is saved at this point. The email is a courtesy on top: if it cannot be sent
+    // (daily quota, permission not granted yet) the visitor must still be told it was saved,
+    // or they would send it again.
+    notify(fields);
 
     return json({ ok: true });
   } catch (error) {
@@ -86,6 +80,34 @@ function doPost(e) {
   } finally {
     lock.releaseLock();
   }
+}
+
+// Emails the team about one inquiry. Never throws: a failure is logged (Executions, in the editor).
+function notify(fields) {
+  if (!NOTIFY_EMAIL) return;
+  try {
+    MailApp.sendEmail({
+      to: NOTIFY_EMAIL,
+      replyTo: String(fields.Email || "").trim(), // "Reply" in the inbox answers the visitor
+      subject: "Adrastea inquiry: " + clean(fields["Request Type"]),
+      body: FIELDS.filter((name) => fields[name])
+        .map((name) => name + ": " + fields[name])
+        .join("\n"),
+    });
+  } catch (error) {
+    console.error("Inquiry saved, but the notification email failed: " + error);
+  }
+}
+
+// Run this once from the editor after setting NOTIFY_EMAIL. It asks for permission to send email
+// and sends a sample, so a problem shows up here rather than on a visitor's inquiry.
+function testEmail() {
+  if (!NOTIFY_EMAIL) throw new Error("Set NOTIFY_EMAIL at the top of this file first.");
+  MailApp.sendEmail({
+    to: NOTIFY_EMAIL,
+    subject: "Adrastea inquiry: test",
+    body: "Email alerts for the contact form are working. Emails left today: " + MailApp.getRemainingDailyQuota(),
+  });
 }
 
 // Opening the address in a browser shows this, which is a quick way to check the deployment is public.
