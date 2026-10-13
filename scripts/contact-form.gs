@@ -71,9 +71,9 @@ function doPost(e) {
     // The inquiry is saved at this point. The email is a courtesy on top: if it cannot be sent
     // (daily quota, permission not granted yet) the visitor must still be told it was saved,
     // or they would send it again.
-    notify(fields);
-
-    return json({ ok: true });
+    // "notified" is "sent", "off" (no address set in this deployed version) or "failed", so a test
+    // submission shows whether alerts are working without opening the execution log.
+    return json({ ok: true, notified: notify(fields) });
   } catch (error) {
     console.error(error);
     return json({ ok: false, message: "We couldn’t save your inquiry. Please try again in a moment." });
@@ -84,7 +84,7 @@ function doPost(e) {
 
 // Emails the team about one inquiry. Never throws: a failure is logged (Executions, in the editor).
 function notify(fields) {
-  if (!NOTIFY_EMAIL) return;
+  if (!NOTIFY_EMAIL) return "off";
   try {
     MailApp.sendEmail({
       to: NOTIFY_EMAIL,
@@ -94,8 +94,10 @@ function notify(fields) {
         .map((name) => name + ": " + fields[name])
         .join("\n"),
     });
+    return "sent";
   } catch (error) {
     console.error("Inquiry saved, but the notification email failed: " + error);
+    return "failed";
   }
 }
 
