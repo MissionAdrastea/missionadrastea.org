@@ -40,10 +40,50 @@ async function loadComponent(selector, filename) {
   }
 }
 
+// Clean addresses. The pages are plain files (about.html), and the links in the markup say so, which
+// works on any web server. Some hosts, GitHub Pages among them, also serve about.html at /about.
+// Where that is the case, the address bar and every link drop ".html"; elsewhere nothing changes.
+let cleanAddresses = false;
+
+function tidyLinks() {
+  if (!cleanAddresses) return;
+  document.querySelectorAll("a[href]").forEach((link) => {
+    // only links to this site's own pages: "about.html", "div.html#policy-advocacy", "index.html"
+    const match = /^([\w-]+)\.html([?#].*)?$/.exec(link.getAttribute("href"));
+    if (match) link.setAttribute("href", (match[1] === "index" ? "./" : match[1]) + (match[2] || ""));
+  });
+}
+
+async function useCleanAddresses() {
+  // Ask the host once per browser session whether it serves a page without its extension.
+  const key = "adrastea:clean-addresses";
+  let supported = remembered(key);
+  if (supported === null) {
+    try {
+      const probe = await fetch(new URL("contact", window.location.href), { method: "HEAD" });
+      supported = probe.ok ? "yes" : "no";
+    } catch {
+      supported = "no";
+    }
+    remember(key, supported);
+  }
+  if (supported !== "yes") return;
+  cleanAddresses = true;
+
+  // Someone who arrives on /about.html or /index.html sees /about or / instead, without a reload.
+  const { pathname, search, hash } = window.location;
+  const tidy = pathname.replace(/\/index\.html$/, "/").replace(/\.html$/, "");
+  if (tidy !== pathname) window.history.replaceState(window.history.state, "", tidy + search + hash);
+  tidyLinks();
+}
+
 function markCurrentPage() {
-  const currentPage = window.location.pathname.split("/").pop() || "index.html";
+  tidyLinks(); // the header and footer have just been put on the page, with ".html" links
+  const pageName = (address) => address.split(/[?#]/)[0].replace(/\.html$/, "");
+  const currentPage = pageName(window.location.pathname.split("/").pop());
+  if (!currentPage) return; // the home page: only the logo links there, and it is not marked
   document.querySelectorAll(".nav a, .foot a").forEach((link) => {
-    if (link.getAttribute("href") === currentPage) {
+    if (pageName(link.getAttribute("href")) === currentPage) {
       link.setAttribute("aria-current", "page");
     }
   });
@@ -98,4 +138,5 @@ async function loadSiteComponents() {
   }
 }
 
+useCleanAddresses();
 loadSiteComponents();

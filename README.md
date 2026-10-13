@@ -13,6 +13,12 @@ Static website, no build step.
 The home page is the root `index.html`, so the site opens at the bare domain with nothing after it.
 Link to the home page as `./`, never as `index.html`, to keep the address clean.
 
+Link to the other pages with their file names (`about.html`, `div.html#policy-advocacy`), which works
+on any web server. GitHub Pages also serves `about.html` at `/about`, so on the live site
+[`components.js`](./assets/components.js) drops `.html` from the address bar and from every link.
+It asks the host once per browser session whether that works; on a plain local server it does not,
+and the site keeps the `.html` addresses.
+
 ## Running it locally
 
 The shared header and footer are loaded with `fetch`, so serve the project over HTTP rather than
