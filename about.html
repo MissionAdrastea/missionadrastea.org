@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>About Us | Adrastea</title>
+    <meta
+      name="description"
+      content="Adrastea is a youth-led accelerator and collaboration hub advancing women in space. Meet our mission, founder, advisors, and teams."
+    />
+    <link rel="icon" href="images/general/emblem.jpg" />
+    <link rel="preload" as="image" href="images/general/emblem.jpg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Instrument+Serif:ital@0;1&display=swap"
+    />
+    <link rel="stylesheet" href="assets/site.css?v=32" />
+    <link rel="stylesheet" href="style/about.css?v=32" />
+    <script src="assets/vendor/gsap.min.js" defer></script>
+    <script src="assets/vendor/ScrollTrigger.min.js" defer></script>
+    <script src="assets/sky.js?v=32" defer></script>
+    <script src="assets/components.js?v=32" defer></script>
+    <script src="assets/motion.js?v=32" defer></script>
+    <script src="assets/people.js?v=32" defer></script>
+    <script src="assets/star-trail.js?v=32" defer></script>
+  </head>
+
+  <body>
+    <div data-site-header></div>
+
+    <main>
+      <section class="hero hero--motto" id="content" data-orbit="hero" aria-labelledby="about-title">
+        <div class="layer" data-intro>
+          <h1 id="about-title">Ad astra, <em>for all.</em></h1>
+          <p>Closing the sex gap in aerospace.</p>
+        </div>
+      </section>
+
+      <section class="scrub layer" data-orbit="ghost" aria-label="About Adrastea">
+        <p data-scrub>
+          A youth-led accelerator and collaboration hub advancing women in space. For every woman
+          in the industry: doctors, engineers, designers, astronauts. For an equitable future in
+          human spaceflight.
+        </p>
+      </section>
+
+      <section class="mission layer" data-orbit="dock" aria-labelledby="mission-title">
+        <h2 class="section-title" id="mission-title" data-reveal>Our mission</h2>
+        <p class="section-lede" data-reveal>
+          Our goal is not just to identify gaps, but to build the research, projects, and
+          partnerships that address them.
+        </p>
+        <ol class="goals">
+          <li class="goal goal--lead goal--photo" data-zoom>
+            <figure class="card-photo">
+              <img
+                src="images/space/webb.jpg"
+                alt="A deep field of galaxies and stars seen by the James Webb Space Telescope"
+                loading="lazy"
+                decoding="async"
+                style="object-position: 50% 50%"
+                data-parallax
+              />
+            </figure>
+            <span class="goal-number" aria-hidden="true">1</span>
+            <p>Ensure women are not an afterthought in space exploration</p>
+          </li>
+          <li class="goal goal--photo" data-zoom>
+            <figure class="card-photo">
+              <img
+                src="images/space/aurora.jpg"
+                alt="Station modules silhouetted against a green aurora over Earth's limb"
+                loading="lazy"
+                decoding="async"
+                style="object-position: 50% 60%"
+                data-parallax
+              />
+            </figure>
+            <span class="goal-number" aria-hidden="true">2</span>
+            <p>Change how the industry attends to women’s health</p>
+          </li>
+          <li class="goal goal--photo" data-zoom>
+            <figure class="card-photo">
+              <img
+                src="images/space/earthrise.jpg"
+                alt="Earth rising over the lunar horizon against black space"
+                loading="lazy"
+                decoding="async"
+                style="object-position: 50% 52%"
+                data-parallax
+              />
+            </figure>
+            <span class="goal-number" aria-hidden="true">3</span>
+            <p>Build a leading hub for women’s health in space</p>
+          </li>
+        </ol>
+      </section>
+
+      <section class="founder layer" aria-label="Founder">
+        <article class="founder-profile" id="founder-profile"></article>
+      </section>
+
+      <section class="council layer" aria-labelledby="council-title">
+        <h2 class="section-title" id="council-title" data-reveal>Astronaut Advisory Council</h2>
+        <div class="council-list" id="council-list"></div>
+        <h3 class="advisors-title" data-reveal>Advisors</h3>
+        <ul class="advisor-list" id="advisor-list"></ul>
+      </section>
+
+      <section class="people layer" aria-labelledby="people-title">
+        <h2 class="section-title" id="people-title" data-reveal>Our people and teams</h2>
+        <p class="section-lede" data-reveal>
+          About 30 members across health, bioengineering, policy, and media, backed by advisors in
+          bioengineering, governance, and finance.
+        </p>
+        <div id="people-directory"></div>
+      </section>
+
+      <section class="network layer" aria-labelledby="network-title">
+        <h2 class="section-title" id="network-title" data-reveal>Our network</h2>
+        <p class="section-lede" data-reveal>
+          Connecting researchers, students, clinicians, engineers, policymakers, and communicators.
+        </p>
+        <p class="tag network-label" data-reveal>
+          <span class="tag-dot"></span>Institutional network
+        </p>
+        <div
+          class="mq network-marquee"
+          data-marquee="NASA|Harvard|MIT|Oxford|Stanford|Mayo Clinic|Virginia Tech|Rutgers|IEEE"
+          aria-hidden="true"
+        ></div>
+        <p class="sr-only">
+          NASA, Harvard, MIT, Oxford, Stanford, Mayo Clinic, Virginia Tech, Rutgers, and IEEE.
+        </p>
+        <div class="partner-list" id="partner-list"></div>
+      </section>
+
+      <section class="join layer" data-orbit="join" aria-labelledby="join-title">
+        <div>
+          <h2 id="join-title">Ad astra,<br /><em>for all.</em></h2>
+          <p>Join a team, sponsor, collaborate, or support our work.</p>
+          <div class="row">
+            <a class="btn" href="contact.html">Get involved</a>
+            <a class="btn dark" href="div.html">Explore our divisions</a>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <div data-site-footer></div>
+  </body>
+</html>

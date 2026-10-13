@@ -4,12 +4,14 @@ Static website, no build step.
 
 | Path      | What lives there                                                                 |
 | --------- | -------------------------------------------------------------------------------- |
-| `page/`   | The pages: `index.html`, `div.html`, `about.html`, `contact.html`                |
+| (root)    | The pages: `index.html`, `div.html`, `about.html`, `contact.html`                |
+| `page/`   | Forwarding stubs only, so links to the old `/page/...` addresses still arrive     |
 | `style/`  | One stylesheet per page                                                          |
 | `assets/` | Everything shared: `site.css`, the header and footer markup, scripts, roster data |
 | `images/` | Photos, partner logos, profile portraits                                         |
 
-The root `index.html` only redirects the bare domain to `page/index.html`.
+The home page is the root `index.html`, so the site opens at the bare domain with nothing after it.
+Link to the home page as `./`, never as `index.html`, to keep the address clean.
 
 ## Running it locally
 
@@ -20,9 +22,31 @@ opening an HTML file directly. From the project root, run:
 python -m http.server 8000
 ```
 
-Then open <http://localhost:8000/page/index.html>.
+Then open <http://localhost:8000/>.
 
 In VS Code, run the **Open site in external browser** task (`Terminal` → `Run Task`) to start a local server and open the home page in your default browser.
+
+## Contact form
+
+The form on `contact.html` posts to a Google Apps Script web app, which saves each inquiry as a row
+in a Google Sheet. The server side is [`scripts/contact-form.gs`](./scripts/contact-form.gs); the
+page side is [`assets/contact-form.js`](./assets/contact-form.js).
+
+To set it up or repair it:
+
+1. Open the Google Sheet that should collect inquiries, then `Extensions` → `Apps Script`, and paste in
+   `scripts/contact-form.gs`. Set `NOTIFY_EMAIL` if the team should be emailed for each inquiry.
+2. `Deploy` → `New deployment` → `Web app`, with **Execute as: Me** and **Who has access: Anyone**.
+   Any other access setting sends visitors to a Google sign-in page and nothing is saved. If "Anyone"
+   is not offered, a Workspace admin has to allow sharing outside the organisation.
+3. Copy the web app address into the form's `action` in `contact.html`, in the shape
+   `https://script.google.com/macros/s/<deployment id>/exec`. Do not use the
+   `/a/macros/missionadrastea.org/` form of the address: it always asks for a Workspace sign-in.
+4. Open that address in a private browser window. It should show `{"ok":true,...}`. A sign-in page
+   means step 2 is not right yet.
+
+To change the script later, use `Deploy` → `Manage deployments` → edit → **New version**, which keeps
+the same address.
 
 ## Design system
 
@@ -54,7 +78,7 @@ motion to new content needs no JavaScript:
 | `data-sky`      | `quiet` hushes the background constellations while this section is on screen |
 
 The home page opens with a loading screen on the first visit of a browser session
-([`loader.js`](./assets/loader.js), markup at the top of `page/index.html`, styles under "loading
+([`loader.js`](./assets/loader.js), markup at the top of `index.html`, styles under "loading
 screen" in `site.css`). It is skipped on later visits and for reduced motion.
 
 The other scripts: [`sky.js`](./assets/sky.js) draws the starry sky and its drifting constellations
@@ -68,7 +92,7 @@ and scroll animations end up in the wrong place.
 
 ## The timeline constellation
 
-The timeline on the home page is written in `page/index.html`: every caption inside `.timeline` that
+The timeline on the home page is written in `index.html`: every caption inside `.timeline` that
 carries `data-star="x,y"` becomes a star, in order, and the script joins each one to the next. To
 add, remove or reword a milestone, edit those captions; no JavaScript changes are needed.
 

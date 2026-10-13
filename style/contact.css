@@ -152,19 +152,22 @@
   color: var(--mute);
 }
 
-/* the honeypot and the response frame are never shown */
-.contact-honeypot,
-.contact-response-frame {
+.contact-form-status[data-state="success"] {
+  color: #8ef0c0;
+}
+
+.contact-form-status[data-state="error"] {
+  color: #ffb3c7;
+}
+
+/* the honeypot is never shown */
+.contact-honeypot {
   position: absolute;
   overflow: hidden;
   width: 1px;
   height: 1px;
   clip-path: inset(50%);
   white-space: nowrap;
-}
-
-.contact-response-frame {
-  display: none;
 }
 
 @media (max-width: 900px) {

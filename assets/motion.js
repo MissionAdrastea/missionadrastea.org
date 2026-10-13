@@ -28,7 +28,7 @@
       // "Name@file.png" puts that logo, from images/logo, on a light chip before the name
       .map((word) => {
         const [name, logo] = word.split("@");
-        const chip = logo ? `<img class="mq-logo" src="../images/logo/${logo}" alt="" />` : "";
+        const chip = logo ? `<img class="mq-logo" src="images/logo/${logo}" alt="" />` : "";
         return `<span>${chip}${name}</span><i></i>`;
       })
       .join("");

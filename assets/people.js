@@ -24,7 +24,7 @@ function createPersonCard(person) {
   if (isDirector && person.image) {
     const portrait = document.createElement("span");
     portrait.className = "person-portrait";
-    portrait.append(createImage(`../images/profile/${person.image}`, ""));
+    portrait.append(createImage(`images/profile/${person.image}`, ""));
     card.append(portrait);
   }
 
@@ -45,7 +45,7 @@ function renderFounder(founder) {
   const portrait = document.createElement("figure");
   portrait.className = "founder-portrait";
   portrait.dataset.reveal = "";
-  portrait.append(createImage(`../images/profile/${founder.image}`, `Portrait of ${founder.name}`));
+  portrait.append(createImage(`images/profile/${founder.image}`, `Portrait of ${founder.name}`));
 
   const details = document.createElement("div");
   details.dataset.reveal = "";
@@ -90,7 +90,7 @@ function renderPartners(partners) {
 
     // Entries without a logo show their name instead.
     if (partner.logo) {
-      card.append(createImage(`../images/logo/${partner.logo}`, `${partner.name} logo`));
+      card.append(createImage(`images/logo/${partner.logo}`, `${partner.name} logo`));
     } else {
       card.textContent = partner.name;
     }
@@ -112,7 +112,7 @@ function renderCouncil(council) {
       const portrait = document.createElement("figure");
       portrait.className = "council-portrait";
       portrait.append(
-        createImage(`../images/profile/${member.image}`, `Portrait of ${member.name}`),
+        createImage(`images/profile/${member.image}`, `Portrait of ${member.name}`),
       );
       card.append(portrait);
     }
@@ -172,7 +172,7 @@ function renderTeams(teams, people) {
 async function loadPeopleDirectory() {
   if (!peopleDirectory) return;
 
-  const response = await fetch("../assets/people-data.json?v=5");
+  const response = await fetch("assets/people-data.json?v=6");
   if (!response.ok) {
     throw new Error(`Could not load the About page roster: ${response.status}`);
   }

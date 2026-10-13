@@ -28,7 +28,7 @@ $server = Start-Process `
   -WindowStyle Hidden `
   -PassThru
 
-$url = "http://127.0.0.1:$port/page/index.html"
+$url = "http://127.0.0.1:$port/"
 $ready = $false
 
 for ($attempt = 0; $attempt -lt 24; $attempt++) {
