@@ -3,18 +3,51 @@ const contactForm = document.querySelector(".contact-form");
 if (contactForm) {
   const requestTypeSelect = contactForm.querySelector("#contact-request-type");
   const joiningTeamSelect = contactForm.querySelector("#contact-joining-team");
+  const joiningTeamField = joiningTeamSelect.closest(".contact-field");
+  const teamSelect = contactForm.querySelector("#contact-team");
   const applicationDetails = contactForm.querySelector("[data-application-details]");
   const status = contactForm.querySelector(".contact-form-status");
   const submitButton = contactForm.querySelector(".contact-submit");
   let sending = false;
 
+  // Sponsors and partners write as an organisation, so the question about joining a team is not
+  // theirs to answer. Hidden fields are disabled, which also leaves them out of the submission.
+  const ORGANISATION_REQUESTS = ["Sponsorship", "Partnership/Collaboration"];
+
   function updateConditionalFields() {
+    const forOrganisation = ORGANISATION_REQUESTS.includes(requestTypeSelect.value);
+    if (forOrganisation) joiningTeamSelect.value = "";
+    joiningTeamField.hidden = forOrganisation;
+    joiningTeamSelect.disabled = forOrganisation;
+
     const isApplication =
       requestTypeSelect.value === "Student/Research Application" ||
       joiningTeamSelect.value === "Yes";
     applicationDetails.hidden = !isApplication;
     applicationDetails.disabled = !isApplication;
   }
+
+  // Links elsewhere on the site open the form already pointed at the right topic:
+  // contact.html?type=sponsorship, or ?type=application&division=policy-advocacy.
+  // Only these known values are accepted; anything else leaves the form as it is.
+  const REQUEST_TYPES = {
+    application: "Student/Research Application",
+    sponsorship: "Sponsorship",
+    partnership: "Partnership/Collaboration",
+    media: "Media/Event",
+    general: "General Inquiry",
+  };
+  const DIVISIONS = {
+    "health-physiology": "Health & Physiology",
+    "bioengineering-technology": "Bioengineering & Technology",
+    "policy-advocacy": "Policy & Advocacy",
+    "scientific-media-marketing": "Scientific Media & Marketing",
+  };
+  const params = new URLSearchParams(window.location.search);
+  const presetType = REQUEST_TYPES[params.get("type")];
+  const presetDivision = DIVISIONS[params.get("division")];
+  if (presetType) requestTypeSelect.value = presetType;
+  if (presetDivision) teamSelect.value = presetDivision;
 
   // state is "sending", "success" or "error"; the stylesheet colours the message from it
   function setStatus(message, state) {

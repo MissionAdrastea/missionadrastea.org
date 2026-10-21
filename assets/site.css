@@ -453,6 +453,12 @@ h2 em {
   }
 }
 
+/* the hero's second audience: a text link, so the two buttons above keep their weight */
+.hero-aside {
+  margin-top: 22px;
+  font-size: 0.95rem;
+}
+
 /* ---------- buttons and links ---------- */
 
 .row {
