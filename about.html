@@ -17,15 +17,17 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Instrument+Serif:ital@0;1&display=swap"
     />
-    <link rel="stylesheet" href="assets/site.css?v=33" />
-    <link rel="stylesheet" href="style/about.css?v=32" />
+    <link rel="stylesheet" href="assets/site.css?v=53" />
+    <link rel="stylesheet" href="style/about.css?v=33" />
     <script src="assets/vendor/gsap.min.js" defer></script>
     <script src="assets/vendor/ScrollTrigger.min.js" defer></script>
-    <script src="assets/sky.js?v=32" defer></script>
+    <script src="assets/sky.js?v=35" defer></script>
     <script src="assets/components.js?v=33" defer></script>
-    <script src="assets/motion.js?v=32" defer></script>
-    <script src="assets/people.js?v=32" defer></script>
+    <script src="assets/motion.js?v=40" defer></script>
+    <script src="assets/constellation.js?v=35" defer></script>
+    <script src="assets/people.js?v=33" defer></script>
     <script src="assets/star-trail.js?v=32" defer></script>
+    <script type="module" src="assets/islands/islands.js"></script>
   </head>
 
   <body>
@@ -105,6 +107,7 @@
 
       <section class="council layer" aria-labelledby="council-title">
         <h2 class="section-title" id="council-title" data-reveal>Astronaut Advisory Council</h2>
+        <div class="council-cards-host" data-island="council"></div>
         <div class="council-list" id="council-list"></div>
         <h3 class="advisors-title" data-reveal>Advisors</h3>
         <ul class="advisor-list" id="advisor-list"></ul>
@@ -113,7 +116,7 @@
       <section class="people layer" aria-labelledby="people-title">
         <h2 class="section-title" id="people-title" data-reveal>Our people and teams</h2>
         <p class="section-lede" data-reveal>
-          About 30 members across health, bioengineering, policy, and media, backed by advisors in
+          Members across health, bioengineering, policy, and media, backed by advisors in
           bioengineering, governance, and finance.
         </p>
         <div id="people-directory"></div>
@@ -138,13 +141,83 @@
         <div class="partner-list" id="partner-list"></div>
       </section>
 
+      <!--
+        The timeline constellation (see constellation.js). Each caption with data-star="x,y" is a
+        star; positions are in sky units, roughly 0-1000 across and 0-600 down.
+      -->
+      <section class="timeline" id="timeline" data-orbit="dock" aria-label="Women in space, a timeline">
+        <a class="link timeline-skip" href="#join-title">Skip the timeline</a>
+        <div class="sticky">
+          <svg class="sky" aria-hidden="true"></svg>
+          <div class="copy">
+            <div class="step on">
+              <span class="tag"><span class="tag-dot"></span>1963 to today</span>
+              <h2>How we got here.</h2>
+              <p>Six decades of women in space, and of the research catching up with them.</p>
+            </div>
+            <div class="step" data-star="60,560">
+              <img class="step-photo" src="images/history/tereshkova.jpg" alt="Valentina Tereshkova in uniform, wearing her medals" loading="lazy" decoding="async" style="object-position: 50% 18%" />
+              <span class="tag"><span class="tag-dot"></span>1963</span>
+              <h3>First woman in space</h3>
+              <p>Valentina Tereshkova orbits Earth 48 times aboard Vostok 6.</p>
+            </div>
+            <div class="step" data-star="210,450" data-label="above">
+              <img class="step-photo" src="images/history/ride.jpg" alt="Sally Ride in a NASA flight jacket beside a Space Shuttle model" loading="lazy" decoding="async" style="object-position: 50% 16%" />
+              <span class="tag"><span class="tag-dot"></span>1983</span>
+              <h3>First American woman in space</h3>
+              <p>Sally Ride flies on the Space Shuttle Challenger.</p>
+            </div>
+            <div class="step" data-star="350,520">
+              <img class="step-photo" src="images/history/jemison.jpg" alt="Mae Jemison in an orange flight suit, holding her helmet" loading="lazy" decoding="async" style="object-position: 50% 14%" />
+              <span class="tag"><span class="tag-dot"></span>1992</span>
+              <h3>First Black woman in space</h3>
+              <p>Mae Jemison, physician and engineer, flies aboard Endeavour.</p>
+            </div>
+            <div class="step" data-star="450,360" data-label="left">
+              <span class="tag"><span class="tag-dot"></span>1993</span>
+              <h3>Women written into research</h3>
+              <p>A US law requires women to be included in NIH-funded clinical research.</p>
+            </div>
+            <div class="step" data-star="330,230" data-label="left">
+              <img class="step-photo" src="images/history/collins.jpg" alt="Eileen Collins in an orange flight suit beside a Space Shuttle model" loading="lazy" decoding="async" style="object-position: 50% 30%" />
+              <span class="tag"><span class="tag-dot"></span>1999</span>
+              <h3>First woman to command a Shuttle</h3>
+              <p>Eileen Collins leads a Space Shuttle mission.</p>
+            </div>
+            <div class="step" data-star="520,130" data-label="below">
+              <img class="step-photo" src="images/space/workstation.jpg" alt="Two women astronauts at a research workstation on the International Space Station" loading="lazy" decoding="async" style="object-position: 50% 38%" />
+              <span class="tag"><span class="tag-dot"></span>2014</span>
+              <h3>Sex and gender in space</h3>
+              <p>NASA reviews how women’s and men’s bodies adapt to spaceflight, and how thin the data is.</p>
+            </div>
+            <div class="step" data-star="690,220" data-label="right">
+              <img class="step-photo" src="images/space/kochmeir.jpg" alt="Christina Koch and Jessica Meir aboard the International Space Station, one in a spacesuit helmet" loading="lazy" decoding="async" style="object-position: 50% 30%" />
+              <span class="tag"><span class="tag-dot"></span>2019</span>
+              <h3>First all-woman spacewalk</h3>
+              <p>Christina Koch and Jessica Meir step outside the International Space Station.</p>
+            </div>
+            <div class="step" data-star="800,380" data-link="4" data-label="below">
+              <img class="step-photo" src="images/history/mare.jpg" alt="A radiation phantom in a blue protective vest carrying German and Israeli flags" loading="lazy" decoding="async" style="object-position: 50% 50%" />
+              <span class="tag"><span class="tag-dot"></span>2022</span>
+              <h3>Measuring radiation for women</h3>
+              <p>Two phantom torsos modelled on the female body, Helga and Zohar, fly around the Moon on Artemis I.</p>
+            </div>
+            <div class="step" data-star="930,90" style="--c: var(--pink)">
+              <span class="tag"><span class="tag-dot"></span>2026</span>
+              <h3>Adrastea launches</h3>
+              <p>The next chapter is ours to write. Ad astra, for all.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section class="join layer" data-orbit="join" aria-labelledby="join-title">
         <div>
           <h2 id="join-title">Ad astra,<br /><em>for all.</em></h2>
           <p>Join a team, sponsor, collaborate, or support our work.</p>
           <div class="row">
-            <a class="btn" href="contact.html">Get involved</a>
-            <a class="btn dark" href="contact.html?type=sponsorship">Sponsor or partner</a>
+            <a class="btn" href="contact.html?type=sponsorship">Sponsor or partner with us</a>
+            <a class="btn dark" href="contact.html?type=application">Join a division</a>
           </div>
         </div>
       </section>

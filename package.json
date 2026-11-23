@@ -1,0 +1,19 @@
+{
+  "name": "missionadrastea.org",
+  "private": true,
+  "type": "module",
+  "description": "Builds the React Bits islands in assets/islands/. The pages themselves are plain HTML.",
+  "scripts": {
+    "build": "vite build",
+    "watch": "vite build --watch"
+  },
+  "dependencies": {
+    "motion": "^12.43.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.7.0",
+    "vite": "^6.4.5"
+  }
+}

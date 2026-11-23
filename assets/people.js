@@ -16,25 +16,11 @@ function createImage(src, alt) {
   return image;
 }
 
+// Team members are listed by name only, under each team they belong to.
 function createPersonCard(person) {
   const card = document.createElement("li");
-  const isDirector = person.title.toLowerCase().startsWith("director");
-  card.className = isDirector ? "person person--director" : "person";
-
-  if (isDirector && person.image) {
-    const portrait = document.createElement("span");
-    portrait.className = "person-portrait";
-    portrait.append(createImage(`images/profile/${person.image}`, ""));
-    card.append(portrait);
-  }
-
-  const details = document.createElement("div");
-  details.append(createTextElement("h4", "person-name", person.name));
-  if (person.title) {
-    details.append(createTextElement("p", "person-title", person.title));
-  }
-
-  card.append(details);
+  card.className = "person";
+  card.append(createTextElement("h4", "person-name", person.name));
   return card;
 }
 
@@ -142,7 +128,7 @@ function renderTeams(teams, people) {
   if (!peopleDirectory) throw new Error("The About page people directory container is missing.");
 
   const teamIds = new Set(teams.map((team) => team.id));
-  const unmatchedPeople = people.filter((person) => !teamIds.has(person.team));
+  const unmatchedPeople = people.filter((person) => !person.teams?.length || person.teams.some((id) => !teamIds.has(id)));
   if (unmatchedPeople.length > 0) {
     throw new Error(
       `People refer to unknown teams: ${unmatchedPeople.map((person) => person.name).join(", ")}`,
@@ -161,7 +147,7 @@ function renderTeams(teams, people) {
     const members = document.createElement("ul");
     members.className = "team-members";
     people
-      .filter((person) => person.team === team.id)
+      .filter((person) => person.teams.includes(team.id))
       .forEach((person) => members.append(createPersonCard(person)));
 
     section.append(heading, members);
@@ -172,7 +158,7 @@ function renderTeams(teams, people) {
 async function loadPeopleDirectory() {
   if (!peopleDirectory) return;
 
-  const response = await fetch("assets/people-data.json?v=6");
+  const response = await fetch("assets/people-data.json?v=7");
   if (!response.ok) {
     throw new Error(`Could not load the About page roster: ${response.status}`);
   }

@@ -32,6 +32,24 @@ Then open <http://localhost:8000/>.
 
 In VS Code, run the **Open site in external browser** task (`Terminal` → `Run Task`) to start a local server and open the home page in your default browser.
 
+## React Bits islands
+
+A few pieces are React components from [React Bits](https://reactbits.dev), dropped into the plain
+pages as islands: the Advisory Council cards on About, magnetic buttons and click sparks. The home
+page's portraits unmask on scroll with [Motion](https://motion.dev) (`revealPortraits` in the same file).
+A page asks for one with `data-island="name"`; [`src/islands.jsx`](./src/islands.jsx) mounts it.
+Until an island has drawn itself the page shows its plain version, so nothing is lost if it fails.
+
+The built files live in `assets/islands/` and are committed, so GitHub Pages needs no build step.
+After changing anything in `src/`, rebuild them:
+
+```powershell
+npm install
+npm run build    # or: npm run watch, while editing
+```
+
+The components are in `src/reactbits/` (MIT + Commons Clause, see the LICENSE there).
+
 ## Contact form
 
 The form on `contact.html` posts to a Google Apps Script web app, which saves each inquiry as a row
@@ -81,7 +99,6 @@ motion to new content needs no JavaScript:
 | `data-stack`    | Cards that stack on top of each other (the Divisions page)         |
 | `data-marquee`  | `"One\|Two\|Three"` becomes an endless row of words                |
 | `data-gallery`  | A row of cards that scrolls sideways; buttons with `data-gallery-step="-1"` or `"1"` in the same section move it one card |
-| `data-sky`      | `quiet` hushes the background constellations while this section is on screen |
 
 The home page opens with a loading screen on the first visit of a browser session
 ([`loader.js`](./assets/loader.js), markup at the top of `index.html`, styles under "loading
@@ -89,7 +106,7 @@ screen" in `site.css`). It is skipped on later visits and for reduced motion.
 
 The other scripts: [`sky.js`](./assets/sky.js) draws the starry sky and its drifting constellations
 behind every page, [`ring.js`](./assets/ring.js) draws the divisions stage on the home page,
-[`constellation.js`](./assets/constellation.js) draws the timeline on the home page and
+[`constellation.js`](./assets/constellation.js) draws the timeline on the About page and
 [`star-trail.js`](./assets/star-trail.js) is the cursor trail. All motion is switched off for
 visitors who ask their system for reduced motion.
 
@@ -98,7 +115,7 @@ and scroll animations end up in the wrong place.
 
 ## The timeline constellation
 
-The timeline on the home page is written in `index.html`: every caption inside `.timeline` that
+The timeline on the About page is written in `about.html`: every caption inside `.timeline` that
 carries `data-star="x,y"` becomes a star, in order, and the script joins each one to the next. To
 add, remove or reword a milestone, edit those captions; no JavaScript changes are needed.
 
@@ -111,9 +128,9 @@ add, remove or reword a milestone, edit those captions; no JavaScript changes ar
 
 The roster is maintained in [`assets/people-data.json`](./assets/people-data.json), so names and groups can be edited without changing JavaScript:
 
-- Add or rename groups in `teams`, then set each person’s `team` value to the matching group `id`.
-- Each person needs a `name` and matching `team`; `title` and `image` are optional. Anyone whose title starts with "Director" shows their portrait. A `bio` can stay in the file but is not shown on the page.
-- Director portraits are optional and use files under `images/profile/`.
+- Add or rename groups in `teams`. Each person in `people` has a `name` and a `teams` list of group `id`s;
+  someone in two divisions is listed under both. Team members appear by name only, with no roles.
+- Keep `people` in step with the internal roster sheet: anyone no longer on it comes off the site.
 - Partner entries can include a `logo` filename stored under `images/logo/`; entries without a logo display their name instead.
 - The founder `bio` accepts an array of paragraph strings so text stays spaced and readable.
 - `council` lists the Astronaut Advisory Council: each entry has a `name`, and optionally an `image`

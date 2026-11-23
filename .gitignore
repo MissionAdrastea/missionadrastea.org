@@ -1,0 +1,5 @@
+node_modules/
+# design-tool working files (snapshots, caches, live-session state)
+.impeccable/critique/
+.impeccable/hook.cache.json
+.impeccable/live/

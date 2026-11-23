@@ -20,11 +20,11 @@
   const BOUNDS = [0.2, 0.45, 0.7, 0.9]; // scroll progress at which steps 1..4 begin
   const BASE = [190, 172, 235];
   const LILAC = [201, 167, 255];
-  // one arc per research division, matching the caption dots: violet, pink, white
+  // one arc per research division, matching the caption dots: violet, pink, sky blue
   const ARC_COLORS = [
     [154, 107, 255],
     [240, 138, 223],
-    [255, 255, 255],
+    [127, 182, 255],
   ];
 
   const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
@@ -59,6 +59,9 @@
   let width, height, pixelRatio, radius, centerX, centerY, count;
   // per particle: home angle, home radius, scatter offsets, flicker phase, size, arc, then this frame's position
   let homeAngle, homeRadius, scatter, lift, phase, size, arcOf, posX, posY, nearSide;
+  // this frame's particles sorted by arc and side (arc * 2 + side), so each group is one path and
+  // one fill instead of a fillRect per particle: 6 draw calls a frame instead of 15,000
+  let buckets, filled;
 
   function setup() {
     width = window.innerWidth;
@@ -84,6 +87,8 @@
     posX = new Float32Array(count);
     posY = new Float32Array(count);
     nearSide = new Uint8Array(count);
+    buckets = Array.from({ length: 6 }, () => new Int32Array(count));
+    filled = new Int32Array(6);
     for (let i = 0; i < count; i += 1) {
       homeAngle[i] = random() * TAU;
       homeRadius[i] = 0.84 + Math.pow(random(), 0.8) * 0.16;
@@ -199,6 +204,7 @@
     const spin = time * 0.00003;
     const glowOf = highlights(progress);
 
+    filled.fill(0);
     for (let i = 0; i < count; i += 1) {
       // 1 while the particle is still scattered, easing to 0 once the moon has swept past its place
       const settled = clamp((sweep - homeAngle[i]) / (TAU * 1.6), 0, 1);
@@ -211,17 +217,23 @@
       posX[i] = centerX + distance * radius * Math.cos(angle);
       posY[i] = centerY + distance * radius * sine * TILT + loose * lift[i] * radius * 0.42;
       nearSide[i] = sine > 0 ? 1 : 0;
+      const bucket = arcOf[i] * 2 + nearSide[i];
+      buckets[bucket][filled[bucket]++] = i;
     }
 
     const pass = (side) => {
       for (let arc = 0; arc < 3; arc += 1) {
         context.fillStyle = rgba(mix(BASE, ARC_COLORS[arc], glowOf[arc]), 0.5 + 0.45 * glowOf[arc]);
         const grow = 0.45 * glowOf[arc];
-        for (let i = 0; i < count; i += 1) {
-          if (arcOf[i] !== arc || nearSide[i] !== side) continue;
+        const list = buckets[arc * 2 + side];
+        const total = filled[arc * 2 + side];
+        context.beginPath();
+        for (let k = 0; k < total; k += 1) {
+          const i = list[k];
           const dot = size[i] + grow;
-          context.fillRect(posX[i], posY[i], dot, dot);
+          context.rect(posX[i], posY[i], dot, dot);
         }
+        context.fill();
       }
       drawMoon(side, sweep + spin);
     };

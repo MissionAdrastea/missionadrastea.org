@@ -2,7 +2,8 @@
  * Adrastea motion layer. Needs GSAP + ScrollTrigger (assets/vendor).
  *
  * The orbit is a logo-derived element that follows the visitor down every page and changes state
- * only in heroes: data-orbit="hero" shows it, any other value (the pages use "dock") hides it.
+ * as the visitor scrolls: large in a hero (data-orbit="hero"), a small corner badge that leads
+ * back to the top everywhere else ("dock"), and large again behind the closing call ("join").
  *
  * Scroll effects are opt-in through data attributes:
  *   data-intro     children rise in on page load
@@ -118,15 +119,26 @@
   const CIRCUMFERENCE = TAU * 488;
   progressRing.style.strokeDasharray = CIRCUMFERENCE;
 
-  // Where the orbit sits in a hero; size is its on-screen diameter in px.
+  // Where the orbit sits in each state; size is its on-screen diameter in px.
+  //   hero  large beside the opening headline
+  //   dock  a small badge in the corner that stays with the visitor and takes them back to the top
+  //   join  large again, behind the closing "Ad astra, for all."
+  // Any other data-orbit value docks it.
   function orbitStates() {
     const w = window.innerWidth;
     const h = window.innerHeight;
+    const small = w < 720;
+    const stacked = w < 900; // phones and tablets: the emblem sits above the headline, not beside it
+    const badge = small ? 64 : 104;
+    const inset = small ? 14 : 28;
     return {
-      hero:
-        w < 720
-          ? { x: w * 0.5, y: h * 0.27, size: w * 0.92, r: -14 }
-          : { x: w * 0.72, y: h * 0.44, size: Math.min(h * 0.95, w * 0.7), r: -14 },
+      // stacked: the emblem never tucks under the nav (its top stays 106px down) and the headline
+      // starts 40px below it (site.css, stacked hero, mirrors this)
+      hero: stacked
+        ? { x: w * 0.5, y: Math.max(h * 0.215, 106 + Math.min(w * 0.156, h * 0.08)), size: Math.min(w * 0.82, h * 0.42), r: -14 }
+        : { x: w * 0.72, y: h * 0.44, size: Math.min(h * 0.95, w * 0.7), r: -14 },
+      dock: { x: w - inset - badge / 2, y: h - inset - badge / 2, size: badge, r: 0, docked: true },
+      join: { x: w * 0.5, y: h * 0.5, size: Math.min(h * 1.1, w * 0.92), r: -14, opacity: 0.2 },
     };
   }
 
@@ -145,23 +157,93 @@
   let current = null;
   let travel = null;
 
+  // Docked, the badge is a real control: it sits above the content and returns to the top.
+  function setDocked(docked) {
+    orbit.classList.toggle("is-docked", docked);
+    if (docked) {
+      orbit.removeAttribute("aria-hidden");
+      orbit.setAttribute("role", "button");
+      orbit.setAttribute("tabindex", "0");
+      orbit.setAttribute("aria-label", "Back to the top");
+    } else {
+      orbit.setAttribute("aria-hidden", "true");
+      ["role", "tabindex", "aria-label"].forEach((attr) => orbit.removeAttribute(attr));
+    }
+  }
+  const toTop = () => window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+  orbit.addEventListener("click", () => orbit.classList.contains("is-docked") && toTop());
+  orbit.addEventListener("keydown", (event) => {
+    if (orbit.classList.contains("is-docked") && (event.key === "Enter" || event.key === " ")) {
+      event.preventDefault();
+      toTop();
+    }
+  });
+
+  // Between the hero and the corner the emblem flies: it glides and shrinks (or grows) on one eased
+  // path, behind the content, and only becomes the badge above the content once it has landed.
+  // Into and out of the closing call it does not fly across the headline: it fades out where it is
+  // and comes back in place, settling from a touch larger.
   function moveOrbit(name, instant) {
-    const state = orbitStates()[name];
+    const states = orbitStates();
+    const state = states[name] ?? states.dock;
+    const previous = current;
     current = name;
     if (travel) travel.kill();
+    const docked = Boolean(state.docked);
+    const scale = state.size / 1000;
+    const still = instant || reduceMotion;
 
-    // Only a hero shows the orbit. Everywhere else it fades out where it stands: an emblem gliding
-    // across the page behind other content was distracting.
-    if (!state) {
-      travel = gsap.to(orbit, { opacity: 0, duration: instant || reduceMotion ? 0 : 0.4, ease: "power2.out" });
+    if (!still && (name === "join" || previous === "join")) {
+      setDocked(false);
+      travel = gsap
+        .timeline()
+        .to(orbit, { opacity: 0, duration: 0.28, ease: "power2.in" })
+        .set(orbit, { x: state.x, y: state.y, scale: scale * 1.08, rotation: state.r })
+        .add(() => setDocked(docked))
+        .to(orbit, { opacity: state.opacity ?? 1, scale, duration: 0.9, ease: "expo.out" });
       return;
     }
-    gsap.set(orbit, { x: state.x, y: state.y, scale: state.size / 1000, rotation: state.r });
-    travel = gsap.to(orbit, { opacity: 1, duration: instant || reduceMotion ? 0 : 0.5, ease: "power2.out" });
+
+    if (!docked) setDocked(false);
+    const rest = state.opacity ?? 1;
+    // to and from the corner the emblem crosses the page's copy, so it travels dimmed and only
+    // brightens again as it settles
+    const crossing = !still && (docked || previous === "dock");
+    travel = gsap
+      .timeline({ onComplete: docked ? () => setDocked(true) : undefined })
+      .to(orbit, { x: state.x, y: state.y, scale, rotation: state.r, duration: still ? 0 : 1.15, ease: "expo.inOut" }, 0);
+    if (crossing) {
+      travel
+        .to(orbit, { opacity: 0.22, duration: 0.35, ease: "power2.out" }, 0)
+        .to(orbit, { opacity: rest, duration: 0.35, ease: "power2.in" }, 0.8);
+    } else {
+      travel.to(orbit, { opacity: rest, duration: still ? 0 : 0.5, ease: "power2.out" }, 0);
+    }
   }
 
   gsap.set(orbit, { xPercent: -50, yPercent: -50 });
   moveOrbit(stateAtScroll(), true);
+
+  // The loading screen hands over to the hero: as it lifts, the orbit starts exactly on the small
+  // emblem in its middle and flies out to its place beside the headline, so the loader becomes the
+  // opening shot instead of a curtain in front of it.
+  const loaderMark = document.querySelector(".loader-mark");
+  if (loaderMark && document.documentElement.classList.contains("is-loading")) {
+    window.addEventListener(
+      "adrastea:revealed",
+      () => {
+        const mark = loaderMark.getBoundingClientRect();
+        const core = 380; // .orbit-core is 38% of the 1000px orbit
+        if (travel) travel.kill();
+        gsap.set(orbit, { x: mark.left + mark.width / 2, y: mark.top + mark.height / 2, scale: mark.width / core, rotation: 0, opacity: 1 });
+        orbit.classList.add("is-handoff");
+        loaderMark.style.visibility = "hidden";
+        moveOrbit(stateAtScroll());
+        travel.duration(reduceMotion ? 0 : 1.5).then(() => orbit.classList.remove("is-handoff"));
+      },
+      { once: true },
+    );
+  }
 
   // A fast scroll crosses several sections inside a few frames; checking at most every 100ms
   // coalesces them into one flight toward the state the visitor ends up in.
@@ -171,9 +253,16 @@
     const state = stateAtScroll();
     if (state !== current) moveOrbit(state);
   }
+  // On phones and tablets the emblem sits above the headline. While the hero is in view it scrolls
+  // away with the page, instead of holding still while the headline slides up underneath it.
+  function followHero() {
+    if (current !== "hero" || window.innerWidth >= 900 || (travel && travel.isActive())) return;
+    gsap.set(orbit, { y: orbitStates().hero.y - window.scrollY });
+  }
   window.addEventListener(
     "scroll",
     () => {
+      followHero();
       if (!checkTimer) checkTimer = window.setTimeout(checkOrbit, 100);
     },
     { passive: true },
@@ -332,9 +421,74 @@
     });
   }
 
+  // Headlines arrive word by word: each word rises into place from behind its own mask, the way a
+  // line of type is set rather than faded in. The heading keeps its full text as its accessible name.
+  function splitWords(heading) {
+    if (heading.dataset.split) return heading.querySelectorAll(".word-in");
+    heading.dataset.split = "";
+    heading.setAttribute("aria-label", heading.textContent.replace(/\s+/g, " ").trim());
+    const wrap = (node) => {
+      [...node.childNodes].forEach((child) => {
+        if (child.nodeType === Node.ELEMENT_NODE) {
+          child.setAttribute("aria-hidden", "true");
+          wrap(child);
+          return;
+        }
+        if (child.nodeType !== Node.TEXT_NODE || !child.textContent.trim()) return;
+        const parts = child.textContent.split(/(\s+)/);
+        const fragment = document.createDocumentFragment();
+        parts.forEach((part) => {
+          if (!part) return;
+          if (/^\s+$/.test(part)) {
+            fragment.append(document.createTextNode(" "));
+            return;
+          }
+          const word = document.createElement("span");
+          word.className = "word";
+          word.setAttribute("aria-hidden", "true");
+          const inner = document.createElement("span");
+          inner.className = "word-in";
+          inner.textContent = part;
+          word.append(inner);
+          fragment.append(word);
+        });
+        child.replaceWith(fragment);
+      });
+    };
+    wrap(heading);
+    return heading.querySelectorAll(".word-in");
+  }
+
+  const riseWords = (heading, options = {}) =>
+    gsap.from(splitWords(heading), {
+      yPercent: 115,
+      duration: 1.15,
+      ease: "expo.out",
+      stagger: 0.045,
+      clearProps: "transform",
+      ...options,
+    });
+
+  const newTitles = unseen();
+  const titleObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting && entry.boundingClientRect.top >= 0) return;
+        titleObserver.unobserve(entry.target);
+        entry.target.style.opacity = "";
+        riseWords(entry.target);
+      });
+    },
+    { rootMargin: "0px 0px -10% 0px" },
+  );
+
   function refreshScrollEffects() {
     if (!reduceMotion) {
-      newReveals("[data-reveal]").forEach((el) => {
+      newTitles(".section-title").forEach((title) => {
+        splitWords(title);
+        titleObserver.observe(title);
+      });
+      newReveals("[data-reveal]:not(.section-title)").forEach((el) => {
         gsap.set(el, { opacity: 0, y: 40 });
         revealObserver.observe(el);
       });
@@ -350,13 +504,19 @@
     // while the loading screen is up, the entrance waits behind it
     const loading = document.documentElement.classList.contains("is-loading");
     document.querySelectorAll("[data-intro]").forEach((group) => {
-      const intro = gsap.from(group.children, {
+      // the headline sets itself word by word; the rest of the group rises in after it
+      const headline = group.querySelector(":scope > h1");
+      if (headline) {
+        const words = riseWords(headline, { delay: 0.15, stagger: 0.06, duration: 1.3, paused: loading });
+        if (loading) window.addEventListener("adrastea:revealed", () => words.play(), { once: true });
+      }
+      const intro = gsap.from([...group.children].filter((child) => child !== headline), {
         y: 46,
         opacity: 0,
         duration: 1.1,
         stagger: 0.12,
         ease: "power3.out",
-        delay: 0.2,
+        delay: headline ? 0.65 : 0.2,
         clearProps: "transform,opacity",
         paused: loading,
       });

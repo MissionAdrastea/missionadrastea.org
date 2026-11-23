@@ -1,0 +1,50 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "ai-color-palette",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-10-29T14:24:21.212Z",
+        "reason": "owner-supplied brand palette: the purple comes from the Adrastea logo the owner provided with its brand colours"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-11-05T09:59:36.804Z",
+        "reason": "intentional hairline lists (Why Adrastea reasons, timeline): a 1px rule above each row with 22-34px vertical inset; nothing is boxed, so no horizontal inset applies"
+      },
+      {
+        "rule": "ai-color-palette",
+        "value": "*",
+        "files": [
+          "about.html"
+        ],
+        "createdAt": "2026-11-07T07:39:57.924Z",
+        "reason": "owner-supplied brand palette: the purple comes from the Adrastea logo the owner provided with its brand colours"
+      },
+      {
+        "rule": "overused-font",
+        "value": "instrument serif",
+        "createdAt": "2026-11-07T07:39:58.313Z",
+        "reason": "user confirmed: the owner chose Fraunces with Instrument Serif accents in the typography kit session"
+      },
+      {
+        "rule": "dark-glow",
+        "value": "*",
+        "files": [
+          "*.html"
+        ],
+        "createdAt": "2026-11-17T16:24:33.031Z",
+        "reason": "user confirmed: the coloured glows on the emblem and division dots are part of the brand"
+      }
+    ]
+  }
+}

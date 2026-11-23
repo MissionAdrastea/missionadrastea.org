@@ -36,7 +36,7 @@
   --display-tracking: -0.02em;
   --display-leading: 1.11;
   --gutter: clamp(20px, 6vw, 96px);
-  --section-space: clamp(100px, 16vh, 200px);
+  --section-space: clamp(80px, 12vh, 140px);
   --radius: 28px;
   /* opaque, so the sky never shows through a card */
   --card: linear-gradient(160deg, rgba(116, 21, 201, 0.22), rgba(14, 8, 32, 0.55)), #0c0619;
@@ -308,7 +308,7 @@ h2 em {
 }
 
 .nav a {
-  padding: 10px 2px; /* a taller target than the text alone */
+  padding: 11px 2px; /* a taller target than the text alone */
   color: var(--mute);
   font-size: 0.88rem;
   text-decoration: none;
@@ -338,7 +338,7 @@ h2 em {
 .nav .cta,
 .nav .cta:hover,
 .nav .cta[aria-current="page"] {
-  padding: 10px 18px;
+  padding: 11px 18px;
   border-radius: 999px;
   background: #fff;
   color: #14072b;
@@ -499,6 +499,7 @@ h2 em {
 
 .link {
   display: inline-flex;
+  min-height: 44px;
   align-items: center;
   gap: 0.5em;
   color: var(--lilac);
@@ -519,8 +520,8 @@ a:hover .link::after {
 
 .section-title {
   max-width: 900px;
-  margin-bottom: 56px;
-  font-size: clamp(2rem, 4.4vw, 4rem);
+  margin-bottom: 48px;
+  font-size: clamp(1.9rem, 3vw, 2.75rem); /* well below the page title, so the hero leads */
 }
 
 /* the second sentence of a two-tone heading, set quieter than the first */
@@ -595,7 +596,7 @@ a:hover .link::after {
 
 /* a statement that lights up word by word as it is scrolled (data-scrub) */
 .scrub {
-  padding: clamp(120px, 22vh, 240px) var(--gutter);
+  padding: clamp(72px, 12vh, 140px) var(--gutter);
 }
 
 .scrub p {
@@ -648,7 +649,7 @@ a:hover .link::after {
     transform 0.5s ease 0.18s;
 }
 
-.step h2 {
+.step :is(h2, h3) {
   margin: 16px 0 14px;
   font-size: clamp(1.8rem, 3vw, 2.8rem);
 }
@@ -676,7 +677,7 @@ a:hover .link::after {
     transform: none;
   }
 
-  .step h2 {
+  .step :is(h2, h3) {
     margin: 10px 0 8px;
     font-size: 1.9rem;
   }
@@ -848,7 +849,14 @@ a:hover .link::after {
   list-style: none;
 }
 
+.foot .brand {
+  min-height: 44px;
+}
+
 .foot ul a {
+  display: inline-block;
+  padding: 12px 0;
+  margin: -12px 0;
   text-decoration: none;
   transition: color 0.25s;
 }
@@ -877,5 +885,678 @@ a:hover .link::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---------- the docked orbit ---------- */
+
+/* in the corner the orbit is a control (back to the top), so it sits above the content */
+.orbit.is-docked {
+  z-index: 95;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.orbit.is-docked:focus-visible {
+  outline: none;
+}
+
+.orbit.is-docked:focus-visible .orbit-core,
+.orbit.is-docked:hover .orbit-core {
+  box-shadow:
+    0 0 0 14px rgba(246, 240, 255, 0.9),
+    0 0 120px 16px rgba(116, 21, 201, 0.5);
+}
+
+/* ---------- React Bits islands (assets/islands, built from src/) ---------- */
+
+/* each island keeps the page's plain version until it has drawn itself */
+.council:has(.council-cards-host[data-island-ready]) #council-list {
+  display: none;
+}
+
+.council-cards {
+  display: grid;
+  max-width: 1280px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(20px, 3vw, 40px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.council-more {
+  margin-top: 18px;
+  color: var(--mute);
+  font-size: 0.98rem;
+  line-height: 1.55;
+}
+
+.join {
+  align-content: center;
+}
+
+.magnet-host {
+  display: inline-block;
+}
+
+.spark-layer {
+  position: fixed;
+  z-index: 120;
+  inset: 0;
+  pointer-events: none;
+}
+
+@media (max-width: 900px) {
+  .council-cards {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 420px;
+  }
+}
+
+/* ---------- stacked hero (phones and tablets) ----------
+   Below 900px the emblem sits above the headline (motion.js, orbitStates: centred at 21.5% of the
+   height, but never higher than the nav allows; min(82% of the width, 42% of the height) across). Its
+   emblem is 38% of that, so it reaches min(15.6vw, 8svh) either side of its centre; the copy starts
+   40px below, whatever the screen size. */
+
+@media (max-width: 899px) {
+  html .hero { /* html: wins over the page stylesheets, which load later */
+    padding-top: calc(max(21.5svh, 106px + min(15.6vw, 8svh)) + min(15.6vw, 8svh) + 40px);
+  }
+}
+
+/* ---------- phone type scale ----------
+   Each page set its own minimum sizes, so on a phone a section title sat level with the page title
+   and the closing call outgrew both. One scale for every page, top to bottom. The html prefix lets
+   it win over the page stylesheets, which load after this one. */
+
+@media (max-width: 720px) {
+  /* page titles */
+  html .hero h1,
+  html .contact-intro h1 {
+    font-size: 2.1rem;
+    line-height: 1.08;
+  }
+
+  /* the two display moments: the motto on About and the closing call on every page;
+     after the page titles, since the motto is also a .hero h1 */
+  html .hero--motto h1,
+  html .join h2 {
+    font-size: 2.9rem;
+    line-height: 1.04;
+  }
+
+  html .founder-name {
+    font-size: 2rem;
+  }
+
+  html .section-title {
+    font-size: 1.7rem;
+    line-height: 1.12;
+  }
+
+  html .step :is(h2, h3),
+  html .division h2 {
+    font-size: 1.5rem;
+    line-height: 1.15;
+  }
+
+  /* statement paragraphs set in the display face */
+  html .scrub p {
+    font-size: 1.3rem;
+    line-height: 1.38;
+  }
+
+  html .goal-number {
+    font-size: 2.4rem;
+  }
+
+  html .goal--lead p {
+    font-size: 1.45rem;
+  }
+
+  html .goal p,
+  html .project-lead h3 {
+    font-size: 1.3rem;
+    line-height: 1.2;
+  }
+
+  /* card titles */
+  html .reasons h3,
+  html .project-card h3 {
+    font-size: 1.15rem;
+    line-height: 1.3;
+  }
+
+  /* the scroll stages need far less travel on a phone: each step is a thumb flick, not a screen */
+  html .stage {
+    height: 200vh;
+  }
+
+  html .timeline {
+    height: 340vh;
+  }
+}
+
+/* ---------- headlines set word by word (motion.js, splitWords) ---------- */
+
+/* each word rises from behind its own mask; the padding keeps descenders and italic overhangs
+   inside the mask, and the negative margin gives the space back so the line does not move */
+.word {
+  display: inline-block;
+  overflow: hidden;
+  padding: 0 0.08em 0.16em 0;
+  margin: 0 -0.08em -0.16em 0;
+  vertical-align: top;
+}
+
+.word-in {
+  display: inline-block;
+  will-change: transform;
+}
+
+/* the division colour, formerly on a label above the caption, now leads the heading itself */
+h2 .tag-dot,
+h3 .tag-dot {
+  display: inline-block;
+  margin: 0 0.45em 0.18em 0;
+  vertical-align: middle;
+}
+
+/* ---------- the remaining marquees pause under the pointer or keyboard focus ---------- */
+
+.mq:hover .mq-track,
+.mq:focus-within .mq-track {
+  animation-play-state: paused;
+}
+
+/* ---------- home: "Why Adrastea?" set as type ---------- */
+
+/* five claims, each with its reason beside it; no photographs standing in for the argument */
+.reasons {
+  max-width: 1280px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.reasons li {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  align-items: baseline;
+  gap: clamp(16px, 4vw, 64px);
+  padding: clamp(22px, 3vw, 34px) 0;
+  border-top: 1px solid var(--line);
+}
+
+.reasons li:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.reasons h3 {
+  font-size: clamp(1.5rem, 2.6vw, 2.4rem);
+  line-height: 1.12;
+}
+
+.reasons p {
+  max-width: 52ch;
+  color: var(--mute);
+  font-size: clamp(1.02rem, 1.2vw, 1.2rem);
+  line-height: 1.6;
+}
+
+@media (max-width: 720px) {
+  .reasons li {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}
+
+/* ---------- home: the planet captions lead to each division ---------- */
+
+.step .link {
+  margin-top: 14px;
+}
+
+/* ---------- home: the people behind Adrastea ---------- */
+
+.people-band,
+.institutions {
+  padding: var(--section-space) var(--gutter);
+}
+
+/* people and institutions are one chapter of proof: they sit closer to each other than to the rest */
+.people-band {
+  padding-bottom: clamp(56px, 7vw, 96px);
+}
+
+.institutions {
+  padding-top: 0;
+}
+
+/* two named groups side by side: the council takes three columns, the founder one, so every
+   portrait is the same size; the heading sits close above them, with no empty band */
+.people-band .section-title {
+  margin-bottom: clamp(28px, 4vw, 48px);
+}
+
+.people-groups {
+  display: grid;
+  max-width: 1280px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(16px, 2.4vw, 32px);
+  margin-bottom: clamp(28px, 4vw, 48px);
+}
+
+/* the council spans three of the four columns, with the same gap inside, so all four portraits match */
+.people-group--council {
+  grid-column: span 3;
+}
+
+.group-name {
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+  color: var(--mute);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.people-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 2.4vw, 32px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.people-group--founder .people-row {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.people-row img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  margin-bottom: 18px;
+  border-radius: var(--radius);
+  object-fit: cover;
+  object-position: 50% 22%;
+  filter: saturate(0.9);
+}
+
+.people-row h4 {
+  margin: 0;
+  font-size: clamp(1.2rem, 1.6vw, 1.5rem);
+}
+
+.people-row p {
+  margin: 4px 0 0;
+  color: var(--mute);
+  line-height: 1.45;
+}
+
+/* on phones the groups stack; the founder keeps a council-sized portrait */
+@media (max-width: 720px) {
+  .people-groups {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+  }
+
+  .people-group--council {
+    grid-column: auto;
+  }
+
+  .people-group--founder .people-row {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .people-row {
+    gap: 12px;
+  }
+
+  .people-row h4 {
+    font-size: 1rem;
+  }
+
+  .people-row p {
+    font-size: 0.85rem;
+  }
+}
+
+/* ---------- home: institutions, still and readable ---------- */
+
+/* a light tile behind each mark keeps the dark logos legible on the night ground */
+.logo-row {
+  display: grid;
+  max-width: 1280px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* quiet tiles: a faint lilac plate with the mark in white, so the wall no longer outshines the
+   people above it; NASA and Oxford keep their own colours (filled marks that a silhouette would blot) */
+.logo-row li {
+  display: grid;
+  height: 72px;
+  padding: 0 18px;
+  border: 1px solid var(--line);
+  overflow: hidden; /* a scaled-up mark never spills into its neighbour */
+  border-radius: 14px;
+  background: rgba(201, 167, 255, 0.06);
+  place-items: center;
+}
+
+.logo-row img {
+  filter: brightness(0) invert(1);
+  opacity: 0.82;
+}
+
+.logo-row img[src$="/nasa.png"],
+.logo-row img[src$="/oxford.png"] {
+  filter: none;
+  opacity: 1;
+}
+
+.logo-row--others {
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.institutions .group-name {
+  margin-top: clamp(28px, 4vw, 44px);
+}
+
+.institutions .section-title + .group-name {
+  margin-top: 0;
+}
+
+.logo-row img {
+  width: auto;
+  height: 40px;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+/* marks drawn small inside their files are set larger so they read at the same size as the rest */
+.logo-row img[src$="/mayo.png"],
+.logo-row img[src$="/oxford.png"],
+.logo-row img[src$="/nasa.png"] {
+  height: 54px;
+}
+
+/* the Oxford file pads its navy block with a wide transparent margin; scaled up, the block reads at
+   the same size as its neighbours, in its own colours */
+.logo-row img[src$="/oxford.png"] {
+  transform: scale(1.6);
+}
+
+.proof-ask {
+  margin-top: clamp(32px, 4vw, 48px);
+}
+
+@media (max-width: 900px) {
+  .logo-row--partners,
+  .logo-row--others {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .logo-row li {
+    height: 72px;
+    padding: 0 14px;
+  }
+
+  /* two columns leave room for every mark to read at 28px or more; wide wordmarks still fit their tile */
+  .logo-row img {
+    height: auto;
+    max-height: 40px;
+    min-height: 28px;
+    max-width: 100%;
+    object-fit: contain;
+  }
+}
+
+/* ---------- home: the timeline can be skipped ---------- */
+
+.timeline {
+  position: relative;
+}
+
+.timeline-skip {
+  position: absolute;
+  z-index: 30;
+  top: calc(var(--section-space) * 0.5);
+  right: var(--gutter);
+  font-size: 0.95rem;
+}
+
+/* ---------- home: what a partner can bring ---------- */
+
+.partner {
+  padding: var(--section-space) var(--gutter);
+}
+
+.partner-lede {
+  max-width: 60ch;
+  margin-bottom: clamp(28px, 4vw, 44px);
+  color: var(--mute);
+  font-size: clamp(1.05rem, 1.3vw, 1.25rem);
+  line-height: 1.6;
+}
+
+/* four kinds of support as a typographic row; each may later carry a line on what it pays for */
+.partner-ways {
+  display: grid;
+  max-width: 1280px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0 0 clamp(32px, 4vw, 48px);
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+
+.partner-ways li {
+  padding: clamp(20px, 2.6vw, 32px) clamp(16px, 2vw, 28px) 0 0;
+}
+
+.partner-ways li + li {
+  padding-left: clamp(16px, 2vw, 28px);
+  border-left: 1px solid var(--line);
+}
+
+.partner-ways h3 {
+  font-size: clamp(1.3rem, 2vw, 1.9rem);
+  line-height: 1.15;
+}
+
+.partner-ways p {
+  margin-top: 8px;
+  color: var(--mute);
+  line-height: 1.55;
+}
+
+@media (max-width: 720px) {
+  .partner-ways {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .partner-ways li:nth-child(3) {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .partner-ways li:nth-child(n + 3) {
+    padding-top: 20px;
+  }
+}
+
+/* ---------- home: the divisions stage, an exit and a place in it ---------- */
+
+.stage {
+  position: relative;
+}
+
+.stage-skip {
+  position: absolute;
+  z-index: 30;
+  top: calc(var(--section-space) * 0.5);
+  right: var(--gutter);
+  font-size: 0.95rem;
+}
+
+.step-count {
+  margin-left: 0.4em;
+  color: var(--mute);
+  font-family: var(--font-body);
+  font-size: max(0.85rem, 0.42em); /* never below a readable size, even under a phone-sized heading */
+  font-weight: 400;
+  letter-spacing: 0;
+  vertical-align: middle;
+}
+
+/* ---------- timeline: the shared scroll stage (site.css) with a constellation drawn by constellation.js ---------- */
+
+.timeline {
+  height: 380vh; /* About page; the phone height is in the phone type scale */
+  scroll-margin-top: -96px; /* cancels the page's scroll padding, which is for ordinary sections */
+}
+
+/* a photograph for the moment in view, above its caption */
+.timeline .copy {
+  height: 540px;
+}
+
+.step-photo {
+  width: 100%;
+  height: 210px;
+  margin-bottom: 22px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  filter: saturate(0.92) contrast(1.04);
+  object-fit: cover;
+}
+
+@media (max-width: 720px) {
+  .timeline .copy {
+    height: 360px;
+  }
+
+  .step-photo {
+    height: 84px;
+    margin-bottom: 12px;
+    border-radius: 14px;
+  }
+}
+
+.sky {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* keeps the caption readable where the constellation passes behind it */
+.timeline .sticky::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(7, 4, 15, 0.9) 0%,
+    rgba(7, 4, 15, 0.55) 30%,
+    transparent 52%
+  );
+  content: "";
+  pointer-events: none;
+}
+
+.sky-dust circle {
+  fill: #e2d6ff;
+}
+
+.sky-dust .twinkle {
+  animation: twinkle 3.6s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  50% {
+    opacity: 0.1;
+  }
+}
+
+/* stroke width and label size are set by the script, so they hold steady as the camera zooms */
+.sky-lines {
+  stroke: rgba(201, 167, 255, 0.75);
+  stroke-linecap: round;
+}
+
+.sky-star path {
+  fill: #fff;
+}
+
+.sky-star--goal path {
+  fill: #ffd9f6;
+}
+
+/* the dark outline lets a name sit over a line without the two tangling */
+.sky-labels text {
+  fill: var(--ink);
+  stroke: var(--bg);
+  stroke-linejoin: round;
+  stroke-width: 0.5em;
+  dominant-baseline: middle;
+  font-family: var(--font-body);
+  paint-order: stroke;
+}
+
+@media (max-width: 720px) {
+  .timeline .sticky::after {
+    background: linear-gradient(
+      0deg,
+      rgba(7, 4, 15, 0.92) 0%,
+      rgba(7, 4, 15, 0.6) 44%,
+      transparent 60%
+    );
+  }
+}
+
+/* ---------- phones: the council and founder as rows, photo left, so credentials read in one or two lines ---------- */
+
+@media (max-width: 720px) {
+  .people-row,
+  .people-group--founder .people-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .people-row li {
+    display: grid;
+    grid-template-columns: 88px minmax(0, 1fr);
+    column-gap: 16px;
+    align-items: center;
+  }
+
+  .people-row img {
+    grid-row: span 2;
+    width: 88px;
+    margin: 0;
+    aspect-ratio: 1;
+    border-radius: 18px;
+  }
+
+  .people-row h4 {
+    align-self: end;
+    font-size: 1.1rem;
+  }
+
+  .people-row p {
+    align-self: start;
+    font-size: 0.95rem;
   }
 }

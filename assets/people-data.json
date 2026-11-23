@@ -93,92 +93,103 @@
   ],
   "people": [
     {
-      "team": "health",
-      "name": "Kate Russell",
-      "title": "Director of Health & Physiology Research",
-      "image": "kater.PNG"
-    },
-    {
-      "team": "health",
-      "name": "Skylar Dipasupil",
-      "title": "Microbiology Research Lead"
-    },
-    {
-      "team": "health",
-      "name": "Hannah May Lyons",
-      "title": "Exercise Physiology Specialist"
-    },
-    {
-      "team": "health",
-      "name": "Ananya Sridhar",
-      "title": "Molecular Biology Specialist"
-    },
-    {
-      "team": "bioengineering",
       "name": "Rianna Chaudhuri",
-      "title": "Director of Bioengineering Technology",
-      "image": "riannac.jpg"
+      "teams": [
+        "bioengineering",
+        "strategy"
+      ]
     },
     {
-      "team": "bioengineering",
-      "name": "Rene Mohammadi",
-      "title": "Molecular Physiology Specialist"
-    },
-    {
-      "team": "policy",
       "name": "Joi Ysabella Carla Salvino",
-      "title": "Policy Research Lead"
+      "teams": [
+        "policy"
+      ]
     },
     {
-      "team": "policy",
-      "name": "Harsha Bheemanathini",
-      "title": "Legal Advocacy Lead"
-    },
-    {
-      "team": "communications",
       "name": "Laine Kowalski",
-      "title": "Director of Marketing & Communications Strategy",
-      "image": "lainek.jpg"
+      "teams": [
+        "communications",
+        "strategy"
+      ]
     },
     {
-      "team": "communications",
-      "name": "Vee Nguyen",
-      "title": "Director of Visual Media & Creative Marketing"
-    },
-    {
-      "team": "communications",
-      "name": "Rida Akhtar",
-      "title": "Scientific Content Research Lead"
-    },
-    {
-      "team": "communications",
-      "name": "Adyan Khan",
-      "title": "Scientific Content Development Lead"
-    },
-    {
-      "team": "communications",
       "name": "Sakura Lai",
-      "title": "Website Lead"
+      "teams": [
+        "communications"
+      ]
     },
     {
-      "team": "communications",
+      "name": "Harsha Bheemanathini",
+      "teams": [
+        "policy"
+      ]
+    },
+    {
       "name": "Victoria Lee",
-      "title": "Videography Lead"
+      "teams": [
+        "communications"
+      ]
     },
     {
-      "team": "communications",
-      "name": "Kieran Fenwick",
-      "title": "Scientific Illustration Specialist"
-    },
-    {
-      "team": "communications",
-      "name": "Jordan Dorsey",
-      "title": ""
-    },
-    {
-      "team": "strategy",
       "name": "Ragasanjana Manyam",
-      "title": "Operations Lead"
+      "teams": [
+        "strategy"
+      ]
+    },
+    {
+      "name": "Hannah May Lyons",
+      "teams": [
+        "health"
+      ]
+    },
+    {
+      "name": "Rida Akhtar",
+      "teams": [
+        "communications"
+      ]
+    },
+    {
+      "name": "Ananya Sridhar",
+      "teams": [
+        "health"
+      ]
+    },
+    {
+      "name": "Rene Mohammadi",
+      "teams": [
+        "bioengineering"
+      ]
+    },
+    {
+      "name": "Kieran Fenwick",
+      "teams": [
+        "communications"
+      ]
+    },
+    {
+      "name": "Jordan Dorsey",
+      "teams": [
+        "communications"
+      ]
+    },
+    {
+      "name": "Adyan Khan",
+      "teams": [
+        "communications"
+      ]
+    },
+    {
+      "name": "Yin-Ru Chen",
+      "teams": [
+        "policy"
+      ]
+    },
+    {
+      "name": "Sean Borsum",
+      "teams": [
+        "bioengineering",
+        "health"
+      ]
     }
   ]
 }

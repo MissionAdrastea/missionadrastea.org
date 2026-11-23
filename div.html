@@ -17,8 +17,8 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Instrument+Serif:ital@0;1&display=swap"
     />
-    <link rel="stylesheet" href="assets/site.css?v=33" />
-    <link rel="stylesheet" href="style/div.css?v=32" />
+    <link rel="stylesheet" href="assets/site.css?v=53" />
+    <link rel="stylesheet" href="style/div.css?v=33" />
     <script>
       // The division anchors were renamed to match the division names. Links to the old ones still arrive.
       {
@@ -34,10 +34,11 @@
     </script>
     <script src="assets/vendor/gsap.min.js" defer></script>
     <script src="assets/vendor/ScrollTrigger.min.js" defer></script>
-    <script src="assets/sky.js?v=32" defer></script>
+    <script src="assets/sky.js?v=35" defer></script>
     <script src="assets/components.js?v=33" defer></script>
-    <script src="assets/motion.js?v=32" defer></script>
+    <script src="assets/motion.js?v=40" defer></script>
     <script src="assets/star-trail.js?v=32" defer></script>
+    <script type="module" src="assets/islands/islands.js"></script>
   </head>
 
   <body>
@@ -66,8 +67,7 @@
             />
           </figure>
           <div class="division-body">
-            <span class="tag"><span class="tag-dot"></span>Research division</span>
-            <h2>Health &amp; Physiology</h2>
+            <h2><span class="tag-dot" aria-hidden="true"></span>Health &amp; Physiology</h2>
             <ul class="division-points">
               <li>How the female body responds to spaceflight.</li>
               <li>Hormones, heart, bone, brain, and radiation.</li>
@@ -91,8 +91,7 @@
             />
           </figure>
           <div class="division-body">
-            <span class="tag"><span class="tag-dot"></span>Research division</span>
-            <h2>Bioengineering &amp; Technology</h2>
+            <h2><span class="tag-dot" aria-hidden="true"></span>Bioengineering &amp; Technology</h2>
             <ul class="division-points">
               <li>Tools that help women thrive in space.</li>
               <li>Wearables, spacesuits, and menstrual health tech.</li>
@@ -106,7 +105,7 @@
         </article>
 
         <span class="stack-anchor" id="policy-advocacy"></span>
-        <article class="division" style="--i: 2; --c: #fff" data-reveal>
+        <article class="division" style="--i: 2; --c: #7fb6ff" data-reveal>
           <figure class="division-photo">
             <img
               src="images/policydiv.jpg"
@@ -116,8 +115,7 @@
             />
           </figure>
           <div class="division-body">
-            <span class="tag"><span class="tag-dot"></span>Research division</span>
-            <h2>Policy &amp; Advocacy</h2>
+            <h2><span class="tag-dot" aria-hidden="true"></span>Policy &amp; Advocacy</h2>
             <ul class="division-points">
               <li>Removing the barriers to women in space.</li>
               <li>Policy briefs, governance, and advocacy.</li>
@@ -141,8 +139,7 @@
             />
           </figure>
           <div class="division-body">
-            <span class="tag"><span class="tag-dot"></span>Media division</span>
-            <h2>Scientific Media &amp; Marketing</h2>
+            <h2><span class="tag-dot" aria-hidden="true"></span>Scientific Media &amp; Marketing</h2>
             <ul class="division-points">
               <li>Turning research into stories.</li>
               <li>Science journalism, design, and video.</li>
@@ -163,8 +160,7 @@
         </h2>
         <div class="split project-group" id="work-health-physiology" style="--c: var(--violet)">
           <div class="project-lead">
-            <span class="tag"><span class="tag-dot"></span>Research</span>
-            <h3>Health &amp; Physiology</h3>
+            <h3><span class="tag-dot" aria-hidden="true"></span>Health &amp; Physiology</h3>
           </div>
           <ul class="project-list">
             <li class="project" data-reveal>
@@ -191,8 +187,7 @@
         </div>
         <div class="split project-group" id="work-bioengineering-technology" style="--c: var(--pink)">
           <div class="project-lead">
-            <span class="tag"><span class="tag-dot"></span>Prototyping</span>
-            <h3>Bioengineering &amp; Technology</h3>
+            <h3><span class="tag-dot" aria-hidden="true"></span>Bioengineering &amp; Technology</h3>
           </div>
           <ul class="project-list">
             <li class="project" data-reveal>
@@ -205,10 +200,9 @@
             </li>
           </ul>
         </div>
-        <div class="split project-group" id="work-policy-advocacy" style="--c: #fff">
+        <div class="split project-group" id="work-policy-advocacy" style="--c: #7fb6ff">
           <div class="project-lead">
-            <span class="tag"><span class="tag-dot"></span>Advocacy</span>
-            <h3>Policy &amp; Advocacy</h3>
+            <h3><span class="tag-dot" aria-hidden="true"></span>Policy &amp; Advocacy</h3>
           </div>
           <ul class="project-list">
             <li class="project" data-reveal>
@@ -231,8 +225,7 @@
         </div>
         <div class="split project-group" id="work-scientific-media-marketing" style="--c: var(--lilac)">
           <div class="project-lead">
-            <span class="tag"><span class="tag-dot"></span>Storytelling</span>
-            <h3>Scientific Media &amp; Marketing</h3>
+            <h3><span class="tag-dot" aria-hidden="true"></span>Scientific Media &amp; Marketing</h3>
           </div>
           <ul class="project-list">
             <li class="project" data-reveal>
@@ -256,8 +249,8 @@
           <h2 id="join-title">Ad astra,<br /><em>for all.</em></h2>
           <p>Found your place? Tell us what you study and which division interests you.</p>
           <div class="row">
-            <a class="btn" href="contact.html">Get involved</a>
-            <a class="btn dark" href="contact.html?type=sponsorship">Sponsor or partner</a>
+            <a class="btn" href="contact.html?type=sponsorship">Sponsor or partner with us</a>
+            <a class="btn dark" href="contact.html?type=application">Join a division</a>
           </div>
         </div>
       </section>

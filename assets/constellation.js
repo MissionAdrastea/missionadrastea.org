@@ -42,7 +42,7 @@
       return {
         x,
         y,
-        name: step.querySelector("h2").textContent,
+        name: step.querySelector("h2, h3").textContent, // milestones are h3 under the timeline's own h2
         link: Number(step.dataset.link),
         side: step.dataset.label || (x > 650 ? "left" : "right"),
       };
@@ -174,7 +174,10 @@
 
   const lit = (star) => (star === milestones[last] ? 1.7 : 1);
 
+  // re-measure whenever the stage itself changes size, not only on a window resize: a stage first
+  // measured while its page was still laying out would otherwise keep an empty sky
   window.addEventListener("resize", layout);
+  new ResizeObserver(layout).observe(svg.parentElement);
   layout();
 
   if (reduceMotion) {

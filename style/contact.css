@@ -100,7 +100,7 @@
 }
 
 .contact-field ::placeholder {
-  color: rgba(169, 155, 201, 0.6);
+  color: var(--mute); /* solid: the faded tint fell below 4.5:1 */
 }
 
 .contact-field input:hover,
